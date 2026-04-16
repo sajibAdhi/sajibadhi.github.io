@@ -4,35 +4,76 @@ const resumeData = {
     name: "Sajib Adhikary",
     headline: "Software Engineer",
     email: "tosajibadhi@gmail.com",
+    phone: "+8801400593322",
+    location: "Agargaon, Dhaka",
+    website: "https://hishabkitab.com/",
     profilePic: "https://storage.rxresu.me/clp9g04jwcp2k9hunw9ic54v9/pictures/clp9kq71300hxqo5qnzxexz40.jpg",
     socials: [
       { name: 'GitHub', url: 'https://github.com/sajibAdhi', icon: 'fab fa-github' },
-      { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sajibadhi/', icon: 'fab fa-linkedin' },
-      { name: 'Website', url: 'https://hishabkitab.com/', icon: 'fas fa-globe' }
+      { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sajibadhi/', icon: 'fab fa-linkedin' }
     ]
   },
-  summary: "Software Engineer with 3+ years of experience in developing scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Specialized in building high-performance applications and optimizing database architectures.",
+  summary: "Software Engineer with 3+ years of experience in developing scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Strong expertise in backend development, database design, and system architecture. Experienced in building high-performance applications, optimizing database queries, and delivering solutions used by hundreds of users in real-world environments.",
   experience: [
-    { company: "Ambala IT", role: "Software Engineer", period: "Jul 2024 - Present" },
-    { company: "Ranks ITT", role: "Software Engineer", period: "Dec 2023 - Jul 2024" },
-    { company: "Adova Soft", role: "Software Engineer", period: "Dec 2022 - Nov 2023" }
+    { 
+      company: "Ambala IT", 
+      role: "Software Engineer", 
+      period: "Jul 2024 - Present",
+      desc: "Developed Educational Institute Management System (500+ users), Pre-Recruitment System, Microfinance workflows, and Mobile Money EMI System."
+    },
+    { 
+      company: "Ranks ITT", 
+      role: "Software Engineer", 
+      period: "Dec 2023 - Jul 2024",
+      desc: "Developed Vehicle Management and Bill Management applications, contributed to CRM and internal data management solutions."
+    },
+    { 
+      company: "Adova Soft", 
+      role: "Software Engineer", 
+      period: "Dec 2022 - Nov 2023",
+      desc: "Built Institute Management System, Accounting/Inventory Software, and POS applications with sales tracking."
+    },
+    { 
+      company: "Independent", 
+      role: "Web Developer", 
+      period: "Jul 2020 - Nov 2022",
+      desc: "Worked on E-Recruitment Systems, Co-operative Microfinance, and Smart Prescription systems."
+    },
+    { 
+      company: "Freelance", 
+      role: "Programmer", 
+      period: "Oct 2019 - Jun 2020",
+      desc: "Developed Shop Management Application with inventory and sales features."
+    }
+  ],
+  education: [
+    { school: "Sonargaon University", degree: "B.Sc in CSE", period: "2019 - 2023", result: "CGPA 3.19" },
+    { school: "Bcic College", degree: "HSC Science", period: "2017 - 2018", result: "GPA 3.42" },
+    { school: "Govt. Boys High School", degree: "SSC Science", period: "2014 - 2016", result: "GPA 4.72" }
   ],
   skills: [
-    { category: 'Languages', items: ['PHP', 'JavaScript', 'TypeScript'] },
-    { category: 'Frameworks', items: ['Laravel', 'CodeIgniter', 'Vue.js', 'jQuery'] },
-    { category: 'Frontend', items: ['HTML5', 'CSS3', 'Tailwind', 'Bootstrap'] },
+    { category: 'Languages', items: ['PHP', 'JavaScript'] },
+    { category: 'Frameworks', items: ['Laravel', 'CodeIgniter', 'jQuery'] },
+    { category: 'Frontend', items: ['HTML', 'CSS', 'Tailwind', 'Bootstrap'] },
     { category: 'Database', items: ['MySQL', 'MariaDB'] },
-    { category: 'Tools', items: ['Docker', 'Git', 'Linux', 'VPS'] }
+    { category: 'Tools', items: ['Git', 'Docker', 'Composer', 'Npm'] },
+    { category: 'Cloud/DevOps', items: ['VPS', 'Linux', 'Hosting'] },
+    { category: 'Concepts', items: ['MVC', 'REST API', 'DB Optimization'] }
   ],
   projects: [
-    { name: "HishabKitab ERP", desc: "Multi-company inventory and accounting system.", link: "https://hishabkitab.com/" },
-    { name: "ZindaPark Banking", desc: "Online banking system with financial year closing." },
-    { name: "Smart Invoice", desc: "Cloud-based invoicing system.", link: "https://smartinvoice.hishabkitab.com/" }
+    { name: "HishabKitab (ERP)", desc: "Inventory & accounting for multi-company operations.", link: "https://hishabkitab.com/" },
+    { name: "ZindaPark Banking", desc: "Online banking with financial year closing & interest calculation.", link: "" },
+    { name: "E-Recruitment", desc: "Platform with dynamic form generation & RBAC.", link: "" },
+    { name: "Smart Prescription", desc: "Appointment & patient management platform.", link: "https://smartprescription.hishabkitab.com/" },
+    { name: "Smart Invoice", desc: "Cloud-based invoicing with product & customer management.", link: "https://smartinvoice.hishabkitab.com/" }
   ],
-  volunteering: [
-    { name: "OpenTelemetry.io (Bangla)", role: "Maintainer" },
-    { name: "CNCF Glossary (Bangla)", role: "Contributor" },
-    { name: "Kubernetes Website", role: "Contributor" }
+  certifications: ["Python for Everybody (Coursera)", "Web App. for Everybody (Coursera)"],
+  awards: [{ title: "Project Showcasing - 2nd Runner-up", provider: "Sonargaon University", desc: "Project Thesis Manager cloud system." }],
+  volunteering: ["Maintainer – OpenTelemetry.io (Bangla)", "Contributor – CNCF Glossary (Bangla)", "Contributor – Kubernetes (Bangla)"],
+  languages: ["English (Professional)", "Bangla (Native)"],
+  references: [
+    { name: "Bulbul Ahamed", pos: "Dept. Head, CSE, SU" },
+    { name: "Subrata Mondol", pos: "MD, Adova Soft" }
   ]
 }
 </script>
@@ -47,133 +88,189 @@ const resumeData = {
         <span class="text-white tracking-tighter">SAJIB.DEV</span>
         <span class="text-hf-pink">/&gt;</span>
       </div>
-      <div class="flex gap-4">
-        <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition"><i class="fab fa-github"></i></a>
-        <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-xs hidden sm:block">Open PR / Contact</a>
+      <div class="flex items-center gap-6">
+        <div class="hidden lg:flex gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+           <a href="#exp" class="hover:text-hf-pink transition">Experience</a>
+           <a href="#projects" class="hover:text-hf-pink transition">Projects</a>
+           <a href="#edu" class="hover:text-hf-pink transition">Education</a>
+        </div>
+        <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-xs">Contact</a>
       </div>
     </header>
 
     <main class="w-full max-w-6xl px-6 py-12 space-y-24">
       
-      <!-- Hero / Introduction -->
+      <!-- Hero -->
       <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div class="lg:col-span-7 space-y-6">
-          <div class="hf-badge text-hf-cyan">#HACKTOBERFEST_2024_THEME</div>
+          <div class="hf-badge text-hf-cyan">#HACKTOBERFEST_2024</div>
           <h1 class="text-5xl lg:text-7xl font-bold text-white tracking-tight leading-none">
-            Building the <br/>
-            <span class="hf-gradient-text">Open Web Ecosystem</span>
+            {{ resumeData.basics.name }}<br/>
+            <span class="hf-gradient-text text-3xl lg:text-5xl block mt-4">{{ resumeData.basics.headline }}</span>
           </h1>
-          <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
-            I'm <span class="text-white font-semibold">{{ resumeData.basics.name }}</span>, a {{ resumeData.basics.headline }} focused on scalable ERP systems and contributing to the global open-source community.
+          <p class="text-lg text-slate-400 max-w-2xl leading-relaxed">
+            {{ resumeData.summary }}
           </p>
-          <div class="flex flex-wrap gap-4 pt-4">
-            <span v-for="skill in ['Laravel', 'PHP', 'Vue.js', 'Docker', 'MySQL']" :key="skill" class="px-4 py-1.5 rounded-lg border border-hf-border bg-slate-900/50 text-xs font-mono text-hf-green">
-              {{ skill }}
-            </span>
+          <div class="flex flex-wrap gap-3 text-[10px] font-mono">
+            <div class="flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-800 text-slate-400">
+              <i class="fas fa-map-marker-alt text-hf-pink"></i> {{ resumeData.basics.location }}
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-800 text-slate-400">
+              <i class="fas fa-phone text-hf-green"></i> {{ resumeData.basics.phone }}
+            </div>
+            <div class="flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-800 text-slate-400">
+              <i class="fas fa-envelope text-hf-cyan"></i> {{ resumeData.basics.email }}
+            </div>
           </div>
         </div>
-        <div class="lg:col-span-5 flex justify-center relative">
-          <div class="absolute inset-0 bg-hf-pink opacity-20 blur-[100px] hf-glow rounded-full animate-pulse"></div>
+        <div class="lg:col-span-5 flex justify-center">
           <div class="relative group">
-            <div class="absolute -inset-2 bg-gradient-to-tr from-hf-pink to-hf-indigo opacity-30 rounded-2xl group-hover:rotate-6 transition-all duration-500"></div>
-            <img :src="resumeData.basics.profilePic" alt="Sajib" class="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border group-hover:grayscale-0 grayscale transition-all duration-500">
+            <div class="absolute -inset-4 bg-hf-pink opacity-10 blur-2xl group-hover:opacity-20 transition animate-pulse"></div>
+            <img :src="resumeData.basics.profilePic" class="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border grayscale hover:grayscale-0 transition-all duration-700">
           </div>
         </div>
       </section>
 
-      <!-- About / Pull Request Stats Style -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="hf-card p-8 md:col-span-2 flex flex-col justify-center">
-          <h2 class="text-xs font-bold text-hf-pink uppercase tracking-widest mb-4">// CONTRIBUTOR_SUMMARY</h2>
-          <p class="text-lg text-slate-300 leading-relaxed italic">
-            "{{ resumeData.summary }}"
-          </p>
+      <!-- Skills Matrix -->
+      <section>
+        <div class="hf-section-header">
+           <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+             <i class="fas fa-layer-group text-hf-pink"></i> Tech Matrix
+           </h2>
+           <div class="hf-line"></div>
         </div>
-        <div class="hf-card p-8 bg-gradient-to-br from-hf-indigo/20 to-transparent flex flex-col items-center justify-center text-center">
-          <div class="text-5xl font-bold text-white mb-2">3+</div>
-          <div class="text-xs font-bold text-hf-indigo uppercase tracking-widest">Years of Code Execution</div>
-          <div class="mt-6 flex gap-2">
-            <div class="w-2 h-2 rounded-full bg-hf-green animate-pulse"></div>
-            <span class="text-[10px] text-slate-500 font-mono">Status: Ready to Deploy</span>
-          </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+           <div v-for="skill in resumeData.skills" :key="skill.category" class="hf-card p-4 hover:bg-hf-pink/5 group">
+             <h3 class="text-[9px] font-bold text-hf-pink uppercase mb-3">{{ skill.category }}</h3>
+             <div class="space-y-1">
+               <div v-for="item in skill.items" :key="item" class="text-xs text-slate-400 group-hover:text-white transition">{{ item }}</div>
+             </div>
+           </div>
         </div>
       </section>
 
       <!-- Experience Timeline -->
-      <section>
+      <section id="exp">
         <div class="hf-section-header">
           <h2 class="text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-history text-hf-pink"></i> Contribution History
-          </h2>
-          <div class="hf-line"></div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div v-for="exp in resumeData.experience" :key="exp.company" class="hf-card p-6 group">
-            <div class="flex justify-between items-start mb-4">
-              <span class="text-[10px] font-bold text-hf-green font-mono">{{ exp.period }}</span>
-              <i class="fas fa-check-circle text-hf-indigo opacity-0 group-hover:opacity-100 transition"></i>
-            </div>
-            <h3 class="text-lg font-bold text-white mb-1">{{ exp.company }}</h3>
-            <p class="text-xs text-hf-pink font-semibold uppercase tracking-wider mb-4">{{ exp.role }}</p>
-            <div class="h-1 w-12 bg-hf-border rounded-full group-hover:w-full group-hover:bg-hf-pink transition-all duration-500"></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Project Matrix (Bento Style) -->
-      <section>
-        <div class="hf-section-header">
-          <h2 class="text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-code-branch text-hf-cyan"></i> Merged Projects
+            <i class="fas fa-code-branch text-hf-cyan"></i> Deployment History
           </h2>
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div v-for="proj in resumeData.projects" :key="proj.name" class="hf-card p-8 flex flex-col">
-            <div class="w-10 h-10 rounded-lg bg-slate-900 border border-hf-border flex items-center justify-center text-hf-pink mb-6">
-              <i class="fas fa-cube text-sm"></i>
+        <div class="space-y-6">
+          <div v-for="exp in resumeData.experience" :key="exp.company" class="hf-card p-8 group relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-hf-pink/5 -mr-16 -mt-16 rounded-full blur-2xl group-hover:bg-hf-pink/10 transition"></div>
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 relative z-10">
+               <div>
+                 <h3 class="text-xl font-bold text-white">{{ exp.company }}</h3>
+                 <p class="text-sm text-hf-cyan font-mono">{{ exp.role }}</p>
+               </div>
+               <span class="hf-badge text-hf-pink">{{ exp.period }}</span>
             </div>
-            <h3 class="text-xl font-bold text-white mb-3">{{ proj.name }}</h3>
-            <p class="text-sm text-slate-400 mb-8 leading-relaxed flex-grow">{{ proj.desc }}</p>
-            <a v-if="proj.link" :href="proj.link" target="_blank" class="text-xs font-bold text-hf-indigo hover:text-hf-pink flex items-center gap-2 transition uppercase tracking-widest">
-              View Deployment <i class="fas fa-external-link-alt"></i>
-            </a>
-            <span v-else class="text-[10px] font-bold text-slate-600 uppercase">Proprietary System</span>
+            <p class="text-sm text-slate-400 leading-relaxed max-w-4xl relative z-10">{{ exp.desc }}</p>
           </div>
         </div>
       </section>
 
-      <!-- Open Source / Volunteering -->
-      <section class="hf-card p-12 bg-gradient-to-r from-hf-pink/10 via-transparent to-hf-indigo/10 border-hf-pink/20">
-        <div class="text-center space-y-8">
-          <h2 class="text-3xl font-bold text-white">Community Contributions</h2>
-          <div class="flex flex-wrap justify-center gap-8">
-            <div v-for="vol in resumeData.volunteering" :key="vol.name" class="flex flex-col items-center gap-2 group">
-              <div class="w-2 h-2 rounded-full bg-hf-pink mb-2 group-hover:scale-150 transition"></div>
-              <span class="text-sm font-bold text-white tracking-tight">{{ vol.name }}</span>
-              <span class="text-[10px] font-mono text-slate-500 uppercase">{{ vol.role }}</span>
-            </div>
+      <!-- Projects -->
+      <section id="projects">
+        <div class="hf-section-header">
+          <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+            <i class="fas fa-terminal text-hf-green"></i> System Protocols
+          </h2>
+          <div class="hf-line from-hf-green/50"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div v-for="proj in resumeData.projects" :key="proj.name" class="hf-card p-8 border-l-4 border-l-hf-indigo hover:border-l-hf-pink transition-all">
+            <h3 class="text-xl font-bold text-white mb-2">{{ proj.name }}</h3>
+            <p class="text-sm text-slate-500 mb-6">{{ proj.desc }}</p>
+            <a v-if="proj.link" :href="proj.link" target="_blank" class="text-[10px] font-bold text-hf-indigo uppercase tracking-[0.2em] hover:text-hf-pink transition">
+              Establish Connection <i class="fas fa-external-link-alt ml-1"></i>
+            </a>
           </div>
         </div>
       </section>
+
+      <!-- Education & Awards -->
+      <section id="edu" class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <div>
+           <div class="hf-section-header mb-8">
+             <h2 class="text-xl font-bold text-white">Academic Path</h2>
+             <div class="hf-line from-hf-indigo/50"></div>
+           </div>
+           <div class="space-y-4">
+             <div v-for="edu in resumeData.education" :key="edu.school" class="p-6 bg-slate-900/30 border border-slate-800 rounded-xl">
+               <div class="flex justify-between items-baseline mb-2">
+                 <h4 class="font-bold text-white">{{ edu.degree }}</h4>
+                 <span class="text-[10px] text-hf-pink font-mono">{{ edu.period }}</span>
+               </div>
+               <p class="text-xs text-slate-500 mb-1">{{ edu.school }}</p>
+               <span class="text-[10px] font-bold text-hf-green">{{ edu.result }}</span>
+             </div>
+           </div>
+        </div>
+        <div>
+           <div class="hf-section-header mb-8">
+             <h2 class="text-xl font-bold text-white">Achievements</h2>
+             <div class="hf-line from-hf-green/50"></div>
+           </div>
+           <div class="space-y-6">
+              <div v-for="award in resumeData.awards" :key="award.title" class="hf-card p-6 border-hf-green/20">
+                <i class="fas fa-trophy text-hf-green mb-4 block"></i>
+                <h4 class="font-bold text-white mb-2">{{ award.title }}</h4>
+                <p class="text-xs text-slate-500">{{ award.desc }}</p>
+              </div>
+              <div class="grid grid-cols-2 gap-4">
+                <div v-for="cert in resumeData.certifications" :key="cert" class="p-4 bg-slate-900/50 border border-slate-800 rounded-lg text-[10px] text-slate-400">
+                  <i class="fas fa-certificate text-hf-indigo mr-2"></i> {{ cert }}
+                </div>
+              </div>
+           </div>
+        </div>
+      </section>
+
+      <!-- Extras & References -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-12">
+         <div class="md:col-span-2">
+            <div class="hf-section-header mb-8">
+              <h2 class="text-xl font-bold text-white">Open Source Ecosystem</h2>
+              <div class="hf-line"></div>
+            </div>
+            <div class="flex flex-wrap gap-4">
+              <div v-for="vol in resumeData.volunteering" :key="vol" class="px-6 py-4 bg-hf-indigo/5 border border-hf-indigo/20 rounded-2xl flex flex-col gap-1">
+                <span class="text-xs font-bold text-white">{{ vol }}</span>
+                <span class="text-[9px] text-slate-500 uppercase tracking-widest">Global Contributor</span>
+              </div>
+            </div>
+         </div>
+         <div>
+            <div class="hf-section-header mb-8">
+              <h2 class="text-xl font-bold text-white">References</h2>
+              <div class="hf-line"></div>
+            </div>
+            <div class="space-y-4">
+               <div v-for="ref in resumeData.references" :key="ref.name" class="p-4 border-l-2 border-l-hf-pink bg-slate-900/20">
+                 <h4 class="text-sm font-bold text-white">{{ ref.name }}</h4>
+                 <p class="text-[10px] text-slate-500">{{ ref.pos }}</p>
+               </div>
+            </div>
+         </div>
+      </section>
+
+      <!-- Declaration -->
+      <footer class="text-center space-y-4 pt-12 border-t border-slate-900">
+        <p class="text-[10px] text-slate-600 italic max-w-md mx-auto">
+          "I hereby declare that all the information furnished above is correct to the best of my belief. I am responsible for the authenticity of all the information."
+        </p>
+        <div class="font-mono text-[10px] text-hf-pink">Build: 1d68e1f // VERIFIED</div>
+      </footer>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full border-t border-hf-border py-12 mt-24">
-      <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-        <div class="font-mono text-xs text-slate-600 uppercase tracking-widest">
-          Build: 1d68e1f // sajib@adhikary.dev
-        </div>
-        <div class="flex gap-6">
-          <a v-for="social in resumeData.basics.socials" :key="social.name" :href="social.url" target="_blank" class="text-slate-600 hover:text-hf-pink transition">
-            <i :class="social.icon"></i>
-          </a>
-        </div>
-        <div class="text-[10px] font-bold text-hf-indigo uppercase tracking-widest">
-          © 2024 SAJIB_DEV // HACKTOBERFEST_THEME
-        </div>
-      </div>
+    <footer class="w-full bg-slate-950 py-12 border-t border-slate-900 mt-24">
+       <div class="max-w-6xl mx-auto px-6 text-center text-[10px] text-slate-700 uppercase tracking-[0.4em]">
+          Handcrafted with Vue 3 & Tailwind // Sajib Adhikary // 2024
+       </div>
     </footer>
   </div>
 </template>
