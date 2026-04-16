@@ -8,6 +8,8 @@ const resumeData = {
     location: "Agargaon, Dhaka",
     website: "https://hishabkitab.com/",
     profilePic: "https://storage.rxresu.me/clp9g04jwcp2k9hunw9ic54v9/pictures/clp9kq71300hxqo5qnzxexz40.jpg",
+    resumeUrl: "https://rxresu.me/sajibadhi/resume-of-sajib-adhikary",
+    linktreeUrl: "https://linktr.ee/sajibAdhi",
     socials: [
       { name: 'GitHub', url: 'https://github.com/sajibAdhi', icon: 'fab fa-github' },
       { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sajibadhi/', icon: 'fab fa-linkedin' }
@@ -121,9 +123,11 @@ const navItems = [
         <span class="text-white tracking-tighter">SAJIB.DEV</span>
         <span class="text-hf-pink">/&gt;</span>
       </div>
-      <div class="flex items-center gap-4">
-        <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition"><i class="fab fa-github"></i></a>
-        <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-xs px-4 py-2">Contact</a>
+      <div class="flex items-center gap-2 sm:gap-4">
+        <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 hidden sm:flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition" title="GitHub"><i class="fab fa-github"></i></a>
+        <a :href="resumeData.basics.linktreeUrl" target="_blank" class="hf-button text-[10px] sm:text-xs px-3 sm:px-4 py-2 !bg-hf-green !border-green-800">Links</a>
+        <a :href="resumeData.basics.resumeUrl" target="_blank" class="hf-button text-[10px] sm:text-xs px-3 sm:px-4 py-2 !bg-hf-pink !border-pink-800">CV</a>
+        <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-[10px] sm:text-xs px-3 sm:px-4 py-2">Contact</a>
       </div>
     </header>
 
