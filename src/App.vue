@@ -8,7 +8,7 @@ const resumeData = {
     location: "Agargaon, Dhaka",
     website: "https://hishabkitab.com/",
     profilePic: "https://storage.rxresu.me/clp9g04jwcp2k9hunw9ic54v9/pictures/clp9kq71300hxqo5qnzxexz40.jpg",
-    resumeUrl: "https://rxresu.me/sajibadhi/resume-of-sajib-adhikary",
+    resumeUrl: "/resume-of-sajib-adhikary.pdf",
     linktreeUrl: "https://linktr.ee/sajibAdhi",
     socials: [
       { name: 'GitHub', url: 'https://github.com/sajibAdhi', icon: 'fab fa-github' },
