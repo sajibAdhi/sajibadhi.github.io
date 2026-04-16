@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-mono: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
-  --font-sans: 'Inter', 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  --font-sans: 'Geist', 'Inter', 'Segoe UI', sans-serif;
   --color-hf-bg: #000000;
   --color-hf-card: #0d1117;
   --color-hf-pink: #ff79c6;

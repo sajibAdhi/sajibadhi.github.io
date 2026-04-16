@@ -118,10 +118,13 @@ const navItems = [
 
     <!-- Top Nav (Minimalist) -->
     <header id="home" class="w-full max-w-6xl px-6 py-6 flex justify-between items-center z-50">
-      <div class="font-mono text-xl font-bold flex items-center gap-2">
-        <span class="text-hf-pink">&lt;</span>
-        <span class="text-white tracking-tighter">SAJIB.DEV</span>
-        <span class="text-hf-pink">/&gt;</span>
+      <div class="flex items-center gap-3 group cursor-pointer">
+        <img src="/logo.svg" alt="Sajib Logo" class="w-10 h-10 rounded-xl shadow-2xl transition-transform group-hover:scale-110 duration-500">
+        <div class="font-mono text-xl font-black flex items-center gap-1.5 tracking-tighter">
+          <span class="text-hf-pink opacity-80">&lt;</span>
+          <span class="text-white">SAJIB.DEV</span>
+          <span class="text-hf-pink opacity-80">/&gt;</span>
+        </div>
       </div>
       <div class="flex items-center gap-2 sm:gap-4">
         <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 hidden sm:flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition" title="GitHub"><i class="fab fa-github"></i></a>
