@@ -30,20 +30,8 @@ const resumeData = {
     { 
       company: "Adova Soft", 
       role: "Software Engineer", 
-      period: "Dec 2022 - Nov 2023",
-      desc: "Built Institute Management System, Accounting/Inventory Software, and POS applications with sales tracking."
-    },
-    { 
-      company: "Independent", 
-      role: "Web Developer", 
-      period: "Jul 2020 - Nov 2022",
-      desc: "Worked on E-Recruitment Systems, Co-operative Microfinance, and Smart Prescription systems."
-    },
-    { 
-      company: "Freelance", 
-      role: "Programmer", 
-      period: "Oct 2019 - Jun 2020",
-      desc: "Developed Shop Management Application with inventory and sales features."
+      period: "Oct 2019 - Nov 2023",
+      desc: "Promoted from Programmer to Web Developer to Software Engineer. Developed Institute Management Systems, Accounting/Inventory Software, and POS applications. Contributed to E-Recruitment Systems, Co-operative Microfinance, and Smart Prescription systems."
     }
   ],
   education: [
@@ -76,24 +64,43 @@ const resumeData = {
     { name: "Subrata Mondol", pos: "MD, Adova Soft" }
   ]
 }
+
+const navItems = [
+  { label: 'Home', icon: 'fas fa-home', link: '#home' },
+  { label: 'Skills', icon: 'fas fa-layer-group', link: '#skills' },
+  { label: 'Experience', icon: 'fas fa-history', link: '#exp' },
+  { label: 'Projects', icon: 'fas fa-code-branch', link: '#projects' },
+  { label: 'Education', icon: 'fas fa-graduation-cap', link: '#edu' },
+  { label: 'Community', icon: 'fas fa-users', link: '#oss' }
+]
 </script>
 
 <template>
-  <div class="min-h-screen hf-grid-bg flex flex-col items-center">
+  <div class="min-h-screen hf-grid-bg flex flex-col items-center selection:bg-hf-pink selection:text-white relative scroll-smooth">
     
-    <!-- Top Nav -->
-    <header class="w-full max-w-6xl px-6 py-6 flex justify-between items-center z-50">
+    <!-- Floating Right Sidebar Navigation -->
+    <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col gap-4">
+      <div v-for="item in navItems" :key="item.label" class="group relative flex items-center justify-end">
+        <!-- Tooltip -->
+        <span class="absolute right-14 px-3 py-1 bg-hf-card border border-hf-border text-white text-[10px] font-bold uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+          {{ item.label }}
+        </span>
+        <!-- Floating Button -->
+        <a :href="item.link" class="w-12 h-12 flex items-center justify-center bg-hf-card border border-hf-border rounded-xl text-slate-400 hover:text-hf-pink hover:border-hf-pink transition-all hf-glow group-hover:scale-110">
+          <i :class="item.icon" class="text-sm"></i>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Top Nav (Minimalist) -->
+    <header id="home" class="w-full max-w-6xl px-6 py-6 flex justify-between items-center z-50">
       <div class="font-mono text-xl font-bold flex items-center gap-2">
         <span class="text-hf-pink">&lt;</span>
         <span class="text-white tracking-tighter">SAJIB.DEV</span>
         <span class="text-hf-pink">/&gt;</span>
       </div>
-      <div class="flex items-center gap-6">
-        <div class="hidden lg:flex gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
-           <a href="#exp" class="hover:text-hf-pink transition">Experience</a>
-           <a href="#projects" class="hover:text-hf-pink transition">Projects</a>
-           <a href="#edu" class="hover:text-hf-pink transition">Education</a>
-        </div>
+      <div class="flex items-center gap-4">
+        <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition"><i class="fab fa-github"></i></a>
         <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-xs">Contact</a>
       </div>
     </header>
@@ -132,7 +139,7 @@ const resumeData = {
       </section>
 
       <!-- Skills Matrix -->
-      <section>
+      <section id="skills">
         <div class="hf-section-header">
            <h2 class="text-2xl font-bold text-white flex items-center gap-3">
              <i class="fas fa-layer-group text-hf-pink"></i> Tech Matrix
@@ -230,7 +237,7 @@ const resumeData = {
       </section>
 
       <!-- Extras & References -->
-      <section class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <section id="oss" class="grid grid-cols-1 md:grid-cols-3 gap-12">
          <div class="md:col-span-2">
             <div class="hf-section-header mb-8">
               <h2 class="text-xl font-bold text-white">Open Source Ecosystem</h2>
@@ -277,4 +284,8 @@ const resumeData = {
 
 <style>
 @import './style.css';
+
+html {
+  scroll-behavior: smooth;
+}
 </style>
