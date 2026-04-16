@@ -1,18 +1,26 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg-grad" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#162033"/>
-      <stop offset="1" stop-color="#0A0F1A"/>
+    <linearGradient id="bg-grad" x1="7" y1="5" x2="57" y2="59" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111827"/>
+      <stop offset="0.55" stop-color="#090E18"/>
+      <stop offset="1" stop-color="#05070D"/>
+    </linearGradient>
+    <linearGradient id="edge-grad" x1="10" y1="9" x2="54" y2="55" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF79C6" stop-opacity="0.45"/>
+      <stop offset="0.55" stop-color="#6366F1" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#8BE9FD" stop-opacity="0.38"/>
     </linearGradient>
     <linearGradient id="accent-grad" x1="25" y1="17" x2="40" y2="46" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#7DD3FC"/>
-      <stop offset="1" stop-color="#2563EB"/>
+      <stop offset="0" stop-color="#FF79C6"/>
+      <stop offset="0.55" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#8BE9FD"/>
     </linearGradient>
   </defs>
   <rect x="3" y="3" width="58" height="58" rx="16" fill="url(#bg-grad)"/>
-  <rect x="3" y="3" width="58" height="58" rx="16" stroke="#E2E8F0" stroke-opacity="0.1" stroke-width="1.5"/>
+  <rect x="3" y="3" width="58" height="58" rx="16" stroke="url(#edge-grad)" stroke-width="1.5"/>
   <path d="M20 23C20 19 23 16 27 16H39" stroke="#F8FAFC" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M39 16H27C23 16 20 19 20 23C20 27 23 30 27 30H34C38 30 42 33 42 37C42 41 38 44 34 44H22" stroke="#F8FAFC" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M26 44L33 22L40 44" stroke="url(#accent-grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M29 36H37" stroke="#7DD3FC" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M29 36H37" stroke="url(#accent-grad)" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="48" cy="16" r="2.5" fill="#8BE9FD"/>
 </svg>
