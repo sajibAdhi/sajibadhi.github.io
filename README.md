@@ -1,43 +1,130 @@
-### Hi there, I'm **Sajib Adhikary**, **Software Engineer** from Bangladesh.
+# Sajib Adhikary Portfolio
 
-[![Visitor](https://komarev.com/ghpvc/?username=sajibAdhi)](#)
-[![Followers](https://img.shields.io/github/followers/sajibAdhi?label=followers&style=social)](#)
-[![wakatime](https://wakatime.com/badge/user/eb4a2b8a-5057-4204-aea3-7efc263f563b.svg)](https://wakatime.com/@eb4a2b8a-5057-4204-aea3-7efc263f563b)
+Personal portfolio site built with Vue 3, Vite, TypeScript, and Tailwind CSS v4. The site presents professional summary, experience, projects, education, open source activity, and links to contact and resume assets.
 
+## Stack
 
+- Vue 3
+- Vite
+- TypeScript
+- Tailwind CSS v4
+- Vitest
+- Vue Test Utils
 
+## Features
 
-<!-- Holopin Board -->
-[![@sajibadhi's Holopin board](https://holopin.me/sajibadhi)](https://holopin.io/@sajibadhi)
+- Responsive portfolio layout for desktop and mobile
+- Custom cyber/dev themed branding and favicon
+- Local resume PDF served from `public/`
+- Hero CTA actions for `Links`, `CV`, and `Contact`
+- GitHub Pages deployment via GitHub Actions
+- Basic component smoke tests
 
-### Talking about Personal Stuffs:
-  - I’m currently working as **Software Engineer @Ambala IT**
-  - An active contributor to open-source projects **cncf/glossary** and **kubernetes/website**.
-  - Excited to create open-source projects.
-  - I’m currently focused on **PHP (Laravel)**, **JavaScript (Vue)**, **Docker**, and **Generative AI**.
-  - You can reach me at <a href="mailto:tosajibadhi@gmail.com">tosajibadhi@gmail.com</a>
+## Project Structure
 
+```text
+.
+|-- .github/workflows/deploy.yml
+|-- public/
+|   |-- favicon.svg
+|   |-- logo.svg
+|   `-- resume-of-sajib-adhikary.pdf
+|-- src/
+|   |-- App.vue
+|   |-- App.test.ts
+|   |-- main.ts
+|   `-- style.css
+|-- package.json
+`-- vitest.config.ts
+```
 
-<div>
-    <img src="https://github-readme-stats.vercel.app/api?username=sajibAdhi&show_icons=true&count_private=true" height="178" />
-    <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=sajibAdhi&layout=compact" height="178" />
-    <img src="https://github-readme-streak-stats.herokuapp.com/?user=sajibAdhi&layout=compact" height="178" alt="Sajib Adhikary Contributions" /> 
-</div>
+## Getting Started
 
-<!-- Technology Section  -->
+Requirements:
 
-| Section | Technology |
-|---------|------------|
-| Actively Working | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" height="30px" width="30px" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="30px" width="30px" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" height="30px" width="30px" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" height="30px" width="30px" /> |
-| Frontend Frameworks | <img src="https://raw.githubusercontent.com/devicons/devicon/v2.16.0/icons/tailwindcss/tailwindcss-original.svg" height="30px" width="30px" /> <img src="https://raw.githubusercontent.com/devicons/devicon/v2.16.0/icons/bootstrap/bootstrap-original.svg" height="30px" width="30px" /> <img src="https://raw.githubusercontent.com/devicons/devicon/v2.16.0/icons/jquery/jquery-original-wordmark.svg" height="30px" width="30px" /> |
-| Backend Frameworks | <img src="https://raw.githubusercontent.com/devicons/devicon/v2.16.0/icons/laravel/laravel-original.svg" height="30px" width="30px" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/codeigniter/codeigniter-plain-wordmark.svg" height="30px" width="30px" /> |
-| Database | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg" height="30px" width="30px" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mariadb/mariadb-original-wordmark.svg" height="30px" width="30px" /> |
-| DevOps & Tools | <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original-wordmark.svg" height="30px" width="30px" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="30px" width="30px" /> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" height="30px" width="30px" /> |
+- Node.js 22 or newer
+- npm
 
+Install dependencies:
 
-### Let's connect!
-<p>
-    <a href="https://www.linkedin.com/in/sajibadhi/" target="blank"><img align="left" alt="Sajib Adhikary's LinkedIn" width="50px" src="https://raw.githubusercontent.com/devicons/devicon/v2.16.0/icons/linkedin/linkedin-original.svg" /> </a>
-    <a href="https://github.com/sajibAdhi" target="blank"><img align="left" alt="Sajib Adhikary's GitHub" width="50px" src="https://raw.githubusercontent.com/devicons/devicon/v2.16.0/icons/github/github-original.svg" /></a>
-    <a href="mailto:tosajibadhi@gmail.com" target="blank"><img align="left" alt="Sajib Adhikary's Email" width="50px" src="https://raw.githubusercontent.com/devicons/devicon/v2.16.0/icons/google/google-original.svg" /></a>
-</p>
+```bash
+npm install
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+## Testing
+
+Run tests once:
+
+```bash
+npm test
+```
+
+Run tests in watch mode:
+
+```bash
+npm run test:watch
+```
+
+Current tests cover:
+
+- App render smoke check
+- Presence of primary CTA actions
+- Local resume link wiring
+
+## Resume Asset
+
+The `CV` button points to a local PDF:
+
+```text
+public/resume-of-sajib-adhikary.pdf
+```
+
+If you replace the resume file, keep the same filename or update `resumeUrl` in `src/App.vue`.
+
+## Deployment
+
+Deployment is handled by GitHub Actions in `.github/workflows/deploy.yml`.
+
+On every push to `main`, the workflow:
+
+1. Installs dependencies with `npm ci`
+2. Runs tests with `npm test`
+3. Builds the site with `npm run build`
+4. Deploys `dist/` to GitHub Pages
+
+## Customization
+
+Main content lives in `src/App.vue`, including:
+
+- personal summary
+- experience
+- education
+- projects
+- certifications
+- volunteering
+- references
+- external links
+
+Theme styling and reusable visual tokens live in `src/style.css`.
+
+## License
+
+This project is for personal portfolio use.
