@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-
 const resumeData = {
   basics: {
     name: "Sajib Adhikary",
-    headline: "System Intelligence Engineer",
+    headline: "Software Engineer",
     email: "tosajibadhi@gmail.com",
     profilePic: "https://storage.rxresu.me/clp9g04jwcp2k9hunw9ic54v9/pictures/clp9kq71300hxqo5qnzxexz40.jpg",
     socials: [
@@ -13,200 +11,173 @@ const resumeData = {
       { name: 'Website', url: 'https://hishabkitab.com/', icon: 'fas fa-globe' }
     ]
   },
-  summary: "Software Engineer with 3+ years of experience in developing scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Specialized in backend intelligence and database optimization.",
+  summary: "Software Engineer with 3+ years of experience in developing scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Specialized in building high-performance applications and optimizing database architectures.",
   experience: [
-    { company: "Ambala IT", role: "Software Engineer", period: "2024-PRESENT", status: "Active" },
-    { company: "Ranks ITT", role: "Software Engineer", period: "2023-2024", status: "Archived" },
-    { company: "Adova Soft", role: "Software Engineer", period: "2022-2023", status: "Archived" }
+    { company: "Ambala IT", role: "Software Engineer", period: "Jul 2024 - Present" },
+    { company: "Ranks ITT", role: "Software Engineer", period: "Dec 2023 - Jul 2024" },
+    { company: "Adova Soft", role: "Software Engineer", period: "Dec 2022 - Nov 2023" }
   ],
   skills: [
+    { category: 'Languages', items: ['PHP', 'JavaScript', 'TypeScript'] },
     { category: 'Frameworks', items: ['Laravel', 'CodeIgniter', 'Vue.js', 'jQuery'] },
-    { category: 'Core Stack', items: ['PHP', 'JavaScript', 'TypeScript', 'MySQL'] },
-    { category: 'DevOps', items: ['Docker', 'Linux', 'VPS', 'Git'] }
+    { category: 'Frontend', items: ['HTML5', 'CSS3', 'Tailwind', 'Bootstrap'] },
+    { category: 'Database', items: ['MySQL', 'MariaDB'] },
+    { category: 'Tools', items: ['Docker', 'Git', 'Linux', 'VPS'] }
   ],
   projects: [
-    { name: "HishabKitab ERP", type: "Intelligence Core", complexity: "High" },
-    { name: "ZindaPark Banking", type: "Financial Protocol", complexity: "High" },
-    { name: "Smart Invoice", type: "Cloud Logic", complexity: "Medium" }
+    { name: "HishabKitab ERP", desc: "Multi-company inventory and accounting system.", link: "https://hishabkitab.com/" },
+    { name: "ZindaPark Banking", desc: "Online banking system with financial year closing." },
+    { name: "Smart Invoice", desc: "Cloud-based invoicing system.", link: "https://smartinvoice.hishabkitab.com/" }
+  ],
+  volunteering: [
+    { name: "OpenTelemetry.io (Bangla)", role: "Maintainer" },
+    { name: "CNCF Glossary (Bangla)", role: "Contributor" },
+    { name: "Kubernetes Website", role: "Contributor" }
   ]
 }
-
-const systemLog = ref(['>> INITIALIZING SYSTEM...', '>> LOADING NEURAL DATASET...', '>> ACCESS GRANTED.'])
-const activeNode = ref('OVERVIEW')
-
-onMounted(() => {
-  setInterval(() => {
-    const logs = ['ENCRYPTING PACKETS...', 'OPTIMIZING QUERY LOGS...', 'SYNCING DATA NODES...', 'MONITORING UPTIME...']
-    systemLog.value.push(`>> ${logs[Math.floor(Math.random() * logs.length)]}`)
-    if (systemLog.value.length > 5) systemLog.value.shift()
-  }, 4000)
-})
 </script>
 
 <template>
-  <div class="min-h-screen neural-grid flex flex-col items-center justify-center p-4 md:p-8 font-sans overflow-x-hidden">
+  <div class="min-h-screen hf-grid-bg flex flex-col items-center">
     
-    <!-- Background Decor -->
-    <div class="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-      <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyber-indigo opacity-10 blur-[120px]"></div>
-      <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyber-purple opacity-10 blur-[120px]"></div>
-    </div>
+    <!-- Top Nav -->
+    <header class="w-full max-w-6xl px-6 py-6 flex justify-between items-center z-50">
+      <div class="font-mono text-xl font-bold flex items-center gap-2">
+        <span class="text-hf-pink">&lt;</span>
+        <span class="text-white tracking-tighter">SAJIB.DEV</span>
+        <span class="text-hf-pink">/&gt;</span>
+      </div>
+      <div class="flex gap-4">
+        <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition"><i class="fab fa-github"></i></a>
+        <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-xs hidden sm:block">Open PR / Contact</a>
+      </div>
+    </header>
 
-    <!-- HUD Interface Wrapper -->
-    <div class="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-6 animate-fade-in relative">
+    <main class="w-full max-w-6xl px-6 py-12 space-y-24">
       
-      <!-- Scanline FX -->
-      <div class="fixed top-0 left-0 w-full h-screen pointer-events-none opacity-5 z-50">
-        <div class="w-full h-[2px] bg-cyber-accent shadow-[0_0_20px_var(--color-cyber-accent)] animate-scan"></div>
-      </div>
-
-      <!-- Left Panel: Core Identification -->
-      <div class="lg:col-span-4 space-y-6">
-        <div class="glass-panel p-8 data-glow relative overflow-hidden group">
-          <div class="absolute top-0 right-0 w-24 h-24 bg-cyber-accent opacity-5 -mr-12 -mt-12 rounded-full blur-2xl"></div>
-          
-          <div class="flex flex-col items-center text-center">
-            <div class="relative mb-6">
-              <div class="absolute -inset-1 bg-gradient-to-tr from-cyber-accent to-cyber-purple opacity-20 rounded-full blur animate-pulse"></div>
-              <img :src="resumeData.basics.profilePic" class="w-48 h-48 rounded-full object-cover border-2 border-cyber-accent/30 relative z-10 grayscale group-hover:grayscale-0 transition-all duration-700">
-            </div>
-            
-            <span class="hud-label">Subject ID: SAJIB_0430</span>
-            <h1 class="text-3xl font-bold text-white mb-2 glitch-text">{{ resumeData.basics.name }}</h1>
-            <p class="text-sm font-mono text-cyber-accent tracking-widest uppercase mb-6">{{ resumeData.basics.headline }}</p>
-            
-            <div class="grid grid-cols-3 gap-4 w-full border-t border-white/5 pt-6">
-              <a v-for="social in resumeData.basics.socials" :key="social.name" :href="social.url" target="_blank" class="flex flex-col items-center gap-2 group/icon">
-                <i :class="social.icon" class="text-xl text-slate-500 group-hover/icon:text-cyber-accent transition"></i>
-                <span class="text-[8px] uppercase tracking-tighter text-slate-600">{{ social.name }}</span>
-              </a>
-            </div>
+      <!-- Hero / Introduction -->
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <div class="hf-badge text-hf-cyan">#HACKTOBERFEST_2024_THEME</div>
+          <h1 class="text-5xl lg:text-7xl font-bold text-white tracking-tight leading-none">
+            Building the <br/>
+            <span class="hf-gradient-text">Open Web Ecosystem</span>
+          </h1>
+          <p class="text-xl text-slate-400 max-w-2xl leading-relaxed">
+            I'm <span class="text-white font-semibold">{{ resumeData.basics.name }}</span>, a {{ resumeData.basics.headline }} focused on scalable ERP systems and contributing to the global open-source community.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-4">
+            <span v-for="skill in ['Laravel', 'PHP', 'Vue.js', 'Docker', 'MySQL']" :key="skill" class="px-4 py-1.5 rounded-lg border border-hf-border bg-slate-900/50 text-xs font-mono text-hf-green">
+              {{ skill }}
+            </span>
           </div>
         </div>
-
-        <!-- Skill Matrix -->
-        <div class="glass-panel p-6 border-l-4 border-l-cyber-accent">
-          <div class="module-header">
-            <div class="header-dot"></div>
-            <span class="hud-label m-0">Intelligence Matrix</span>
-          </div>
-          <div class="space-y-6">
-            <div v-for="skill in resumeData.skills" :key="skill.category">
-              <h3 class="text-[10px] font-bold text-white/40 mb-3 uppercase tracking-widest">{{ skill.category }}</h3>
-              <div class="flex flex-wrap gap-2">
-                <span v-for="item in skill.items" :key="item" class="px-2 py-1 bg-cyber-accent/5 border border-cyber-accent/10 rounded text-[10px] text-cyber-accent font-mono uppercase">
-                  {{ item }}
-                </span>
-              </div>
-            </div>
+        <div class="lg:col-span-5 flex justify-center relative">
+          <div class="absolute inset-0 bg-hf-pink opacity-20 blur-[100px] hf-glow rounded-full animate-pulse"></div>
+          <div class="relative group">
+            <div class="absolute -inset-2 bg-gradient-to-tr from-hf-pink to-hf-indigo opacity-30 rounded-2xl group-hover:rotate-6 transition-all duration-500"></div>
+            <img :src="resumeData.basics.profilePic" alt="Sajib" class="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border group-hover:grayscale-0 grayscale transition-all duration-500">
           </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Main Panel: Neural Feed -->
-      <div class="lg:col-span-8 space-y-6">
-        
-        <!-- Summary Dashboard -->
-        <div class="glass-panel p-8 relative overflow-hidden">
-          <div class="absolute top-4 right-4 text-[40px] font-bold text-white/[0.02] font-mono select-none">DATA_OVERVIEW</div>
-          <div class="module-header">
-            <div class="header-dot"></div>
-            <span class="hud-label m-0">System Summary</span>
-          </div>
-          <p class="text-lg text-slate-400 font-light leading-relaxed max-w-2xl italic">
+      <!-- About / Pull Request Stats Style -->
+      <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="hf-card p-8 md:col-span-2 flex flex-col justify-center">
+          <h2 class="text-xs font-bold text-hf-pink uppercase tracking-widest mb-4">// CONTRIBUTOR_SUMMARY</h2>
+          <p class="text-lg text-slate-300 leading-relaxed italic">
             "{{ resumeData.summary }}"
           </p>
         </div>
+        <div class="hf-card p-8 bg-gradient-to-br from-hf-indigo/20 to-transparent flex flex-col items-center justify-center text-center">
+          <div class="text-5xl font-bold text-white mb-2">3+</div>
+          <div class="text-xs font-bold text-hf-indigo uppercase tracking-widest">Years of Code Execution</div>
+          <div class="mt-6 flex gap-2">
+            <div class="w-2 h-2 rounded-full bg-hf-green animate-pulse"></div>
+            <span class="text-[10px] text-slate-500 font-mono">Status: Ready to Deploy</span>
+          </div>
+        </div>
+      </section>
 
-        <!-- Experience Logs -->
-        <div class="grid md:grid-cols-2 gap-6">
-          <div v-for="exp in resumeData.experience" :key="exp.company" class="glass-panel p-6 border-t border-white/5 hover:border-cyber-accent/30 transition-all group">
+      <!-- Experience Timeline -->
+      <section>
+        <div class="hf-section-header">
+          <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+            <i class="fas fa-history text-hf-pink"></i> Contribution History
+          </h2>
+          <div class="hf-line"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div v-for="exp in resumeData.experience" :key="exp.company" class="hf-card p-6 group">
             <div class="flex justify-between items-start mb-4">
-              <div>
-                <span class="hud-label">{{ exp.period }}</span>
-                <h3 class="text-white font-bold">{{ exp.company }}</h3>
-                <p class="text-xs text-cyber-accent/80 font-mono">{{ exp.role }}</p>
-              </div>
-              <div class="px-2 py-1 rounded text-[8px] border" :class="exp.status === 'Active' ? 'bg-green-500/10 border-green-500/20 text-green-400' : 'bg-slate-500/10 border-slate-500/20 text-slate-400'">
-                {{ exp.status }}
-              </div>
+              <span class="text-[10px] font-bold text-hf-green font-mono">{{ exp.period }}</span>
+              <i class="fas fa-check-circle text-hf-indigo opacity-0 group-hover:opacity-100 transition"></i>
             </div>
-            <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden">
-              <div class="h-full bg-cyber-accent" :style="{ width: exp.status === 'Active' ? '100%' : '60%' }"></div>
+            <h3 class="text-lg font-bold text-white mb-1">{{ exp.company }}</h3>
+            <p class="text-xs text-hf-pink font-semibold uppercase tracking-wider mb-4">{{ exp.role }}</p>
+            <div class="h-1 w-12 bg-hf-border rounded-full group-hover:w-full group-hover:bg-hf-pink transition-all duration-500"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Project Matrix (Bento Style) -->
+      <section>
+        <div class="hf-section-header">
+          <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+            <i class="fas fa-code-branch text-hf-cyan"></i> Merged Projects
+          </h2>
+          <div class="hf-line from-hf-cyan/50"></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div v-for="proj in resumeData.projects" :key="proj.name" class="hf-card p-8 flex flex-col">
+            <div class="w-10 h-10 rounded-lg bg-slate-900 border border-hf-border flex items-center justify-center text-hf-pink mb-6">
+              <i class="fas fa-cube text-sm"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-3">{{ proj.name }}</h3>
+            <p class="text-sm text-slate-400 mb-8 leading-relaxed flex-grow">{{ proj.desc }}</p>
+            <a v-if="proj.link" :href="proj.link" target="_blank" class="text-xs font-bold text-hf-indigo hover:text-hf-pink flex items-center gap-2 transition uppercase tracking-widest">
+              View Deployment <i class="fas fa-external-link-alt"></i>
+            </a>
+            <span v-else class="text-[10px] font-bold text-slate-600 uppercase">Proprietary System</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Open Source / Volunteering -->
+      <section class="hf-card p-12 bg-gradient-to-r from-hf-pink/10 via-transparent to-hf-indigo/10 border-hf-pink/20">
+        <div class="text-center space-y-8">
+          <h2 class="text-3xl font-bold text-white">Community Contributions</h2>
+          <div class="flex flex-wrap justify-center gap-8">
+            <div v-for="vol in resumeData.volunteering" :key="vol.name" class="flex flex-col items-center gap-2 group">
+              <div class="w-2 h-2 rounded-full bg-hf-pink mb-2 group-hover:scale-150 transition"></div>
+              <span class="text-sm font-bold text-white tracking-tight">{{ vol.name }}</span>
+              <span class="text-[10px] font-mono text-slate-500 uppercase">{{ vol.role }}</span>
             </div>
           </div>
         </div>
+      </section>
 
-        <!-- Project Protocol Grid -->
-        <div class="glass-panel p-8">
-          <div class="module-header">
-            <div class="header-dot"></div>
-            <span class="hud-label m-0">Operational Protocols (Projects)</span>
-          </div>
-          <div class="grid md:grid-cols-3 gap-4">
-            <div v-for="proj in resumeData.projects" :key="proj.name" class="p-4 bg-black/40 border border-white/5 rounded-xl hover:bg-cyber-accent/5 transition-all">
-              <div class="text-[8px] text-cyber-accent font-bold mb-1 tracking-widest">{{ proj.type }}</div>
-              <h4 class="text-white font-bold text-sm mb-4">{{ proj.name }}</h4>
-              <div class="flex items-center gap-1">
-                <div v-for="i in 3" :key="i" class="w-1.5 h-1.5 rounded-full" :class="i <= (proj.complexity === 'High' ? 3 : 2) ? 'bg-cyber-accent' : 'bg-white/10'"></div>
-                <span class="text-[8px] text-slate-500 ml-2 uppercase tracking-tighter">Complexity</span>
-              </div>
-            </div>
-          </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-hf-border py-12 mt-24">
+      <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="font-mono text-xs text-slate-600 uppercase tracking-widest">
+          Build: 1d68e1f // sajib@adhikary.dev
         </div>
-
-        <!-- Bottom Status Bar -->
-        <div class="bg-black/80 backdrop-blur px-6 py-4 border border-white/10 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-4 w-full md:w-auto overflow-hidden">
-            <div class="animate-pulse w-2 h-2 rounded-full bg-cyber-accent"></div>
-            <div class="font-mono text-[10px] text-slate-500 whitespace-nowrap overflow-hidden">
-              <span v-for="(log, i) in systemLog" :key="i" class="mr-4 transition-all duration-500">{{ log }}</span>
-            </div>
-          </div>
-          <div class="flex gap-4 items-center">
-             <div class="text-[10px] text-slate-500 uppercase font-bold">Latency: <span class="text-green-500">12ms</span></div>
-             <div class="text-[10px] text-slate-500 uppercase font-bold">Sync: <span class="text-cyber-accent">Complete</span></div>
-          </div>
+        <div class="flex gap-6">
+          <a v-for="social in resumeData.basics.socials" :key="social.name" :href="social.url" target="_blank" class="text-slate-600 hover:text-hf-pink transition">
+            <i :class="social.icon"></i>
+          </a>
         </div>
-
+        <div class="text-[10px] font-bold text-hf-indigo uppercase tracking-widest">
+          © 2024 SAJIB_DEV // HACKTOBERFEST_THEME
+        </div>
       </div>
-    </div>
-
-    <!-- Footer Meta -->
-    <div class="mt-12 text-[10px] font-mono text-slate-600 uppercase tracking-[0.4em] flex flex-col items-center gap-4">
-      <div class="w-24 h-[1px] bg-white/10"></div>
-      © 2026 Sajib Intelligence Systems // Dhaka Division
-    </div>
-
+    </footer>
   </div>
 </template>
 
 <style>
 @import './style.css';
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fade-in 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
-
-@keyframes scan {
-  from { transform: translateY(0); }
-  to { transform: translateY(100vh); }
-}
-
-.animate-scan {
-  animation: scan 10s linear infinite;
-}
 </style>
