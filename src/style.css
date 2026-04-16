@@ -3,63 +3,59 @@
 @theme {
   --font-mono: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
   --font-sans: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --color-ide-bg: #1e1e1e;
-  --color-ide-sidebar: #252526;
-  --color-ide-activity: #333333;
-  --color-ide-status: #007acc;
-  --color-ide-border: #333333;
-  --color-ide-text: #cccccc;
-  --color-ide-keyword: #569cd6;
-  --color-ide-string: #ce9178;
-  --color-ide-comment: #6a9955;
+  --color-cyber-bg: #030712;
+  --color-cyber-border: rgba(99, 102, 241, 0.2);
+  --color-cyber-accent: #00f5ff; /* Neon Cyan */
+  --color-cyber-purple: #7000ff; /* Neon Purple */
+  --color-cyber-indigo: #6366f1;
 }
 
 @layer base {
   body {
-    @apply bg-[#050505] text-ide-text font-sans selection:bg-indigo-500/30 overflow-hidden;
+    @apply bg-cyber-bg text-slate-300 font-sans selection:bg-cyber-accent/30 selection:text-white;
   }
 }
 
-.ide-window {
-  @apply bg-ide-bg border border-ide-border rounded-lg shadow-2xl flex flex-col h-screen overflow-hidden;
+.neural-grid {
+  background-image: 
+    linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-.activity-bar {
-  @apply bg-ide-activity w-12 flex flex-col items-center py-4 gap-6 flex-shrink-0;
+.glass-panel {
+  @apply bg-slate-900/40 backdrop-blur-xl border border-white/5 rounded-2xl shadow-2xl;
 }
 
-.sidebar {
-  @apply bg-ide-sidebar w-64 border-r border-ide-border hidden md:flex flex-col flex-shrink-0 overflow-y-auto;
+.data-glow {
+  box-shadow: 0 0 20px -5px rgba(0, 245, 255, 0.2);
 }
 
-.editor-area {
-  @apply flex-grow flex flex-col min-w-0 bg-[#1e1e1e];
+.scanline {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--color-cyber-accent), transparent);
+  animation: scan 3s linear infinite;
+  opacity: 0.2;
 }
 
-.editor-tab {
-  @apply px-4 py-2 text-xs border-r border-ide-border flex items-center gap-2 cursor-pointer bg-[#2d2d2d] text-slate-400;
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(1000%); }
 }
 
-.editor-tab.active {
-  @apply bg-ide-bg text-white border-t-2 border-t-indigo-500;
+.glitch-text {
+  text-shadow: 2px 0 var(--color-cyber-purple), -2px 0 var(--color-cyber-accent);
 }
 
-.status-bar {
-  @apply bg-ide-status h-6 px-4 flex items-center justify-between text-[10px] text-white font-medium flex-shrink-0;
+.module-header {
+  @apply flex items-center gap-3 mb-6;
 }
 
-.file-tree-item {
-  @apply px-4 py-1 flex items-center gap-2 text-xs hover:bg-[#2a2d2e] cursor-pointer text-slate-400;
+.header-dot {
+  @apply w-1.5 h-1.5 rounded-full bg-cyber-accent animate-pulse;
 }
 
-.file-tree-item.active {
-  @apply bg-[#37373d] text-white;
-}
-
-.code-line {
-  @apply flex gap-4 text-sm leading-6 hover:bg-[#2a2d2e] px-4 font-mono;
-}
-
-.line-number {
-  @apply w-8 text-right text-slate-600 select-none;
+.hud-label {
+  @apply text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold mb-1 block;
 }
