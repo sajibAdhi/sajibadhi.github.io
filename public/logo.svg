@@ -1,40 +1,18 @@
 <svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="prism-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ff0080" />
-      <stop offset="50%" style="stop-color:#7928ca" />
-      <stop offset="100%" style="stop-color:#00f2ff" />
+    <linearGradient id="bg-grad" x1="88" y1="64" x2="424" y2="448" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#162033"/>
+      <stop offset="1" stop-color="#0A0F1A"/>
     </linearGradient>
-    <style>
-      .monogram { 
-        font-family: 'Geist Mono', 'Inter', 'Segoe UI', monospace; 
-        font-weight: 900; 
-        font-size: 240px; 
-        letter-spacing: -15px;
-      }
-      .cursor {
-        fill: #ff0080;
-      }
-    </style>
+    <linearGradient id="accent-grad" x1="212" y1="132" x2="332" y2="364" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7DD3FC"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
   </defs>
-
-  <!-- High-End Rounded Base -->
-  <rect width="512" height="512" rx="140" fill="#000000"/>
-  
-  <!-- Subtle Glass Polish -->
-  <rect x="10" y="10" width="492" height="492" rx="130" stroke="white" stroke-width="1" opacity="0.1"/>
-
-  <!-- Typographic Mark -->
-  <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" class="monogram">
-    <tspan fill="white">S</tspan><tspan fill="url(#prism-grad)">A</tspan>
-  </text>
-
-  <!-- The Developer Accent (Underscore) -->
-  <rect x="216" y="360" width="80" height="20" rx="4" class="cursor">
-    <animate attributeName="opacity" values="1;0;1" dur="1.5s" repeatCount="indefinite" />
-  </rect>
-
-  <!-- Corner Precision Accents -->
-  <circle cx="60" cy="60" r="4" fill="white" opacity="0.2"/>
-  <circle cx="452" cy="452" r="4" fill="white" opacity="0.2"/>
+  <rect x="24" y="24" width="464" height="464" rx="112" fill="url(#bg-grad)"/>
+  <rect x="24" y="24" width="464" height="464" rx="112" stroke="#E2E8F0" stroke-opacity="0.08" stroke-width="2"/>
+  <path d="M166 178C166 146 191 124 226 124H316" stroke="#F8FAFC" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M316 124H226C191 124 166 146 166 178C166 210 191 232 226 232H286C321 232 346 255 346 288C346 321 321 344 286 344H196" stroke="#F8FAFC" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M220 344L276 168L332 344" stroke="url(#accent-grad)" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M242 280H310" stroke="#7DD3FC" stroke-width="18" stroke-linecap="round"/>
 </svg>
