@@ -117,20 +117,21 @@ const navItems = [
     </nav>
 
     <!-- Top Nav (Minimalist) -->
-    <header id="home" class="w-full max-w-6xl px-6 py-6 flex justify-between items-center z-50">
-      <div class="flex items-center gap-3 group cursor-pointer">
-        <img src="/logo.svg" alt="Sajib Logo" class="w-10 h-10 rounded-xl shadow-2xl transition-transform group-hover:scale-110 duration-500">
-        <div class="font-mono text-xl font-black flex items-center gap-1.5 tracking-tighter">
+    <header id="home" class="w-full max-w-6xl px-6 py-6 flex flex-col items-start gap-4 sm:flex-row sm:justify-between sm:items-center z-50">
+      <div class="flex items-center gap-3 group cursor-pointer min-w-0">
+        <img src="/logo.svg" alt="Sajib Logo" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-2xl transition-transform group-hover:scale-110 duration-500 shrink-0">
+        <div class="font-mono text-base sm:text-xl font-black flex items-center gap-1 sm:gap-1.5 tracking-tight sm:tracking-tighter min-w-0">
           <span class="text-hf-pink opacity-80">&lt;</span>
-          <span class="text-white">SAJIB.DEV</span>
+          <span class="text-white truncate">SAJIB.DEV</span>
           <span class="text-hf-pink opacity-80">/&gt;</span>
         </div>
       </div>
-      <div class="flex items-center gap-2 sm:gap-4">
+      <div class="flex flex-wrap items-center justify-start sm:justify-end gap-3 w-full sm:w-auto">
         <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 hidden sm:flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition" title="GitHub"><i class="fab fa-github"></i></a>
-        <a :href="resumeData.basics.linktreeUrl" target="_blank" class="hf-button text-[10px] sm:text-xs px-3 sm:px-4 py-2 !bg-hf-green !border-green-800">Links</a>
-        <a :href="resumeData.basics.resumeUrl" target="_blank" class="hf-button text-[10px] sm:text-xs px-3 sm:px-4 py-2 !bg-hf-pink !border-pink-800">CV</a>
-        <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-[10px] sm:text-xs px-3 sm:px-4 py-2">Contact</a>
+        <a :href="'mailto:' + resumeData.basics.email" class="hf-cta hf-cta--ghost">
+          <i class="fas fa-envelope text-[11px]"></i>
+          <span>Contact</span>
+        </a>
       </div>
     </header>
 
@@ -146,6 +147,16 @@ const navItems = [
           <p class="text-base lg:text-lg text-slate-400 max-w-2xl leading-relaxed mx-auto lg:mx-0">
             {{ resumeData.summary }}
           </p>
+          <div class="flex flex-wrap justify-center lg:justify-start gap-3">
+            <a :href="resumeData.basics.linktreeUrl" target="_blank" class="hf-cta hf-cta--accent">
+              <i class="fas fa-link text-[11px]"></i>
+              <span>Links</span>
+            </a>
+            <a :href="resumeData.basics.resumeUrl" target="_blank" class="hf-cta hf-cta--primary">
+              <i class="fas fa-file-lines text-[11px]"></i>
+              <span>CV</span>
+            </a>
+          </div>
           <div class="flex flex-wrap justify-center lg:justify-start gap-3 text-[10px] font-mono">
             <div class="flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-800 text-slate-400">
               <i class="fas fa-map-marker-alt text-hf-pink"></i> {{ resumeData.basics.location }}
