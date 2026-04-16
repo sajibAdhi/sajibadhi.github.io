@@ -88,9 +88,9 @@ const navItems = [
 </script>
 
 <template>
-  <div class="min-h-screen hf-grid-bg flex flex-col items-center selection:bg-hf-pink selection:text-white relative scroll-smooth">
+  <div class="min-h-screen hf-grid-bg flex flex-col items-center selection:bg-hf-pink selection:text-white relative scroll-smooth pb-20 lg:pb-0">
     
-    <!-- Floating Right Sidebar Navigation -->
+    <!-- Floating Right Sidebar Navigation (Desktop) -->
     <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col gap-4">
       <div v-for="item in navItems" :key="item.label" class="group relative flex items-center justify-end">
         <!-- Tooltip -->
@@ -104,6 +104,16 @@ const navItems = [
       </div>
     </nav>
 
+    <!-- Mobile Bottom Navigation -->
+    <nav class="fixed bottom-4 left-4 right-4 z-[100] lg:hidden">
+      <div class="bg-hf-card/80 backdrop-blur-lg border border-hf-border rounded-2xl flex items-center justify-around p-2 shadow-2xl">
+        <a v-for="item in navItems" :key="item.label" :href="item.link" class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-hf-pink transition-colors">
+          <i :class="item.icon" class="text-lg"></i>
+          <span class="text-[8px] font-bold uppercase tracking-tighter">{{ item.label }}</span>
+        </a>
+      </div>
+    </nav>
+
     <!-- Top Nav (Minimalist) -->
     <header id="home" class="w-full max-w-6xl px-6 py-6 flex justify-between items-center z-50">
       <div class="font-mono text-xl font-bold flex items-center gap-2">
@@ -113,24 +123,24 @@ const navItems = [
       </div>
       <div class="flex items-center gap-4">
         <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition"><i class="fab fa-github"></i></a>
-        <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-xs">Contact</a>
+        <a :href="'mailto:' + resumeData.basics.email" class="hf-button text-xs px-4 py-2">Contact</a>
       </div>
     </header>
 
-    <main class="w-full max-w-6xl px-6 py-12 space-y-24">
+    <main class="w-full max-w-6xl px-6 py-8 lg:py-12 space-y-16 lg:space-y-24">
       
       <!-- Hero -->
-      <section class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-7 space-y-6">
-          <div class="hf-badge text-hf-cyan">#HACKTOBERFEST_2024</div>
-          <h1 class="text-5xl lg:text-7xl font-bold text-white tracking-tight leading-none">
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="hf-badge text-hf-cyan mx-auto lg:mx-0 w-fit">#HACKTOBERFEST_2024</div>
+          <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight leading-none">
             {{ resumeData.basics.name }}<br/>
-            <span class="hf-gradient-text text-3xl lg:text-5xl block mt-4">{{ resumeData.basics.headline }}</span>
+            <span class="hf-gradient-text text-2xl sm:text-3xl lg:text-5xl block mt-4">{{ resumeData.basics.headline }}</span>
           </h1>
-          <p class="text-lg text-slate-400 max-w-2xl leading-relaxed">
+          <p class="text-base lg:text-lg text-slate-400 max-w-2xl leading-relaxed mx-auto lg:mx-0">
             {{ resumeData.summary }}
           </p>
-          <div class="flex flex-wrap gap-3 text-[10px] font-mono">
+          <div class="flex flex-wrap justify-center lg:justify-start gap-3 text-[10px] font-mono">
             <div class="flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-800 text-slate-400">
               <i class="fas fa-map-marker-alt text-hf-pink"></i> {{ resumeData.basics.location }}
             </div>
@@ -142,10 +152,10 @@ const navItems = [
             </div>
           </div>
         </div>
-        <div class="lg:col-span-5 flex justify-center">
+        <div class="lg:col-span-5 flex justify-center order-first lg:order-last">
           <div class="relative group">
             <div class="absolute -inset-4 bg-hf-pink opacity-10 blur-2xl group-hover:opacity-20 transition animate-pulse"></div>
-            <img :src="resumeData.basics.profilePic" class="w-64 h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border grayscale hover:grayscale-0 transition-all duration-700">
+            <img :src="resumeData.basics.profilePic" class="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border grayscale hover:grayscale-0 transition-all duration-700">
           </div>
         </div>
       </section>
@@ -153,12 +163,12 @@ const navItems = [
       <!-- Skills Matrix -->
       <section id="skills">
         <div class="hf-section-header">
-           <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
              <i class="fas fa-layer-group text-hf-pink"></i> Tech Matrix
            </h2>
            <div class="hf-line"></div>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
            <div v-for="skill in resumeData.skills" :key="skill.category" class="hf-card p-4 hover:bg-hf-pink/5 group">
              <h3 class="text-[9px] font-bold text-hf-pink uppercase mb-3">{{ skill.category }}</h3>
              <div class="space-y-1">
@@ -171,20 +181,20 @@ const navItems = [
       <!-- Experience Timeline -->
       <section id="exp">
         <div class="hf-section-header">
-          <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+          <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
             <i class="fas fa-code-branch text-hf-cyan"></i> Deployment History
           </h2>
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
         <div class="space-y-6">
-          <div v-for="exp in resumeData.experience" :key="exp.company" class="hf-card p-8 group relative overflow-hidden">
+          <div v-for="exp in resumeData.experience" :key="exp.company" class="hf-card p-6 lg:p-8 group relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-hf-pink/5 -mr-16 -mt-16 rounded-full blur-2xl group-hover:bg-hf-pink/10 transition"></div>
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 relative z-10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 relative z-10">
                <div>
-                 <h3 class="text-xl font-bold text-white">{{ exp.company }}</h3>
-                 <p class="text-sm text-hf-cyan font-mono">{{ exp.role }}</p>
+                 <h3 class="text-lg lg:text-xl font-bold text-white">{{ exp.company }}</h3>
+                 <p class="text-xs lg:text-sm text-hf-cyan font-mono">{{ exp.role }}</p>
                </div>
-               <span class="hf-badge text-hf-pink">{{ exp.period }}</span>
+               <span class="hf-badge text-hf-pink w-fit">{{ exp.period }}</span>
             </div>
             <p class="text-sm text-slate-400 leading-relaxed max-w-4xl relative z-10">{{ exp.desc }}</p>
           </div>
@@ -194,14 +204,14 @@ const navItems = [
       <!-- Projects -->
       <section id="projects">
         <div class="hf-section-header">
-          <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+          <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
             <i class="fas fa-terminal text-hf-green"></i> System Protocols
           </h2>
           <div class="hf-line from-hf-green/50"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div v-for="proj in resumeData.projects" :key="proj.name" class="hf-card p-8 border-l-4 border-l-hf-indigo hover:border-l-hf-pink transition-all">
-            <h3 class="text-xl font-bold text-white mb-2">{{ proj.name }}</h3>
+          <div v-for="proj in resumeData.projects" :key="proj.name" class="hf-card p-6 lg:p-8 border-l-4 border-l-hf-indigo hover:border-l-hf-pink transition-all">
+            <h3 class="text-lg lg:text-xl font-bold text-white mb-2">{{ proj.name }}</h3>
             <p class="text-sm text-slate-500 mb-6">{{ proj.desc }}</p>
             <a v-if="proj.link" :href="proj.link" target="_blank" class="text-[10px] font-bold text-hf-indigo uppercase tracking-[0.2em] hover:text-hf-pink transition">
               Establish Connection <i class="fas fa-external-link-alt ml-1"></i>
@@ -214,13 +224,13 @@ const navItems = [
       <section id="edu" class="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
            <div class="hf-section-header mb-8">
-             <h2 class="text-xl font-bold text-white">Academic Path</h2>
+             <h2 class="text-lg lg:text-xl font-bold text-white">Academic Path</h2>
              <div class="hf-line from-hf-indigo/50"></div>
            </div>
            <div class="space-y-4">
-             <div v-for="edu in resumeData.education" :key="edu.school" class="p-6 bg-slate-900/30 border border-slate-800 rounded-xl">
+             <div v-for="edu in resumeData.education" :key="edu.school" class="p-4 lg:p-6 bg-slate-900/30 border border-slate-800 rounded-xl">
                <div class="flex justify-between items-baseline mb-2">
-                 <h4 class="font-bold text-white">{{ edu.degree }}</h4>
+                 <h4 class="font-bold text-white text-sm lg:text-base">{{ edu.degree }}</h4>
                  <span class="text-[10px] text-hf-pink font-mono">{{ edu.period }}</span>
                </div>
                <p class="text-xs text-slate-500 mb-1">{{ edu.school }}</p>
@@ -230,16 +240,16 @@ const navItems = [
         </div>
         <div>
            <div class="hf-section-header mb-8">
-             <h2 class="text-xl font-bold text-white">Achievements</h2>
+             <h2 class="text-lg lg:text-xl font-bold text-white">Achievements</h2>
              <div class="hf-line from-hf-green/50"></div>
            </div>
            <div class="space-y-6">
               <div v-for="award in resumeData.awards" :key="award.title" class="hf-card p-6 border-hf-green/20">
                 <i class="fas fa-trophy text-hf-green mb-4 block"></i>
-                <h4 class="font-bold text-white mb-2">{{ award.title }}</h4>
+                <h4 class="font-bold text-white mb-2 text-sm lg:text-base">{{ award.title }}</h4>
                 <p class="text-xs text-slate-500">{{ award.desc }}</p>
               </div>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div v-for="cert in resumeData.certifications" :key="cert" class="p-4 bg-slate-900/50 border border-slate-800 rounded-lg text-[10px] text-slate-400">
                   <i class="fas fa-certificate text-hf-indigo mr-2"></i> {{ cert }}
                 </div>
@@ -252,11 +262,11 @@ const navItems = [
       <section id="oss" class="grid grid-cols-1 md:grid-cols-3 gap-12">
          <div class="md:col-span-2">
             <div class="hf-section-header mb-8">
-              <h2 class="text-xl font-bold text-white">Open Source Ecosystem</h2>
+              <h2 class="text-lg lg:text-xl font-bold text-white">Open Source Ecosystem</h2>
               <div class="hf-line"></div>
             </div>
             <div class="flex flex-wrap gap-4">
-              <div v-for="vol in resumeData.volunteering" :key="vol" class="px-6 py-4 bg-hf-indigo/5 border border-hf-indigo/20 rounded-2xl flex flex-col gap-1">
+              <div v-for="vol in resumeData.volunteering" :key="vol" class="px-6 py-4 bg-hf-indigo/5 border border-hf-indigo/20 rounded-2xl flex flex-col gap-1 w-full sm:w-auto">
                 <span class="text-xs font-bold text-white">{{ vol }}</span>
                 <span class="text-[9px] text-slate-500 uppercase tracking-widest">Global Contributor</span>
               </div>
@@ -264,7 +274,7 @@ const navItems = [
          </div>
          <div>
             <div class="hf-section-header mb-8">
-              <h2 class="text-xl font-bold text-white">References</h2>
+              <h2 class="text-lg lg:text-xl font-bold text-white">References</h2>
               <div class="hf-line"></div>
             </div>
             <div class="space-y-4">
@@ -286,8 +296,8 @@ const navItems = [
 
     </main>
 
-    <footer class="w-full bg-slate-950 py-12 border-t border-slate-900 mt-24">
-       <div class="max-w-6xl mx-auto px-6 text-center text-[10px] text-slate-700 uppercase tracking-[0.4em]">
+    <footer class="w-full bg-slate-950 py-12 border-t border-slate-900 mt-12 lg:mt-24">
+       <div class="max-w-6xl mx-auto px-6 text-center text-[8px] lg:text-[10px] text-slate-700 uppercase tracking-[0.2em] lg:tracking-[0.4em]">
           Handcrafted with Vue 3 & Tailwind // Sajib Adhikary // 2024
        </div>
     </footer>
