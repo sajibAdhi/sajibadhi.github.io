@@ -25,8 +25,9 @@ The design evolved through three major phases directed by the user:
 ### 4. Technical Refinement & Automation
 The AI performed complex engineering tasks to ensure production readiness:
 - **Dependency Management:** Resolved version conflicts between Tailwind v4 and PostCSS.
-- **CI/CD Configuration:** Wrote a custom **GitHub Actions** workflow (`deploy.yml`) for zero-touch deployment to GitHub Pages.
-- **Optimization:** Configured Vite's `base` path and TypeScript module resolution for correct asset loading on production.
+- **CI/CD Configuration:** Wrote and refined a custom **GitHub Actions** workflow (`deploy.yml`) using Node.js 22 and `npm ci` for zero-touch, reliable deployment to GitHub Pages.
+- **Optimization:** Configured Vite's `base` path and fixed asset resolution (e.g., favicon) for correct loading on production.
+- **Mobile Responsiveness:** Implemented a mobile-first navigation system and adaptive grid layouts to ensure a seamless experience across all device types.
 
 ## 🛠 Tools Used by the AI
 - **Vite:** For ultra-fast development and optimized production builds.

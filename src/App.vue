@@ -132,7 +132,6 @@ const navItems = [
       <!-- Hero -->
       <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-          <div class="hf-badge text-hf-cyan mx-auto lg:mx-0 w-fit">#HACKTOBERFEST_2024</div>
           <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight leading-none">
             {{ resumeData.basics.name }}<br/>
             <span class="hf-gradient-text text-2xl sm:text-3xl lg:text-5xl block mt-4">{{ resumeData.basics.headline }}</span>
@@ -291,14 +290,14 @@ const navItems = [
         <p class="text-[10px] text-slate-600 italic max-w-md mx-auto">
           "I hereby declare that all the information furnished above is correct to the best of my belief. I am responsible for the authenticity of all the information."
         </p>
-        <div class="font-mono text-[10px] text-hf-pink">Build: 1d68e1f // VERIFIED</div>
+        <div class="font-mono text-[10px] text-hf-pink">Build: v1.0.0-final // VERIFIED</div>
       </footer>
 
     </main>
 
     <footer class="w-full bg-slate-950 py-12 border-t border-slate-900 mt-12 lg:mt-24">
        <div class="max-w-6xl mx-auto px-6 text-center text-[8px] lg:text-[10px] text-slate-700 uppercase tracking-[0.2em] lg:tracking-[0.4em]">
-          Handcrafted with Vue 3 & Tailwind // Sajib Adhikary // 2024
+          Handcrafted with Vue 3 & Tailwind // Sajib Adhikary
        </div>
     </footer>
   </div>
