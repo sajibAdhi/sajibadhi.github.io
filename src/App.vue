@@ -30,8 +30,20 @@ const resumeData = {
     { 
       company: "Adova Soft", 
       role: "Software Engineer", 
-      period: "Oct 2019 - Nov 2023",
-      desc: "Promoted from Programmer to Web Developer to Software Engineer. Developed Institute Management Systems, Accounting/Inventory Software, and POS applications. Contributed to E-Recruitment Systems, Co-operative Microfinance, and Smart Prescription systems."
+      period: "Dec 2022 - Nov 2023",
+      desc: "Developed an Institute Management System for administrative automation. Built Accounting and Inventory Management Software, and a POS application."
+    },
+    { 
+      company: "Adova Soft", 
+      role: "Web Developer", 
+      period: "Jul 2020 - Nov 2022",
+      desc: "Contributed to the E-Recruitment System with multi-role access. Worked on Co-operative Microfinance Management and Smart Prescription systems."
+    },
+    { 
+      company: "Adova Soft", 
+      role: "Programmer", 
+      period: "Oct 2019 - Jun 2020",
+      desc: "Developed a Shop Management Application with inventory and sales features."
     }
   ],
   education: [
