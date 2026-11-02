@@ -1,0 +1,71 @@
+{
+  "introduction": "My career began while I was studying Computer Science and Engineering at Sonargaon University. I wanted to understand not only how software works, but how it can make everyday work easier for the people who rely on it. Since then, each role has taught me to take on a bigger part of that responsibility.",
+  "chapters": [
+    {
+      "company": "Sonargaon University",
+      "role": "B.Sc. in Computer Science & Engineering",
+      "period": "2019 - 2023",
+      "title": "Learning the foundations while building real software.",
+      "story": "At university, I built my computer science foundation and applied it through practical projects. My cloud-based thesis project, Project Thesis Manager, earned 2nd Runner-up at the university project showcase.",
+      "highlights": [
+        "Graduated with a B.Sc. in Computer Science & Engineering (CGPA 3.19).",
+        "Recognized for Project Thesis Manager at the university project showcase."
+      ],
+      "transitionToNext": {
+        "title": "I began applying what I learned before I graduated.",
+        "story": "While finishing my degree, I joined Adova Soft as a Web Developer. Working and studying side by side let me bring programming fundamentals into real product work—and bring the practical questions from work back to how I approached engineering.",
+        "skills": ["Programming fundamentals", "Project delivery", "Learning through practice"]
+      }
+    },
+    {
+      "company": "Adova Soft",
+      "role": "Web Developer",
+      "period": "Oct 2019 - Nov 2022",
+      "title": "I learned to start with the people and their problems.",
+      "story": "My first role put me close to the people using the software. Recruitment, community finance, and healthcare each came with different rules and workflows. I learned to listen, understand those details, and turn them into features people could actually use.",
+      "highlights": [
+        "Created an E-Recruitment system with dynamic forms for 500+ applicants per job posting.",
+        "Built a co-operative microfinance system serving 2,000+ members.",
+        "Developed a Smart Prescription system for 5 doctors and 300+ patients."
+      ],
+      "transitionToNext": {
+        "title": "Understanding the workflow led me to think about the whole system.",
+        "story": "Across those products, I learned to model real-world processes, support different user roles, and make features flexible without losing sight of the people using them. I carried that foundation into a larger challenge: connecting many business workflows in one platform.",
+        "skills": ["Workflow analysis", "Dynamic form design", "Role-based access", "Domain modeling"]
+      }
+    },
+    {
+      "company": "Adova Soft",
+      "role": "Software Engineer",
+      "period": "Dec 2022 - Jul 2024",
+      "title": "I grew from building features to shaping platforms.",
+      "story": "Working with a three-person team, I co-designed HishabKitab from scratch. Accounting, inventory, and lending had to work together, so I learned to think across modules and keep important business data consistent. The POS work brought a different lesson: the system had to keep up with the pace of real vendors.",
+      "highlights": [
+        "Co-designed HishabKitab, growing it to 15+ accounting, inventory, and loan modules.",
+        "Built a point-of-sale platform adopted by 50+ vendors, each processing 180+ transactions daily."
+      ],
+      "transitionToNext": {
+        "title": "The next step was applying that thinking at greater scale.",
+        "story": "Building connected business systems taught me to look beyond a feature: how data moves, where performance matters, and what happens when people depend on a workflow every day. At Ambala IT, I brought that perspective to financial and education products with much larger user bases.",
+        "skills": ["Modular system design", "Transaction workflows", "Database performance", "Operational reliability"]
+      }
+    },
+    {
+      "company": "Ambala IT",
+      "role": "Software Engineer",
+      "period": "Aug 2024 - Present",
+      "title": "Today, I build for scale—and help others grow.",
+      "story": "At Ambala IT, I work on products where reliability and speed matter to thousands of people. I take ownership of backend workflows and performance, and I share what I have learned through code reviews and mentoring. For me, good engineering means building dependable systems and helping the team behind them get stronger.",
+      "highlights": [
+        "Architected Mobile EMI services used by 60,000+ customers across 300,000+ installments.",
+        "Reduced high-volume report generation from 4 minutes to 30 seconds.",
+        "Led backend work on Shikkha Plus, serving 3,000+ active users, and mentored 4 junior engineers."
+      ]
+    }
+  ],
+  "closing": {
+    "title": "The thread through every chapter",
+    "story": "I keep coming back to the same questions: Who depends on this system? What would make their work simpler? How can we make it reliable as it grows? I bring that mindset—from understanding a workflow to improving a system and supporting the people who build it.",
+    "callToAction": "Have a meaningful problem to solve? Let’s talk."
+  }
+}

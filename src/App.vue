@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import careerStory from './data/career-story.json'
 
 const resumeData = {
   basics: {
@@ -18,26 +19,6 @@ const resumeData = {
     ]
   },
   summary: "Software Engineer with 6+ years of experience building scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Specializes in backend architecture, database design, and performance optimization for applications serving hundreds of users. Mentors 4 junior engineers, leads code reviews for a 5-person team, and promotes two-way knowledge-sharing to raise code quality and architectural standards.",
-  experience: [
-    { 
-      company: "Ambala IT", 
-      role: "Software Engineer", 
-      period: "Aug 2024 - Present",
-      desc: "Architected a Mobile EMI platform (MoMo EMI, Halalflex, OlalaPay) serving 60,000+ customers with 300,000+ installment transactions. Built device lock/unlock, payment-status, overdue, and early-payment workflows; optimized high-volume reports from 4 minutes to 30 seconds. Led backend development of Shikkha Plus, serving 3,000+ active users, implemented features for pre-recruitment and microfinance platforms, and mentored 4 junior engineers."
-    },
-    { 
-      company: "Adova Soft", 
-      role: "Software Engineer", 
-      period: "Dec 2022 - Jul 2024",
-      desc: "Co-designed HishabKitab, an accounting, inventory, and loan platform with 15+ modules. Built a POS adopted by 50+ vendors, processing 180+ transactions per vendor daily."
-    },
-    { 
-      company: "Adova Soft", 
-      role: "Web Developer", 
-      period: "Oct 2019 - Nov 2022",
-      desc: "Built an E-Recruitment system with a dynamic form builder for 500+ applicants per job posting, a co-operative microfinance system serving 2,000+ members, and a Smart Prescription system for 5 doctors and 300+ patients."
-    }
-  ],
   education: [
     { school: "Sonargaon University", degree: "B.Sc in CSE", period: "2019 - 2023", result: "CGPA 3.19" },
     { school: "Bcic College", degree: "HSC Science", period: "2017 - 2018", result: "GPA 3.42" },
@@ -80,29 +61,46 @@ const navItems = [
 ]
 
 const resumeRoot = ref<HTMLElement | null>(null)
+const activeStoryIndex = ref(0)
 let revealObserver: IntersectionObserver | undefined
+let storyObserver: IntersectionObserver | undefined
 
 onMounted(() => {
   const root = resumeRoot.value
+  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
 
-  if (!root || window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches || !('IntersectionObserver' in window)) {
+  if (!root || !('IntersectionObserver' in window)) {
     return
   }
 
-  revealObserver = new IntersectionObserver((entries, observer) => {
+  if (!reduceMotion) {
+    revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, { rootMargin: '0px 0px -48px 0px', threshold: 0 })
+    root.querySelectorAll('.resume-reveal').forEach((element) => revealObserver?.observe(element))
+    root.classList.add('resume-motion-ready')
+  }
+
+  storyObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible')
-        observer.unobserve(entry.target)
+        activeStoryIndex.value = Number((entry.target as HTMLElement).dataset.storyIndex)
       }
     })
-  }, { rootMargin: '0px 0px -48px 0px', threshold: 0 })
+  }, { rootMargin: '-140px 0px -140px 0px', threshold: 0 })
 
-  root.querySelectorAll('.resume-reveal').forEach((element) => revealObserver?.observe(element))
-  root.classList.add('resume-motion-ready')
+  root.querySelectorAll('.story-chapter').forEach((element) => storyObserver?.observe(element))
 })
 
-onBeforeUnmount(() => revealObserver?.disconnect())
+onBeforeUnmount(() => {
+  revealObserver?.disconnect()
+  storyObserver?.disconnect()
+})
 </script>
 
 <template>
@@ -211,25 +209,121 @@ onBeforeUnmount(() => revealObserver?.disconnect())
         </div>
       </section>
 
-      <!-- Experience Timeline -->
-      <section id="exp" class="resume-reveal">
+      <!-- Career story -->
+      <section
+        id="exp"
+        class="career-story"
+        :style="{ '--story-progress': `${(activeStoryIndex / (careerStory.chapters.length - 1)) * 100}%` }"
+      >
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-code-branch text-hf-cyan"></i> Deployment History
+            <i class="fas fa-code-branch text-hf-cyan"></i> The Journey
           </h2>
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
-        <div class="space-y-6">
-          <div v-for="exp in resumeData.experience" :key="`${exp.company}-${exp.period}`" class="hf-card resume-card resume-reveal p-6 lg:p-8 group relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-32 h-32 bg-hf-pink/5 -mr-16 -mt-16 rounded-full blur-2xl group-hover:bg-hf-pink/10 transition"></div>
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 relative z-10">
-               <div>
-                 <h3 class="text-lg lg:text-xl font-bold text-white">{{ exp.company }}</h3>
-                 <p class="text-xs lg:text-sm text-hf-cyan font-mono">{{ exp.role }}</p>
-               </div>
-               <span class="hf-badge text-hf-pink w-fit">{{ exp.period }}</span>
+        <p class="career-story__introduction">{{ careerStory.introduction }}</p>
+        <div class="career-story__layout">
+          <aside class="career-story__guide" aria-label="Career story progress">
+            <div class="career-story__guide-content">
+              <p class="career-story__eyebrow">A career in chapters</p>
+              <Transition name="story-swap" mode="out-in">
+                <div :key="activeStoryIndex">
+                  <p class="career-story__current-period">{{ careerStory.chapters[activeStoryIndex].period }}</p>
+                  <h3 class="career-story__current-title">{{ careerStory.chapters[activeStoryIndex].title }}</h3>
+                  <p class="career-story__current-company">
+                    {{ careerStory.chapters[activeStoryIndex].company }}
+                    <span>//</span>
+                    {{ careerStory.chapters[activeStoryIndex].role }}
+                  </p>
+                </div>
+              </Transition>
+              <nav class="career-story__progress" aria-label="Jump to a career chapter">
+                <span class="career-story__progress-track" aria-hidden="true">
+                  <span class="career-story__progress-fill"></span>
+                </span>
+                <a
+                  v-for="(chapter, index) in careerStory.chapters"
+                  :key="chapter.period"
+                  :href="`#story-chapter-${index}`"
+                  class="career-story__progress-step"
+                  :class="{ 'is-active': activeStoryIndex === index, 'is-complete': activeStoryIndex > index }"
+                  :aria-current="activeStoryIndex === index ? 'step' : undefined"
+                  :aria-label="`Chapter ${index + 1}: ${chapter.period}, ${chapter.company}`"
+                >
+                  <span class="career-story__progress-dot">{{ String(index + 1).padStart(2, '0') }}</span>
+                  <span class="career-story__progress-label">{{ chapter.period }}</span>
+                </a>
+              </nav>
+              <p class="career-story__scroll-prompt"><i class="fas fa-arrow-down" aria-hidden="true"></i> Scroll to continue</p>
             </div>
-            <p class="text-sm text-slate-400 leading-relaxed max-w-4xl relative z-10">{{ exp.desc }}</p>
+          </aside>
+
+          <div class="career-story__timeline">
+            <div
+              v-for="(chapter, index) in careerStory.chapters"
+              :key="chapter.period"
+              class="career-story__event"
+              :class="{ 'is-active': activeStoryIndex === index }"
+            >
+              <span class="career-story__event-node" aria-hidden="true">
+                <span>{{ String(index + 1).padStart(2, '0') }}</span>
+              </span>
+              <article
+                :id="`story-chapter-${index}`"
+                :data-story-index="index"
+                class="story-chapter"
+                :class="{ 'is-active': activeStoryIndex === index }"
+              >
+                <div class="story-chapter__topline">
+                  <span>{{ chapter.period }}</span>
+                  <span>{{ chapter.company }}</span>
+                </div>
+                <div class="story-chapter__body">
+                  <p class="story-chapter__role">
+                    <i class="fas fa-terminal" aria-hidden="true"></i>
+                    {{ chapter.role }}
+                  </p>
+                  <h3>{{ chapter.title }}</h3>
+                  <p class="story-chapter__narrative">{{ chapter.story }}</p>
+                </div>
+                <div class="story-chapter__impact">
+                  <p class="story-chapter__impact-label">The work and its impact</p>
+                  <p
+                    v-for="(highlight, highlightIndex) in chapter.highlights"
+                    :key="highlight"
+                    class="story-chapter__highlight"
+                    :style="{ '--story-delay': `${highlightIndex * 100}ms` }"
+                  >
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    {{ highlight }}
+                  </p>
+                </div>
+              </article>
+              <div
+                v-if="chapter.transitionToNext"
+                class="career-transition"
+                aria-label="How this experience carried into the next chapter"
+              >
+                <div class="career-transition__content">
+                  <p class="career-transition__eyebrow">What I carried forward</p>
+                  <h3>{{ chapter.transitionToNext.title }}</h3>
+                  <p class="career-transition__story">{{ chapter.transitionToNext.story }}</p>
+                  <ul class="career-transition__skills">
+                    <li v-for="skill in chapter.transitionToNext.skills" :key="skill">{{ skill }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <footer class="career-story__ending">
+              <span class="career-story__ending-mark" aria-hidden="true"><i class="fas fa-arrow-up-right-from-square"></i></span>
+              <p class="career-transition__eyebrow">The story continues</p>
+              <h3>{{ careerStory.closing.title }}</h3>
+              <p class="career-transition__story">{{ careerStory.closing.story }}</p>
+              <a :href="'mailto:' + resumeData.basics.email" class="career-story__contact">
+                {{ careerStory.closing.callToAction }}
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </footer>
           </div>
         </div>
       </section>
