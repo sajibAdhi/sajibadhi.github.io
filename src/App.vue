@@ -109,10 +109,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="resumeRoot" class="min-h-screen hf-grid-bg flex flex-col items-center selection:bg-hf-pink selection:text-white relative scroll-smooth pb-20 lg:pb-0">
+  <div ref="resumeRoot" class="min-h-screen hf-grid-bg flex flex-col items-center selection:bg-hf-pink selection:text-white relative scroll-smooth pb-20 xl:pb-0">
     
     <!-- Floating Right Sidebar Navigation (Desktop) -->
-    <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col gap-4">
+    <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-[100] hidden xl:flex flex-col gap-4">
       <div v-for="item in navItems" :key="item.label" class="group relative flex items-center justify-end">
         <!-- Tooltip -->
         <span class="absolute right-14 px-3 py-1 bg-hf-card border border-hf-border text-white text-[10px] font-bold uppercase tracking-widest rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
@@ -126,7 +126,7 @@ onBeforeUnmount(() => {
     </nav>
 
     <!-- Mobile Bottom Navigation -->
-    <nav class="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-[100] lg:hidden">
+    <nav class="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-[100] xl:hidden">
       <div class="mobile-bottom-nav__links bg-hf-card/80 backdrop-blur-lg border border-hf-border rounded-2xl flex items-center justify-around p-2 shadow-2xl">
         <a v-for="item in navItems" :key="item.label" :href="item.link" :aria-label="item.label" class="mobile-bottom-nav__link flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-hf-pink transition-colors">
           <i :class="item.icon" class="text-lg"></i>
@@ -175,7 +175,7 @@ onBeforeUnmount(() => {
             </a>
             <a :href="resumeData.basics.resumeUrl" target="_blank" class="hf-cta hf-cta--primary">
               <i class="fas fa-file-lines text-[11px]"></i>
-              <span>CV</span>
+              <span>Resume</span>
             </a>
           </div>
           <div class="flex flex-wrap justify-center lg:justify-start gap-3 text-[10px] font-mono">
