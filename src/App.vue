@@ -5,9 +5,9 @@ const resumeData = {
     headline: "Software Engineer",
     email: "tosajibadhi@gmail.com",
     phone: "+8801400593322",
-    location: "Agargaon, Dhaka",
+    location: "Shere Bangla Nagar, Agargaon, Dhaka",
     website: "https://hishabkitab.com/",
-    profilePic: "https://storage.rxresu.me/clp9g04jwcp2k9hunw9ic54v9/pictures/clp9kq71300hxqo5qnzxexz40.jpg",
+    profilePic: "/sajib-adhikary.jpg",
     resumeUrl: "/resume-of-sajib-adhikary.pdf",
     linktreeUrl: "https://linktr.ee/sajibAdhi",
     socials: [
@@ -15,37 +15,25 @@ const resumeData = {
       { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sajibadhi/', icon: 'fab fa-linkedin' }
     ]
   },
-  summary: "Software Engineer with 3+ years of experience in developing scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Strong expertise in backend development, database design, and system architecture. Experienced in building high-performance applications, optimizing database queries, and delivering solutions used by hundreds of users in real-world environments.",
+  summary: "Software Engineer with 6+ years of experience building scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Specializes in backend architecture, database design, and performance optimization for applications serving hundreds of users. Mentors 4 junior engineers, leads code reviews for a 5-person team, and promotes two-way knowledge-sharing to raise code quality and architectural standards.",
   experience: [
     { 
       company: "Ambala IT", 
       role: "Software Engineer", 
-      period: "Jul 2024 - Present",
-      desc: "Developed Educational Institute Management System (500+ users), Pre-Recruitment System, Microfinance workflows, and Mobile Money EMI System."
-    },
-    { 
-      company: "Ranks ITT", 
-      role: "Software Engineer", 
-      period: "Dec 2023 - Jul 2024",
-      desc: "Developed Vehicle Management and Bill Management applications, contributed to CRM and internal data management solutions."
+      period: "Aug 2024 - Present",
+      desc: "Architected a Mobile EMI platform (MoMo EMI, Halalflex, OlalaPay) serving 60,000+ customers with 300,000+ installment transactions. Built device lock/unlock, payment-status, overdue, and early-payment workflows; optimized high-volume reports from 4 minutes to 30 seconds. Led backend development of Shikkha Plus, serving 3,000+ active users, implemented features for pre-recruitment and microfinance platforms, and mentored 4 junior engineers."
     },
     { 
       company: "Adova Soft", 
       role: "Software Engineer", 
-      period: "Dec 2022 - Nov 2023",
-      desc: "Developed an Institute Management System for administrative automation. Built Accounting and Inventory Management Software, and a POS application."
+      period: "Dec 2022 - Jul 2024",
+      desc: "Co-designed HishabKitab, an accounting, inventory, and loan platform with 15+ modules. Built a POS adopted by 50+ vendors, processing 180+ transactions per vendor daily."
     },
     { 
       company: "Adova Soft", 
       role: "Web Developer", 
-      period: "Jul 2020 - Nov 2022",
-      desc: "Contributed to the E-Recruitment System with multi-role access. Worked on Co-operative Microfinance Management and Smart Prescription systems."
-    },
-    { 
-      company: "Adova Soft", 
-      role: "Programmer", 
-      period: "Oct 2019 - Jun 2020",
-      desc: "Developed a Shop Management Application with inventory and sales features."
+      period: "Oct 2019 - Nov 2022",
+      desc: "Built an E-Recruitment system with a dynamic form builder for 500+ applicants per job posting, a co-operative microfinance system serving 2,000+ members, and a Smart Prescription system for 5 doctors and 300+ patients."
     }
   ],
   education: [
@@ -57,17 +45,18 @@ const resumeData = {
     { category: 'Languages', items: ['PHP', 'JavaScript'] },
     { category: 'Frameworks', items: ['Laravel', 'CodeIgniter', 'jQuery'] },
     { category: 'Frontend', items: ['HTML', 'CSS', 'Tailwind', 'Bootstrap'] },
-    { category: 'Database', items: ['MySQL', 'MariaDB'] },
-    { category: 'Tools', items: ['Git', 'Docker', 'Composer', 'Npm'] },
+    { category: 'Database', items: ['MySQL', 'MariaDB', 'PostgreSQL'] },
+    { category: 'Tools', items: ['Git', 'Docker', 'Composer', 'Npm', 'Pest'] },
     { category: 'Cloud/DevOps', items: ['VPS', 'Linux', 'Hosting'] },
-    { category: 'Concepts', items: ['MVC', 'REST API', 'DB Optimization'] }
+    { category: 'Concepts', items: ['MVC Architecture', 'REST APIs', 'Database Optimization', 'Authentication & Authorization'] },
+    { category: 'Engineering', items: ['System Design', 'API Design', 'Performance Profiling', 'Caching & Queues', 'Code Review & Mentoring'] }
   ],
   projects: [
-    { name: "HishabKitab (ERP)", desc: "Inventory & accounting for multi-company operations.", link: "https://hishabkitab.com/" },
-    { name: "ZindaPark Banking", desc: "Online banking with financial year closing & interest calculation.", link: "" },
-    { name: "E-Recruitment", desc: "Platform with dynamic form generation & RBAC.", link: "" },
-    { name: "Smart Prescription", desc: "Appointment & patient management platform.", link: "https://smartprescription.hishabkitab.com/" },
-    { name: "Smart Invoice", desc: "Cloud-based invoicing with product & customer management.", link: "https://smartinvoice.hishabkitab.com/" }
+    { name: "Mobile EMI", desc: "Automated device lock/unlock and installment workflows serving 60,000+ customers and 300,000+ transactions. Optimized reporting from 4 minutes to 30 seconds.", link: "" },
+    { name: "Shikkha Plus", desc: "Educational institute management system serving 3,000+ active users, with admissions, fees, attendance, exams, and results management.", link: "https://shikkhaplus.com/" },
+    { name: "HishabKitab (ERP)", desc: "Accounting, inventory, and loan management across 15+ modules, including ledgers, balance sheets, and transaction logging.", link: "https://hishabkitab.com/" },
+    { name: "E-Recruitment", desc: "Recruitment platform with applicant, admin, and verifier panels, dynamic job forms, and role-based access control.", link: "" },
+    { name: "ZindaPark Banking", desc: "Online banking with year-end closing, interest calculations, low-bandwidth performance, and queue-based task scheduling.", link: "" }
   ],
   certifications: ["Python for Everybody (Coursera)", "Web App. for Everybody (Coursera)"],
   awards: [{ title: "Project Showcasing - 2nd Runner-up", provider: "Sonargaon University", desc: "Project Thesis Manager cloud system." }],
@@ -185,7 +174,7 @@ const navItems = [
            </h2>
            <div class="hf-line"></div>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
            <div v-for="skill in resumeData.skills" :key="skill.category" class="hf-card p-4 hover:bg-hf-pink/5 group">
              <h3 class="text-[9px] font-bold text-hf-pink uppercase mb-3">{{ skill.category }}</h3>
              <div class="space-y-1">
@@ -204,7 +193,7 @@ const navItems = [
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
         <div class="space-y-6">
-          <div v-for="exp in resumeData.experience" :key="exp.company" class="hf-card p-6 lg:p-8 group relative overflow-hidden">
+          <div v-for="exp in resumeData.experience" :key="`${exp.company}-${exp.period}`" class="hf-card p-6 lg:p-8 group relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-hf-pink/5 -mr-16 -mt-16 rounded-full blur-2xl group-hover:bg-hf-pink/10 transition"></div>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 relative z-10">
                <div>
