@@ -2,6 +2,10 @@
   "introduction": "My career began while I was studying Computer Science and Engineering at Sonargaon University. I wanted to understand not only how software works, but how it can make everyday work easier for the people who rely on it. Since then, each role has taught me to take on a bigger part of that responsibility.",
   "chapters": [
     {
+      "scene": {
+        "label": "THE FOUNDATION",
+        "caption": "Ideas become practice"
+      },
       "company": "Sonargaon University",
       "role": "B.Sc. in Computer Science & Engineering",
       "period": "2019 - 2023",
@@ -18,6 +22,10 @@
       }
     },
     {
+      "scene": {
+        "label": "REAL-WORLD PRODUCTS",
+        "caption": "People, problems, and useful software"
+      },
       "company": "Adova Soft",
       "role": "Web Developer",
       "period": "Oct 2019 - Nov 2022",
@@ -35,6 +43,10 @@
       }
     },
     {
+      "scene": {
+        "label": "CONNECTED SYSTEMS",
+        "caption": "Small features grow into platforms"
+      },
       "company": "Adova Soft",
       "role": "Software Engineer",
       "period": "Dec 2022 - Jul 2024",
@@ -51,6 +63,10 @@
       }
     },
     {
+      "scene": {
+        "label": "ENGINEERING AT SCALE",
+        "caption": "Reliable systems. Stronger teams."
+      },
       "company": "Ambala IT",
       "role": "Software Engineer",
       "period": "Aug 2024 - Present",
@@ -63,6 +79,10 @@
       ]
     }
   ],
+  "epilogueScene": {
+    "label": "THE NEXT CHAPTER",
+    "caption": "Still curious. Still building."
+  },
   "closing": {
     "title": "The thread through every chapter",
     "story": "I keep coming back to the same questions: Who depends on this system? What would make their work simpler? How can we make it reliable as it grows? I bring that mindset—from understanding a workflow to improving a system and supporting the people who build it.",

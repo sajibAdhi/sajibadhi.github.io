@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import careerStory from './data/career-story.json'
 
 const resumeData = {
@@ -62,10 +62,8 @@ const navItems = [
 
 const resumeRoot = ref<HTMLElement | null>(null)
 const activeStoryIndex = ref(0)
-const isTurningForward = ref(true)
-const activeStoryChapter = computed(() => careerStory.chapters[activeStoryIndex.value])
-const activeStoryTransition = computed(() => activeStoryChapter.value?.transitionToNext)
 let revealObserver: IntersectionObserver | undefined
+let storyObserver: IntersectionObserver | undefined
 
 onMounted(() => {
   const root = resumeRoot.value
@@ -87,15 +85,21 @@ onMounted(() => {
     root.querySelectorAll('.resume-reveal').forEach((element) => revealObserver?.observe(element))
     root.classList.add('resume-motion-ready')
   }
+
+  storyObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        activeStoryIndex.value = Number((entry.target as HTMLElement).dataset.storyIndex)
+      }
+    })
+  }, { rootMargin: '-35% 0px -45% 0px', threshold: 0 })
+  root.querySelectorAll('.novel__page[data-story-index]').forEach((page) => storyObserver?.observe(page))
 })
 
-const turnToPage = (page: number) => {
-  const nextPage = Math.max(0, Math.min(page, careerStory.chapters.length))
-  isTurningForward.value = nextPage >= activeStoryIndex.value
-  activeStoryIndex.value = nextPage
-}
-
-onBeforeUnmount(() => revealObserver?.disconnect())
+onBeforeUnmount(() => {
+  revealObserver?.disconnect()
+  storyObserver?.disconnect()
+})
 </script>
 
 <template>
@@ -208,8 +212,7 @@ onBeforeUnmount(() => revealObserver?.disconnect())
       <section
         id="exp"
         class="career-story"
-        :class="isTurningForward ? 'is-forward' : 'is-backward'"
-        :style="{ '--story-progress': `${(activeStoryIndex / careerStory.chapters.length) * 100}%` }"
+        :style="{ '--story-progress': `${((activeStoryIndex + 1) / (careerStory.chapters.length + 1)) * 100}%` }"
       >
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
@@ -217,79 +220,90 @@ onBeforeUnmount(() => revealObserver?.disconnect())
           </h2>
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
-        <p class="career-story__introduction">{{ careerStory.introduction }}</p>
         <div class="novel">
           <div class="novel__masthead">
             <span><i class="fas fa-book-open" aria-hidden="true"></i> A CAREER IN CHAPTERS</span>
-            <span>PAGE {{ String(activeStoryIndex + 1).padStart(2, '0') }} / {{ String(careerStory.chapters.length + 1).padStart(2, '0') }}</span>
+            <span>NOW READING · {{ String(activeStoryIndex + 1).padStart(2, '0') }} / {{ String(careerStory.chapters.length + 1).padStart(2, '0') }}</span>
           </div>
-          <nav class="novel__contents" aria-label="Choose a story chapter">
-            <button
-              v-for="(chapter, index) in careerStory.chapters"
-              :key="chapter.period"
-              type="button"
-              class="novel__chapter-link"
-              :class="{ 'is-active': activeStoryIndex === index, 'is-read': activeStoryIndex > index }"
-              :aria-current="activeStoryIndex === index ? 'step' : undefined"
-              @click="turnToPage(index)"
-            >
-              <span>{{ String(index + 1).padStart(2, '0') }}</span>
-              <span>{{ chapter.company }}</span>
-              <span>{{ chapter.period }}</span>
-            </button>
-            <button
-              type="button"
-              class="novel__chapter-link novel__chapter-link--epilogue"
-              :class="{ 'is-active': activeStoryIndex === careerStory.chapters.length }"
-              :aria-current="activeStoryIndex === careerStory.chapters.length ? 'step' : undefined"
-              @click="turnToPage(careerStory.chapters.length)"
-            >
-              <span><i class="fas fa-feather-pointed" aria-hidden="true"></i></span>
-              <span>Epilogue</span>
-              <span>Today</span>
-            </button>
-          </nav>
-          <div class="novel__book">
-            <Transition name="novel-page" mode="out-in">
+          <div class="novel__progress" aria-hidden="true">
+            <span></span>
+          </div>
+          <div class="novel__book novel__pages">
+              <header class="novel__opening">
+                <span class="novel__opening-kicker"><i class="fas fa-film" aria-hidden="true"></i> A PERSONAL STORY</span>
+                <h3>A journey from ideas<br>to systems people rely on.</h3>
+                <p>{{ careerStory.introduction }}</p>
+                <span class="novel__opening-scroll"><i class="fas fa-arrow-down" aria-hidden="true"></i> Scroll to begin</span>
+              </header>
               <article
-                v-if="activeStoryIndex < careerStory.chapters.length"
-                :key="`chapter-${activeStoryIndex}`"
+                v-for="(chapter, index) in careerStory.chapters"
+                :id="`story-chapter-${index}`"
+                :key="chapter.period"
+                :data-story-index="index"
                 class="novel__page"
-                aria-live="polite"
+                :class="{ 'is-active': activeStoryIndex === index }"
               >
+                <div class="novel__scene" aria-hidden="true">
+                  <span class="novel__scene-grid"></span>
+                  <span class="novel__scene-orbit novel__scene-orbit--one"></span>
+                  <span class="novel__scene-orbit novel__scene-orbit--two"></span>
+                  <span class="novel__scene-glow"></span>
+                  <span class="novel__scene-number">{{ String(index + 1).padStart(2, '0') }}</span>
+                  <span class="novel__scene-copy">
+                    <span>{{ chapter.scene.label }}</span>
+                    <span>{{ chapter.scene.caption }}</span>
+                  </span>
+                  <span class="novel__scene-scan"></span>
+                </div>
                 <div class="novel__page-heading">
-                  <p class="novel__chapter-label">CHAPTER {{ String(activeStoryIndex + 1).padStart(2, '0') }}</p>
-                  <p class="novel__period">{{ activeStoryChapter.period }}</p>
+                  <p class="novel__chapter-label">CHAPTER {{ String(index + 1).padStart(2, '0') }}</p>
+                  <p class="novel__period">{{ chapter.period }}</p>
                 </div>
                 <p class="novel__byline">
-                  {{ activeStoryChapter.company }}
+                  {{ chapter.company }}
                   <span>·</span>
-                  {{ activeStoryChapter.role }}
+                  {{ chapter.role }}
                 </p>
-                <h3 class="novel__title">{{ activeStoryChapter.title }}</h3>
-                <p class="novel__narrative">{{ activeStoryChapter.story }}</p>
+                <h3 class="novel__title">{{ chapter.title }}</h3>
+                <p class="novel__narrative">{{ chapter.story }}</p>
                 <div class="novel__details">
                   <p class="novel__section-label">THE WORK THAT MOVED THE STORY FORWARD</p>
                   <ul class="novel__highlights">
-                    <li v-for="highlight in activeStoryChapter.highlights" :key="highlight">
+                    <li v-for="highlight in chapter.highlights" :key="highlight">
                       <i class="fas fa-arrow-right" aria-hidden="true"></i>
                       <span>{{ highlight }}</span>
                     </li>
                   </ul>
                 </div>
-                <aside v-if="activeStoryTransition" class="novel__carry">
+                <aside v-if="chapter.transitionToNext" class="novel__carry">
                   <p class="novel__section-label"><i class="fas fa-bookmark" aria-hidden="true"></i> WHAT I CARRIED FORWARD</p>
-                  <h4>{{ activeStoryTransition.title }}</h4>
-                  <p>{{ activeStoryTransition.story }}</p>
+                  <h4>{{ chapter.transitionToNext.title }}</h4>
+                  <p>{{ chapter.transitionToNext.story }}</p>
                   <ul class="novel__skills">
-                    <li v-for="skill in activeStoryTransition.skills" :key="skill">
+                    <li v-for="skill in chapter.transitionToNext.skills" :key="skill">
                       {{ skill }}
                     </li>
                   </ul>
                 </aside>
               </article>
-              <article v-else key="epilogue" class="novel__page novel__page--epilogue" aria-live="polite">
-                <p class="novel__chapter-label"><i class="fas fa-feather-pointed" aria-hidden="true"></i> EPILOGUE · THE STORY CONTINUES</p>
+              <article
+                :data-story-index="careerStory.chapters.length"
+                class="novel__page novel__page--epilogue"
+                :class="{ 'is-active': activeStoryIndex === careerStory.chapters.length }"
+              >
+                <div class="novel__scene novel__scene--epilogue" aria-hidden="true">
+                  <span class="novel__scene-grid"></span>
+                  <span class="novel__scene-orbit novel__scene-orbit--one"></span>
+                  <span class="novel__scene-orbit novel__scene-orbit--two"></span>
+                  <span class="novel__scene-glow"></span>
+                  <span class="novel__scene-number"><i class="fas fa-feather-pointed"></i></span>
+                  <span class="novel__scene-copy">
+                    <span>{{ careerStory.epilogueScene.label }}</span>
+                    <span>{{ careerStory.epilogueScene.caption }}</span>
+                  </span>
+                  <span class="novel__scene-scan"></span>
+                </div>
+                <p class="novel__chapter-label">EPILOGUE · THE STORY CONTINUES</p>
                 <h3 class="novel__title">{{ careerStory.closing.title }}</h3>
                 <p class="novel__narrative">{{ careerStory.closing.story }}</p>
                 <a :href="'mailto:' + resumeData.basics.email" class="career-story__contact">
@@ -297,35 +311,6 @@ onBeforeUnmount(() => revealObserver?.disconnect())
                   <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
               </article>
-            </Transition>
-            <div class="novel__page-number" aria-hidden="true">{{ String(activeStoryIndex + 1).padStart(2, '0') }}</div>
-          </div>
-          <div
-            class="novel__progress"
-            role="progressbar"
-            :aria-valuenow="activeStoryIndex + 1"
-            :aria-valuemin="1"
-            :aria-valuemax="careerStory.chapters.length + 1"
-            aria-label="Story reading progress"
-          >
-            <span></span>
-          </div>
-          <div class="novel__controls">
-            <button type="button" class="novel__turn novel__turn--previous" :disabled="activeStoryIndex === 0" @click="turnToPage(activeStoryIndex - 1)">
-              <i class="fas fa-arrow-left" aria-hidden="true"></i>
-              <span>Previous page</span>
-            </button>
-            <span class="novel__reading-status" aria-live="polite">
-              {{ activeStoryIndex === careerStory.chapters.length ? 'THE END — FOR NOW' : `${activeStoryIndex + 1} OF ${careerStory.chapters.length} CHAPTERS` }}
-            </span>
-            <button
-              type="button"
-              class="novel__turn"
-              @click="turnToPage(activeStoryIndex === careerStory.chapters.length ? 0 : activeStoryIndex + 1)"
-            >
-              <span>{{ activeStoryIndex === careerStory.chapters.length ? 'Read again' : activeStoryIndex === careerStory.chapters.length - 1 ? 'Turn to epilogue' : 'Turn the page' }}</span>
-              <i :class="activeStoryIndex === careerStory.chapters.length ? 'fas fa-rotate-left' : 'fas fa-arrow-right'" aria-hidden="true"></i>
-            </button>
           </div>
         </div>
       </section>
