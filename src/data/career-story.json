@@ -3,8 +3,9 @@
   "chapters": [
     {
       "scene": {
-        "label": "THE FOUNDATION",
-        "caption": "Ideas become practice"
+        "label": "FOUNDATION",
+        "caption": "Learn · Design · Build",
+        "steps": ["CS FUNDAMENTALS", "PROJECT DESIGN", "THESIS SYSTEM"]
       },
       "company": "Sonargaon University",
       "role": "B.Sc. in Computer Science & Engineering",
@@ -23,8 +24,9 @@
     },
     {
       "scene": {
-        "label": "REAL-WORLD PRODUCTS",
-        "caption": "People, problems, and useful software"
+        "label": "PRODUCT ENGINEERING",
+        "caption": "Understand workflows. Ship useful software.",
+        "steps": ["USER NEEDS", "BUSINESS RULES", "PRODUCT FEATURES"]
       },
       "company": "Adova Soft",
       "role": "Web Developer",
@@ -44,8 +46,9 @@
     },
     {
       "scene": {
-        "label": "CONNECTED SYSTEMS",
-        "caption": "Small features grow into platforms"
+        "label": "SYSTEM DESIGN",
+        "caption": "Connecting modules into platforms",
+        "steps": ["ERP MODULES", "SHARED DATA", "POS WORKFLOWS"]
       },
       "company": "Adova Soft",
       "role": "Software Engineer",
@@ -64,8 +67,9 @@
     },
     {
       "scene": {
-        "label": "ENGINEERING AT SCALE",
-        "caption": "Reliable systems. Stronger teams."
+        "label": "BACKEND AT SCALE",
+        "caption": "Performance, reliability, and team growth",
+        "steps": ["QUEUES & JOBS", "QUERY OPTIMIZATION", "60K+ CUSTOMERS"]
       },
       "company": "Ambala IT",
       "role": "Software Engineer",
@@ -80,8 +84,9 @@
     }
   ],
   "epilogueScene": {
-    "label": "THE NEXT CHAPTER",
-    "caption": "Still curious. Still building."
+    "label": "ENGINEERING PRINCIPLE",
+    "caption": "Build reliable systems for people",
+    "steps": ["UNDERSTAND", "ENGINEER", "IMPROVE"]
   },
   "closing": {
     "title": "The thread through every chapter",

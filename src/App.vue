@@ -60,6 +60,12 @@ const navItems = [
   { label: 'Community', icon: 'fas fa-users', link: '#oss' }
 ]
 
+const engineeringImpact = [
+  { value: '60K+', label: 'customers served' },
+  { value: '300K+', label: 'installments processed' },
+  { value: '4m → 30s', label: 'report time optimized' }
+]
+
 const resumeRoot = ref<HTMLElement | null>(null)
 const activeStoryIndex = ref(0)
 let revealObserver: IntersectionObserver | undefined
@@ -120,17 +126,17 @@ onBeforeUnmount(() => {
     </nav>
 
     <!-- Mobile Bottom Navigation -->
-    <nav class="fixed bottom-4 left-4 right-4 z-[100] lg:hidden">
-      <div class="bg-hf-card/80 backdrop-blur-lg border border-hf-border rounded-2xl flex items-center justify-around p-2 shadow-2xl">
-        <a v-for="item in navItems" :key="item.label" :href="item.link" class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-hf-pink transition-colors">
+    <nav class="mobile-bottom-nav fixed bottom-4 left-4 right-4 z-[100] lg:hidden">
+      <div class="mobile-bottom-nav__links bg-hf-card/80 backdrop-blur-lg border border-hf-border rounded-2xl flex items-center justify-around p-2 shadow-2xl">
+        <a v-for="item in navItems" :key="item.label" :href="item.link" :aria-label="item.label" class="mobile-bottom-nav__link flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-hf-pink transition-colors">
           <i :class="item.icon" class="text-lg"></i>
-          <span class="text-[8px] font-bold uppercase tracking-tighter">{{ item.label }}</span>
+          <span class="mobile-bottom-nav__label text-[8px] font-bold uppercase tracking-tighter">{{ item.label }}</span>
         </a>
       </div>
     </nav>
 
     <!-- Top Nav (Minimalist) -->
-    <header id="home" class="w-full max-w-6xl px-6 py-6 flex flex-col items-start gap-4 sm:flex-row sm:justify-between sm:items-center z-50">
+    <header id="home" class="w-full max-w-6xl px-4 sm:px-6 py-4 sm:py-6 flex flex-row justify-between items-center gap-3 z-50">
       <div class="flex items-center gap-3 group cursor-pointer min-w-0">
         <img src="/logo.svg" alt="Sajib Logo" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-2xl transition-transform group-hover:scale-110 duration-500 shrink-0">
         <div class="font-mono text-base sm:text-xl font-black flex items-center gap-1 sm:gap-1.5 tracking-tight sm:tracking-tighter min-w-0">
@@ -148,15 +154,17 @@ onBeforeUnmount(() => {
       </div>
     </header>
 
-    <main class="w-full max-w-6xl px-6 py-8 lg:py-12 space-y-16 lg:space-y-24">
+    <main class="w-full max-w-6xl px-4 sm:px-6 py-6 sm:py-8 lg:py-12 space-y-12 sm:space-y-16 lg:space-y-24">
       
       <!-- Hero -->
       <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         <div class="resume-hero-copy lg:col-span-7 space-y-6 text-center lg:text-left">
+          <p class="engineer-eyebrow"><span></span> BACKEND · ERP · FINANCIAL SYSTEMS</p>
           <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight leading-none">
             {{ resumeData.basics.name }}<br/>
-            <span class="hf-gradient-text text-2xl sm:text-3xl lg:text-5xl block mt-4">{{ resumeData.basics.headline }}</span>
+            <span class="hf-gradient-text text-2xl sm:text-3xl lg:text-5xl block mt-4">Software Engineer</span>
           </h1>
+          <p class="engineer-positioning">I build dependable software for real-world businesses.</p>
           <p class="text-base lg:text-lg text-slate-400 max-w-2xl leading-relaxed mx-auto lg:mx-0">
             {{ resumeData.summary }}
           </p>
@@ -184,17 +192,27 @@ onBeforeUnmount(() => {
         </div>
         <div class="resume-portrait lg:col-span-5 flex justify-center order-first lg:order-last">
           <div class="relative group">
-            <div class="absolute -inset-4 bg-hf-pink opacity-10 blur-2xl group-hover:opacity-20 transition animate-pulse"></div>
+            <div class="absolute -inset-4 bg-hf-cyan opacity-10 blur-2xl group-hover:opacity-20 transition animate-pulse"></div>
             <img :src="resumeData.basics.profilePic" alt="Portrait of Sajib Adhikary" class="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border grayscale hover:grayscale-0 transition-all duration-700">
+            <div class="engineer-stack" aria-label="Primary engineering technologies">
+              <span v-for="technology in ['PHP', 'Laravel', 'MySQL', 'Docker']" :key="technology">{{ technology }}</span>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- Skills Matrix -->
+      <section class="engineering-impact" aria-label="Engineering impact">
+        <div v-for="metric in engineeringImpact" :key="metric.label" class="engineering-impact__metric">
+          <strong>{{ metric.value }}</strong>
+          <span>{{ metric.label }}</span>
+        </div>
+      </section>
+
+      <!-- Engineering toolkit -->
       <section id="skills" class="resume-reveal">
         <div class="hf-section-header">
            <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-             <i class="fas fa-layer-group text-hf-pink"></i> Tech Matrix
+             <i class="fas fa-screwdriver-wrench text-hf-cyan"></i> Engineering Toolkit
            </h2>
            <div class="hf-line"></div>
         </div>
@@ -216,13 +234,13 @@ onBeforeUnmount(() => {
       >
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-book-open text-hf-cyan"></i> The Journey
+            <i class="fas fa-code-branch text-hf-cyan"></i> Engineering Experience
           </h2>
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
         <div class="novel">
           <div class="novel__masthead">
-            <span><i class="fas fa-book-open" aria-hidden="true"></i> A CAREER IN CHAPTERS</span>
+            <span><i class="fas fa-code" aria-hidden="true"></i> CAREER / ENGINEERING.LOG</span>
             <span>NOW READING · {{ String(activeStoryIndex + 1).padStart(2, '0') }} / {{ String(careerStory.chapters.length + 1).padStart(2, '0') }}</span>
           </div>
           <div class="novel__progress" aria-hidden="true">
@@ -230,8 +248,8 @@ onBeforeUnmount(() => {
           </div>
           <div class="novel__book novel__pages">
               <header class="novel__opening">
-                <span class="novel__opening-kicker"><i class="fas fa-film" aria-hidden="true"></i> A PERSONAL STORY</span>
-                <h3>A journey from ideas<br>to systems people rely on.</h3>
+                <span class="novel__opening-kicker"><i class="fas fa-terminal" aria-hidden="true"></i> ENGINEERING / IN PRACTICE</span>
+                <h3>From solving real problems<br>to building systems at scale.</h3>
                 <p>{{ careerStory.introduction }}</p>
                 <span class="novel__opening-scroll"><i class="fas fa-arrow-down" aria-hidden="true"></i> Scroll to begin</span>
               </header>
@@ -245,13 +263,16 @@ onBeforeUnmount(() => {
               >
                 <div class="novel__scene" aria-hidden="true">
                   <span class="novel__scene-grid"></span>
-                  <span class="novel__scene-orbit novel__scene-orbit--one"></span>
-                  <span class="novel__scene-orbit novel__scene-orbit--two"></span>
-                  <span class="novel__scene-glow"></span>
                   <span class="novel__scene-number">{{ String(index + 1).padStart(2, '0') }}</span>
                   <span class="novel__scene-copy">
                     <span>{{ chapter.scene.label }}</span>
                     <span>{{ chapter.scene.caption }}</span>
+                  </span>
+                  <span class="novel__architecture">
+                    <span v-for="(step, stepIndex) in chapter.scene.steps" :key="step" class="novel__architecture-node">
+                      <i :class="['fas', stepIndex === 0 ? 'fa-diagram-project' : stepIndex === 1 ? 'fa-gears' : 'fa-database']"></i>
+                      {{ step }}
+                    </span>
                   </span>
                   <span class="novel__scene-scan"></span>
                 </div>
@@ -267,7 +288,7 @@ onBeforeUnmount(() => {
                 <h3 class="novel__title">{{ chapter.title }}</h3>
                 <p class="novel__narrative">{{ chapter.story }}</p>
                 <div class="novel__details">
-                  <p class="novel__section-label">THE WORK THAT MOVED THE STORY FORWARD</p>
+                  <p class="novel__section-label">ENGINEERING WORK & IMPACT</p>
                   <ul class="novel__highlights">
                     <li v-for="highlight in chapter.highlights" :key="highlight">
                       <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -291,15 +312,18 @@ onBeforeUnmount(() => {
                 class="novel__page novel__page--epilogue"
                 :class="{ 'is-active': activeStoryIndex === careerStory.chapters.length }"
               >
-                <div class="novel__scene novel__scene--epilogue" aria-hidden="true">
+                <div class="novel__scene" aria-hidden="true">
                   <span class="novel__scene-grid"></span>
-                  <span class="novel__scene-orbit novel__scene-orbit--one"></span>
-                  <span class="novel__scene-orbit novel__scene-orbit--two"></span>
-                  <span class="novel__scene-glow"></span>
                   <span class="novel__scene-number"><i class="fas fa-feather-pointed"></i></span>
                   <span class="novel__scene-copy">
                     <span>{{ careerStory.epilogueScene.label }}</span>
                     <span>{{ careerStory.epilogueScene.caption }}</span>
+                  </span>
+                  <span class="novel__architecture">
+                    <span v-for="(step, stepIndex) in careerStory.epilogueScene.steps" :key="step" class="novel__architecture-node">
+                      <i :class="['fas', stepIndex === 0 ? 'fa-diagram-project' : stepIndex === 1 ? 'fa-gears' : 'fa-database']"></i>
+                      {{ step }}
+                    </span>
                   </span>
                   <span class="novel__scene-scan"></span>
                 </div>
@@ -319,7 +343,7 @@ onBeforeUnmount(() => {
       <section id="projects" class="resume-reveal">
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-terminal text-hf-green"></i> System Protocols
+            <i class="fas fa-cubes text-hf-cyan"></i> Selected Engineering Work
           </h2>
           <div class="hf-line from-hf-green/50"></div>
         </div>
