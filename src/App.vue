@@ -434,7 +434,7 @@ onBeforeUnmount(() => {
 
     </main>
 
-    <footer class="w-full bg-slate-950 py-12 border-t border-slate-900 mt-12 lg:mt-24">
+    <footer class="site-footer w-full bg-slate-950 py-12 border-t border-slate-900 mt-12 lg:mt-24">
        <div class="max-w-6xl mx-auto px-6 text-center text-[8px] lg:text-[10px] text-slate-700 uppercase tracking-[0.2em] lg:tracking-[0.4em]">
           Handcrafted with Vue 3 & Tailwind // Sajib Adhikary
        </div>
