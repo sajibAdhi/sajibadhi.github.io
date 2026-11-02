@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+
 const resumeData = {
   basics: {
     name: "Sajib Adhikary",
@@ -76,10 +78,35 @@ const navItems = [
   { label: 'Education', icon: 'fas fa-graduation-cap', link: '#edu' },
   { label: 'Community', icon: 'fas fa-users', link: '#oss' }
 ]
+
+const resumeRoot = ref<HTMLElement | null>(null)
+let revealObserver: IntersectionObserver | undefined
+
+onMounted(() => {
+  const root = resumeRoot.value
+
+  if (!root || window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches || !('IntersectionObserver' in window)) {
+    return
+  }
+
+  revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible')
+        observer.unobserve(entry.target)
+      }
+    })
+  }, { rootMargin: '0px 0px -48px 0px', threshold: 0 })
+
+  root.querySelectorAll('.resume-reveal').forEach((element) => revealObserver?.observe(element))
+  root.classList.add('resume-motion-ready')
+})
+
+onBeforeUnmount(() => revealObserver?.disconnect())
 </script>
 
 <template>
-  <div class="min-h-screen hf-grid-bg flex flex-col items-center selection:bg-hf-pink selection:text-white relative scroll-smooth pb-20 lg:pb-0">
+  <div ref="resumeRoot" class="min-h-screen hf-grid-bg flex flex-col items-center selection:bg-hf-pink selection:text-white relative scroll-smooth pb-20 lg:pb-0">
     
     <!-- Floating Right Sidebar Navigation (Desktop) -->
     <nav class="fixed right-6 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col gap-4">
@@ -128,7 +155,7 @@ const navItems = [
       
       <!-- Hero -->
       <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+        <div class="resume-hero-copy lg:col-span-7 space-y-6 text-center lg:text-left">
           <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight leading-none">
             {{ resumeData.basics.name }}<br/>
             <span class="hf-gradient-text text-2xl sm:text-3xl lg:text-5xl block mt-4">{{ resumeData.basics.headline }}</span>
@@ -158,16 +185,16 @@ const navItems = [
             </div>
           </div>
         </div>
-        <div class="lg:col-span-5 flex justify-center order-first lg:order-last">
+        <div class="resume-portrait lg:col-span-5 flex justify-center order-first lg:order-last">
           <div class="relative group">
             <div class="absolute -inset-4 bg-hf-pink opacity-10 blur-2xl group-hover:opacity-20 transition animate-pulse"></div>
-            <img :src="resumeData.basics.profilePic" class="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border grayscale hover:grayscale-0 transition-all duration-700">
+            <img :src="resumeData.basics.profilePic" alt="Portrait of Sajib Adhikary" class="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border grayscale hover:grayscale-0 transition-all duration-700">
           </div>
         </div>
       </section>
 
       <!-- Skills Matrix -->
-      <section id="skills">
+      <section id="skills" class="resume-reveal">
         <div class="hf-section-header">
            <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
              <i class="fas fa-layer-group text-hf-pink"></i> Tech Matrix
@@ -175,7 +202,7 @@ const navItems = [
            <div class="hf-line"></div>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
-           <div v-for="skill in resumeData.skills" :key="skill.category" class="hf-card p-4 hover:bg-hf-pink/5 group">
+           <div v-for="skill in resumeData.skills" :key="skill.category" class="hf-card resume-card p-4 hover:bg-hf-pink/5 group">
              <h3 class="text-[9px] font-bold text-hf-pink uppercase mb-3">{{ skill.category }}</h3>
              <div class="space-y-1">
                <div v-for="item in skill.items" :key="item" class="text-xs text-slate-400 group-hover:text-white transition">{{ item }}</div>
@@ -185,7 +212,7 @@ const navItems = [
       </section>
 
       <!-- Experience Timeline -->
-      <section id="exp">
+      <section id="exp" class="resume-reveal">
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
             <i class="fas fa-code-branch text-hf-cyan"></i> Deployment History
@@ -193,7 +220,7 @@ const navItems = [
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
         <div class="space-y-6">
-          <div v-for="exp in resumeData.experience" :key="`${exp.company}-${exp.period}`" class="hf-card p-6 lg:p-8 group relative overflow-hidden">
+          <div v-for="exp in resumeData.experience" :key="`${exp.company}-${exp.period}`" class="hf-card resume-card resume-reveal p-6 lg:p-8 group relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-hf-pink/5 -mr-16 -mt-16 rounded-full blur-2xl group-hover:bg-hf-pink/10 transition"></div>
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4 relative z-10">
                <div>
@@ -208,7 +235,7 @@ const navItems = [
       </section>
 
       <!-- Projects -->
-      <section id="projects">
+      <section id="projects" class="resume-reveal">
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
             <i class="fas fa-terminal text-hf-green"></i> System Protocols
@@ -216,7 +243,7 @@ const navItems = [
           <div class="hf-line from-hf-green/50"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div v-for="proj in resumeData.projects" :key="proj.name" class="hf-card p-6 lg:p-8 border-l-4 border-l-hf-indigo hover:border-l-hf-pink transition-all">
+          <div v-for="proj in resumeData.projects" :key="proj.name" class="hf-card resume-card resume-reveal p-6 lg:p-8 border-l-4 border-l-hf-indigo hover:border-l-hf-pink transition-all">
             <h3 class="text-lg lg:text-xl font-bold text-white mb-2">{{ proj.name }}</h3>
             <p class="text-sm text-slate-500 mb-6">{{ proj.desc }}</p>
             <a v-if="proj.link" :href="proj.link" target="_blank" class="text-[10px] font-bold text-hf-indigo uppercase tracking-[0.2em] hover:text-hf-pink transition">
@@ -227,14 +254,14 @@ const navItems = [
       </section>
 
       <!-- Education & Awards -->
-      <section id="edu" class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <section id="edu" class="resume-reveal grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>
            <div class="hf-section-header mb-8">
              <h2 class="text-lg lg:text-xl font-bold text-white">Academic Path</h2>
              <div class="hf-line from-hf-indigo/50"></div>
            </div>
            <div class="space-y-4">
-             <div v-for="edu in resumeData.education" :key="edu.school" class="p-4 lg:p-6 bg-slate-900/30 border border-slate-800 rounded-xl">
+             <div v-for="edu in resumeData.education" :key="edu.school" class="resume-card resume-reveal p-4 lg:p-6 bg-slate-900/30 border border-slate-800 rounded-xl">
                <div class="flex justify-between items-baseline mb-2">
                  <h4 class="font-bold text-white text-sm lg:text-base">{{ edu.degree }}</h4>
                  <span class="text-[10px] text-hf-pink font-mono">{{ edu.period }}</span>
@@ -250,13 +277,13 @@ const navItems = [
              <div class="hf-line from-hf-green/50"></div>
            </div>
            <div class="space-y-6">
-              <div v-for="award in resumeData.awards" :key="award.title" class="hf-card p-6 border-hf-green/20">
+              <div v-for="award in resumeData.awards" :key="award.title" class="hf-card resume-card resume-reveal p-6 border-hf-green/20">
                 <i class="fas fa-trophy text-hf-green mb-4 block"></i>
                 <h4 class="font-bold text-white mb-2 text-sm lg:text-base">{{ award.title }}</h4>
                 <p class="text-xs text-slate-500">{{ award.desc }}</p>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div v-for="cert in resumeData.certifications" :key="cert" class="p-4 bg-slate-900/50 border border-slate-800 rounded-lg text-[10px] text-slate-400">
+                <div v-for="cert in resumeData.certifications" :key="cert" class="resume-card resume-reveal p-4 bg-slate-900/50 border border-slate-800 rounded-lg text-[10px] text-slate-400">
                   <i class="fas fa-certificate text-hf-indigo mr-2"></i> {{ cert }}
                 </div>
               </div>
@@ -265,14 +292,14 @@ const navItems = [
       </section>
 
       <!-- Extras & References -->
-      <section id="oss" class="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <section id="oss" class="resume-reveal grid grid-cols-1 md:grid-cols-3 gap-12">
          <div class="md:col-span-2">
             <div class="hf-section-header mb-8">
               <h2 class="text-lg lg:text-xl font-bold text-white">Open Source Ecosystem</h2>
               <div class="hf-line"></div>
             </div>
             <div class="flex flex-wrap gap-4">
-              <div v-for="vol in resumeData.volunteering" :key="vol" class="px-6 py-4 bg-hf-indigo/5 border border-hf-indigo/20 rounded-2xl flex flex-col gap-1 w-full sm:w-auto">
+              <div v-for="vol in resumeData.volunteering" :key="vol" class="resume-card resume-reveal px-6 py-4 bg-hf-indigo/5 border border-hf-indigo/20 rounded-2xl flex flex-col gap-1 w-full sm:w-auto">
                 <span class="text-xs font-bold text-white">{{ vol }}</span>
                 <span class="text-[9px] text-slate-500 uppercase tracking-widest">Global Contributor</span>
               </div>
@@ -284,7 +311,7 @@ const navItems = [
               <div class="hf-line"></div>
             </div>
             <div class="space-y-4">
-               <div v-for="ref in resumeData.references" :key="ref.name" class="p-4 border-l-2 border-l-hf-pink bg-slate-900/20">
+               <div v-for="ref in resumeData.references" :key="ref.name" class="resume-card resume-reveal p-4 border-l-2 border-l-hf-pink bg-slate-900/20">
                  <h4 class="text-sm font-bold text-white">{{ ref.name }}</h4>
                  <p class="text-[10px] text-slate-500">{{ ref.pos }}</p>
                </div>
