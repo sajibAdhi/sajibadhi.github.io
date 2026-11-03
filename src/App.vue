@@ -268,15 +268,15 @@ onBeforeUnmount(() => {
     </nav>
 
     <!-- Top Nav (Minimalist) -->
-    <header id="home" class="w-full max-w-6xl px-4 sm:px-6 py-4 sm:py-6 flex flex-row justify-between items-center gap-3 z-50">
+    <header id="home" class="w-full max-w-6xl px-4 sm:px-6 py-4 sm:py-6 flex flex-row flex-wrap justify-between items-center gap-3 z-50">
       <a href="#home" class="site-logo-link group shrink-0" :aria-label="`${resumeData.basics.name} ${t('home')}`">
         <img
-          :src="resolvedTheme === 'light' ? '/logos/logo-horizontal-dark.png' : '/logos/logo-horizontal-light.png'"
+          :src="resolvedTheme === 'light' ? '/logos/icon-64-dark.png' : '/logos/icon-64-light.png'"
           :alt="t('logoAlt')"
-          class="w-52 sm:w-64 h-auto transition-transform duration-300 group-hover:scale-[1.02]"
+          class="w-16 h-16 sm:w-[4.5rem] sm:h-[4.5rem] object-contain transition-transform duration-300 group-hover:scale-[1.04]"
         >
       </a>
-      <div class="flex flex-wrap items-center justify-start sm:justify-end gap-3 w-full sm:w-auto">
+      <div class="flex flex-wrap items-center justify-end gap-2 min-w-0 max-w-full">
         <label v-if="siteFeatures.language.enabled" class="theme-control flex items-center gap-2 rounded-lg border border-hf-border bg-slate-900 px-3 py-2 text-slate-300">
           <span class="theme-control__value" aria-hidden="true">{{ activeLocaleLabel }}</span>
           <select v-model="locale" :aria-label="t('language')" class="theme-control__select">

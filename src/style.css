@@ -37,6 +37,24 @@ html[lang="bn"] .font-mono {
   font-family: 'Noto Sans Bengali', 'Nirmala UI', var(--font-sans);
 }
 
+html[lang="bn"] main > section,
+html[lang="bn"] main > section > * {
+  min-width: 0;
+}
+
+html[lang="bn"] main :where(h1, h2, h3, h4, p, li, a, span) {
+  overflow-wrap: anywhere;
+}
+
+html[lang="bn"] .resume-hero-copy h1 {
+  line-height: 1.4;
+  letter-spacing: normal;
+}
+
+html[lang="bn"] .resume-hero-copy h1 .hf-gradient-text {
+  line-height: 1.5;
+}
+
 .hf-grid-bg {
   background-image:
     linear-gradient(rgba(56, 189, 248, 0.025) 1px, transparent 1px),
