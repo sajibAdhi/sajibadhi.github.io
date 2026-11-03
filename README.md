@@ -106,6 +106,14 @@ public/resume-of-sajib-adhikary.pdf
 
 If you replace the resume file, keep the same filename or update `resumeUrl` in `src/App.vue`.
 
+## Brand Assets
+
+The contents of `public/logos/` are maintained in the public
+[sajibAdhi/logos](https://github.com/sajibAdhi/logos) repository and included here as a
+Git submodule. Clone this project with `git clone --recurse-submodules`; if you already
+cloned it, run `git submodule update --init --recursive`. Both deployment workflows
+initialize submodules automatically.
+
 ## Deployment
 
 GitHub Pages deployment is handled by `.github/workflows/deploy.yml`. Every push to

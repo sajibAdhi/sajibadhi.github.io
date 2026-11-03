@@ -87,6 +87,10 @@ const applyTheme = () => {
     'content',
     isLight ? siteFeatures.theme.colors.light : siteFeatures.theme.colors.dark
   )
+  document.querySelector<HTMLLinkElement>('#site-favicon')?.setAttribute(
+    'href',
+    `./logos/${isLight ? 'dark' : 'light'}-favicon.ico?v=1`
+  )
 }
 
 applyTheme()
