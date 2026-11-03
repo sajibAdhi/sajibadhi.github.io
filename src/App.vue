@@ -25,6 +25,7 @@ const resumeData = {
     { category: 'Frontend', items: ['HTML', 'CSS', 'Tailwind', 'Bootstrap'] },
     { category: 'Database', items: ['MySQL', 'MariaDB', 'PostgreSQL'] },
     { category: 'Tools', items: ['Git', 'Docker', 'Composer', 'Npm', 'Pest'] },
+    { category: 'AI & Automation', items: ['Agentic AI'] },
     { category: 'Cloud/DevOps', items: ['VPS', 'Linux', 'Hosting'] },
     { category: 'Concepts', items: ['MVC Architecture', 'REST APIs', 'Database Optimization', 'Authentication & Authorization'] },
     { category: 'Engineering', items: ['System Design', 'API Design', 'Performance Profiling', 'Caching & Queues', 'Code Review & Mentoring'] }
@@ -39,18 +40,16 @@ const resumeData = {
   languages: ["English (Professional)", "Bangla (Native)"]
 }
 
+const coreSkillCategories = ['Languages', 'Frameworks', 'Database']
+const coreSkills = resumeData.skills.filter((skill) => coreSkillCategories.includes(skill.category))
+const supportingSkills = resumeData.skills.filter((skill) => !coreSkillCategories.includes(skill.category))
+
 const navItems = [
   { label: 'Home', icon: 'fas fa-home', link: '#home' },
   { label: 'Skills', icon: 'fas fa-layer-group', link: '#skills' },
   { label: 'Experience', icon: 'fas fa-history', link: '#exp' },
   { label: 'Projects', icon: 'fas fa-code-branch', link: '#projects' },
   { label: 'GitHub Activity', icon: 'fab fa-github', link: '#github-activity' }
-]
-
-const engineeringImpact = [
-  { value: '60K+', label: 'customers served' },
-  { value: '300K+', label: 'installments processed' },
-  { value: '4m → 30s', label: 'report time optimized' }
 ]
 
 const resumeRoot = ref<HTMLElement | null>(null)
@@ -188,13 +187,6 @@ onBeforeUnmount(() => {
         </div>
       </section>
 
-      <section class="engineering-impact" aria-label="Engineering impact">
-        <div v-for="metric in engineeringImpact" :key="metric.label" class="engineering-impact__metric">
-          <strong>{{ metric.value }}</strong>
-          <span>{{ metric.label }}</span>
-        </div>
-      </section>
-
       <!-- Engineering toolkit -->
       <section id="skills" class="resume-reveal">
         <div class="hf-section-header">
@@ -203,13 +195,33 @@ onBeforeUnmount(() => {
            </h2>
            <div class="hf-line"></div>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-4">
-           <div v-for="skill in resumeData.skills" :key="skill.category" class="hf-card resume-card p-4 hover:bg-hf-pink/5 group">
-             <h3 class="text-[9px] font-bold text-hf-pink uppercase mb-3">{{ skill.category }}</h3>
-             <div class="space-y-1">
-               <div v-for="item in skill.items" :key="item" class="text-xs text-slate-400 group-hover:text-white transition">{{ item }}</div>
-             </div>
-           </div>
+        <div class="space-y-8">
+          <div>
+            <h3 class="text-xs font-bold text-hf-cyan uppercase tracking-[0.2em] mb-4">Core</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <article v-for="skill in coreSkills" :key="skill.category" class="hf-card resume-card p-5 border-hf-cyan/30">
+                <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">{{ skill.category }}</h4>
+                <div class="grid grid-cols-2 gap-2">
+                  <span v-for="item in skill.items" :key="item" class="rounded-lg border border-hf-border bg-slate-950/60 px-3 py-2 text-xs text-slate-300 text-center">
+                    {{ item }}
+                  </span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-hf-indigo uppercase tracking-[0.2em] mb-4">Supporting Skills</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              <article v-for="skill in supportingSkills" :key="skill.category" class="resume-card rounded-xl border border-slate-800 bg-slate-900/30 p-4">
+                <h4 class="text-[10px] font-bold text-hf-indigo uppercase tracking-wider mb-3">{{ skill.category }}</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span v-for="item in skill.items" :key="item" class="rounded-md border border-slate-800 bg-slate-950/50 px-2 py-1 text-[11px] text-slate-400">
+                    {{ item }}
+                  </span>
+                </div>
+              </article>
+            </div>
+          </div>
         </div>
       </section>
 
