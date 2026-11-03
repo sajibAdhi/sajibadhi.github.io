@@ -4,201 +4,280 @@
 
 ### 1.1 Purpose
 
-This document defines the software requirements for the personal portfolio website of Sajib Adhikary. The system is intended to present professional information, highlight projects and experience, and provide contact and resume access through a responsive web interface.
+This specification describes the implemented behavior and operating requirements of
+Sajib Adhikary's personal portfolio website. It is intended for the site owner,
+maintainers, and developers working on the portfolio.
 
 ### 1.2 Scope
 
-The application is a static frontend portfolio built with Vue 3, Vite, TypeScript, and Tailwind CSS. It is deployed to GitHub Pages. The system does not include a backend, database, authentication flow, or content management panel. All content is currently maintained in source code and static assets.
+The product is a public, responsive, single-page portfolio. It presents professional
+profile information, engineering skills, career history, selected projects, GitHub
+activity, and links for contacting the owner or viewing a resume.
 
-### 1.3 Intended Audience
+The application is a static frontend built with Vue 3, TypeScript, Vite, and Tailwind
+CSS v4. It has no application backend, database, authentication, content management
+system, or contact-form processing. Portfolio content is maintained in the repository
+and deployed as static files.
 
-- Project owner
-- Maintainers and contributors
-- Developers extending the portfolio
-- Reviewers validating scope and behavior
+### 1.3 Intended users
+
+- **Visitor:** Views the portfolio, changes display preferences, and follows contact,
+  resume, social, or project links.
+- **Maintainer:** Updates portfolio content, translations, settings, assets, and
+  deployment configuration.
 
 ### 1.4 Definitions
 
-- `CTA`: Call to action button such as `Links`, `CV`, or `Contact`
-- `Portfolio`: The public-facing personal website
-- `Static asset`: File served directly from `public/`, such as logo or resume PDF
+- **CTA:** A call-to-action link or button, such as Links or Resume.
+- **Resolved theme:** The light or dark appearance currently applied after resolving
+  the visitor's light, dark, or system preference.
+- **Brand-assets submodule:** The `public/logos/` Git submodule connected to the public
+  `sajibAdhi/logos` repository.
 
-## 2. Overall Description
+## 2. Product Description
 
-### 2.1 Product Perspective
+### 2.1 Product perspective
 
-The system is a standalone single-page application. It is structured as a static site with a single main Vue component and supporting assets. Deployment is automated using GitHub Actions and GitHub Pages.
+The application mounts a Vue single-page interface from `src/main.ts`. The primary
+portfolio UI and its interactions are implemented in `src/App.vue`; styling is in
+`src/style.css`. There is no client-side route system: navigation uses in-page anchors.
 
-### 2.2 Product Functions
+### 2.2 Product functions
 
-The system shall:
+The website provides:
 
-- Display personal profile and professional summary
-- Display experience, education, skills, projects, achievements, and references
-- Provide navigation to page sections
-- Provide outbound links to social and professional resources
-- Provide access to a locally hosted resume PDF
-- Present a responsive layout optimized for desktop and mobile devices
-- Use themed branding assets consistent with the site design
+- A branded header and responsive section navigation.
+- A profile hero with professional summary, portrait, contact details, and action links.
+- A skills toolkit with category filters.
+- A scrollable, chapter-based career story.
+- Selected project summaries and available project links.
+- A GitHub contribution-calendar image and profile link.
+- English and Bangla interface/career-story content.
+- Light, dark, and system theme preferences.
 
-### 2.3 User Classes
+### 2.3 Operating environment
 
-- `Visitor`: Any person viewing the public portfolio site
-- `Maintainer`: A developer or owner updating content, styling, assets, or deployment configuration
+- Current evergreen desktop and mobile browsers with JavaScript enabled.
+- Node.js 22 or newer and npm for local development and production builds.
+- Static hosting compatible with the generated Vite `dist/` directory.
+- Internet access is needed for externally hosted fonts, Font Awesome, and the GitHub
+  contribution-calendar image. The primary portfolio content and assets are local.
 
-### 2.4 Operating Environment
+### 2.4 Constraints and dependencies
 
-- Modern desktop and mobile browsers
-- Static hosting via GitHub Pages
-- Development environment with Node.js 22+ and npm
-
-### 2.5 Constraints
-
-- No backend services
-- No server-side rendering
-- All content is source-controlled
-- Deployment target is GitHub Pages
-- Build and test flow must run in GitHub Actions
-
-### 2.6 Assumptions and Dependencies
-
-- Users have internet access to load external resources such as Google Fonts and Font Awesome CDN
-- Static assets placed in `public/` are available at runtime
-- The portfolio content remains maintained directly inside `src/App.vue` unless future refactoring changes content storage
+- The application has no backend API or server-side rendering.
+- The site depends on Vue 3, Vite, TypeScript, Tailwind CSS v4, and npm-managed packages.
+- Theme-specific brand images and the shared SVG icon sprite are supplied by the
+  `public/logos/` Git submodule.
+- GitHub Actions must initialize submodules before building.
+- Theme and language choices are stored in browser `localStorage`; they are not synced
+  across devices.
 
 ## 3. Functional Requirements
 
-### 3.1 Header and Branding
+### 3.1 Branding and navigation
 
-- `FR-1`: The system shall display a branded header containing the logo and site name.
-- `FR-2`: The system shall display a `Contact` CTA in the header.
-- `FR-3`: The header layout shall adapt to mobile view without overlap between branding and action controls.
+- **FR-1:** The header shall display a logo variant matching the resolved theme.
+- **FR-2:** The browser favicon shall use the dark-mark variant on a light theme and the
+  light-mark variant on a dark theme.
+- **FR-3:** The site shall provide desktop navigation to Home, Skills, Experience,
+  Projects, and GitHub Activity.
+- **FR-4:** The site shall provide a fixed bottom navigation on narrow/mobile layouts
+  and a floating section navigation on wide/desktop layouts.
+- **FR-5:** Navigation controls shall link to the corresponding in-page section.
 
-### 3.2 Navigation
+### 3.2 Profile and contact
 
-- `FR-4`: The system shall provide desktop section navigation through a floating right sidebar.
-- `FR-5`: The system shall provide mobile section navigation through a fixed bottom navigation bar.
-- `FR-6`: Navigation items shall link to in-page anchors for major sections.
+- **FR-6:** The hero shall display the owner's name, professional role, positioning,
+  summary, portrait, and primary technologies.
+- **FR-7:** The hero shall display Links, Resume, GitHub, and Contact actions. GitHub
+  shall open the owner's GitHub profile; Contact shall use the configured email address.
+- **FR-8:** The hero shall display the configured location, phone number, and email.
+- **FR-9:** The Resume action shall open the PDF at
+  `public/resume-of-sajib-adhikary.pdf`.
+- **FR-10:** The career-story ending shall provide a contact-by-email action.
 
-### 3.3 Hero Section
+### 3.3 Engineering toolkit
 
-- `FR-7`: The system shall display the portfolio owner name, headline, and summary in the hero section.
-- `FR-8`: The system shall provide hero CTA buttons for `Links` and `CV`.
-- `FR-9`: The `CV` CTA shall link to a local resume file hosted from `public/`.
-- `FR-10`: The hero section shall display location, phone, and email summary items.
+- **FR-11:** The Skills section shall show the core technology stack and grouped skills.
+- **FR-12:** Visitors shall be able to filter skill groups by All, Backend, Frontend, or
+  DevOps.
+- **FR-13:** The active toolkit filter shall be exposed through the selected button's
+  pressed state.
 
-### 3.4 Portfolio Content
+### 3.4 Career story and selected projects
 
-- `FR-11`: The system shall display categorized skills.
-- `FR-12`: The system shall display work experience entries.
-- `FR-13`: The system shall display project entries with external links where available.
-- `FR-14`: The system shall display education and achievements.
-- `FR-15`: The system shall display open source/community involvement and references.
+- **FR-14:** The Experience section shall present the career story as an introduction,
+  ordered chapters, engineering highlights, transitions, and closing content.
+- **FR-15:** The active career chapter shall update as the visitor scrolls through the
+  story when `IntersectionObserver` is supported.
+- **FR-16:** The story shall use the selected language's career data.
+- **FR-17:** The Projects section shall show project names and localized summaries.
+- **FR-18:** A project link shall be shown only when a URL is configured for that project.
 
-### 3.5 Assets
+### 3.5 GitHub activity
 
-- `FR-16`: The system shall use a custom logo asset in the site header.
-- `FR-17`: The system shall use a favicon asset for browser tabs.
-- `FR-18`: The resume asset shall be replaceable by updating the PDF in `public/` or adjusting the local asset path in code.
+- **FR-19:** The GitHub Activity section shall display the contribution-calendar image
+  for the configured GitHub profile.
+- **FR-20:** The section shall provide an accessible, horizontally scrollable region for
+  the calendar and a link to the GitHub profile.
 
-### 3.6 Testing and CI
+### 3.6 Language and theme preferences
 
-- `FR-19`: The project shall include automated tests for basic rendering and critical links.
-- `FR-20`: The GitHub Actions workflow shall run tests before building and deploying.
+- **FR-21:** The visitor shall be able to choose English or Bangla.
+- **FR-22:** Changing language shall update translated interface copy, career-story
+  content, document language, page title, and meta description.
+- **FR-23:** The visitor shall be able to choose System, Light, or Dark theme.
+- **FR-24:** System theme shall follow the browser/operating-system color preference and
+  react to preference changes while selected.
+- **FR-25:** The selected language and theme shall be saved in `localStorage` using the
+  keys and defaults declared in `src/config/site-features.ts`.
+- **FR-26:** If a saved preference is missing or is not supported, the configured
+  default shall be used.
+- **FR-27:** Language and theme controls shall be operable using native select controls
+  and have accessible labels.
 
-## 4. Non-Functional Requirements
+### 3.7 Motion and responsive behavior
 
-### 4.1 Performance
+- **FR-28:** The layout shall adapt to small, medium, and wide viewports without
+  requiring horizontal scrolling for the page as a whole.
+- **FR-29:** Scroll-reveal and career-story observer behavior shall degrade gracefully
+  when `IntersectionObserver` is unavailable.
+- **FR-30:** Nonessential animation shall be disabled or reduced when the visitor
+  requests reduced motion.
 
-- `NFR-1`: The portfolio shall load as a static site without requiring backend requests for core content.
-- `NFR-2`: The build output shall be suitable for static hosting.
+## 4. Data and Asset Requirements
 
-### 4.2 Usability
+### 4.1 Content sources
 
-- `NFR-3`: The interface shall be readable and navigable on both mobile and desktop.
-- `NFR-4`: Primary actions shall be visually consistent with the site theme.
-- `NFR-5`: Contact and resume actions shall be easy to discover in the first viewport.
+- Profile information, project definitions, skills, navigation, and UI logic are
+  maintained in `src/App.vue`.
+- English and Bangla UI strings are maintained in `src/data/translations.ts`.
+- Career-story content is maintained in `src/data/career-story.json` and
+  `src/data/career-story.bn.json`.
+- Theme/language defaults, options, enabled flags, storage keys, and theme colors are
+  maintained in `src/config/site-features.ts`.
 
-### 4.3 Maintainability
+### 4.2 Static assets
 
-- `NFR-6`: Content and presentation shall remain easy to modify through source files.
-- `NFR-7`: Project setup, testing, and deployment steps shall be documented in `README.md`.
+- The resume PDF and portrait are stored in `public/`.
+- Logos, theme-specific favicon/icon variants, and the shared icon sprite are
+  stored in the `public/logos/` submodule.
+- Standard logo/icon assets use the `-original` suffix, for example
+  `icon-32-original.png` and `logo-horizontal-original.png`. Themed filenames use
+  `-dark` or `-light` suffixes after the type and size, for example `icon-32-dark.png`,
+  `icon-32-light.png`, `favicon-dark.ico`, and `favicon-light.ico`.
+- A fresh checkout shall initialize submodules with
+  `git clone --recurse-submodules`; an existing checkout shall use
+  `git submodule update --init --recursive`.
 
-### 4.4 Reliability
+## 5. Non-Functional Requirements
 
-- `NFR-8`: Deployment shall be blocked when automated tests fail.
+### 5.1 Performance
 
-### 4.5 Compatibility
+- **NFR-1:** Core portfolio content shall be available from the generated static site
+  without a backend request.
+- **NFR-2:** The GitHub contribution image shall be lazy-loaded.
+- **NFR-3:** Production files shall be generated in `dist/` and be suitable for static
+  hosting.
 
-- `NFR-9`: The site shall function in current evergreen browsers.
+### 5.2 Accessibility and usability
 
-## 5. External Interface Requirements
+- **NFR-4:** Interactive controls and links shall use semantic HTML and accessible names.
+- **NFR-5:** Keyboard users shall be able to focus and operate navigation, preference
+  controls, filters, and links.
+- **NFR-6:** Images that convey content shall provide suitable alternative text;
+  decorative icons shall be hidden from assistive technology where appropriate.
+- **NFR-7:** The interface shall remain readable and usable across supported viewport
+  sizes and both resolved themes.
+- **NFR-8:** Motion shall respect `prefers-reduced-motion`.
 
-### 5.1 User Interface
+### 5.3 Maintainability
 
-The user interface shall include:
+- **NFR-9:** Source code, static content, feature configuration, and deployment
+  workflows shall remain version-controlled.
+- **NFR-10:** Brand assets shall be managed in the dedicated logos repository and
+  consumed through the submodule rather than duplicated in the portfolio repository.
+- **NFR-11:** Developer setup, asset-submodule setup, and deployment configuration
+  shall be documented in `README.md`.
 
-- Header with logo, title, and contact action
-- Hero section with profile image, summary, and CTA buttons
-- Skills, experience, projects, education, achievements, community, and references sections
-- Desktop floating navigation
-- Mobile bottom navigation
-- Footer with portfolio attribution
+### 5.4 Compatibility and resilience
 
-### 5.2 Software Interfaces
+- **NFR-12:** The site shall work in current evergreen browsers with JavaScript enabled.
+- **NFR-13:** If external fonts or the GitHub contribution service are unavailable, the
+  locally rendered portfolio content shall remain available.
+- **NFR-14:** If browser storage is unavailable, the site shall still use configured
+  defaults for language and theme.
 
-- Vue 3 runtime
-- Vite build tool
-- Tailwind CSS styling
-- Vitest and Vue Test Utils for testing
-- GitHub Actions for CI
-- GitHub Pages for hosting
+## 6. External Interface Requirements
 
-### 5.3 Communication Interfaces
+### 6.1 User interface
 
-- Email via `mailto:` link
-- External links to GitHub, LinkedIn, Linktree, and project URLs
+The single-page interface shall include:
 
-## 6. Data Requirements
+1. Header with theme-appropriate logo and language/theme controls.
+2. Hero with profile, professional summary, contact details, and action links.
+3. Filterable Engineering Toolkit.
+4. Chapter-based Engineering Experience.
+5. Selected Engineering Work.
+6. GitHub Activity.
+7. Footer attribution.
 
-The system currently stores portfolio content directly in `src/App.vue` as structured frontend data, including:
+### 6.2 External services and links
 
-- basic profile data
-- social links
-- summary
-- experience
-- education
-- skills
-- projects
-- certifications
-- awards
-- volunteering
-- languages
-- references
+- Email actions use `mailto:`.
+- Resume is served as a local PDF.
+- GitHub contribution activity is loaded from `ghchart.rshah.org`.
+- Google Fonts and Font Awesome are loaded from their configured external CDNs.
+- GitHub profile, Linktree, LinkedIn, and configured project destinations are outbound
+  links.
 
-Static assets are stored in `public/`, including:
+## 7. Build, Deployment, and Acceptance
 
-- `logo.svg`
-- `favicon.svg`
-- `resume-of-sajib-adhikary.pdf`
+### 7.1 Build
 
-## 7. Validation Criteria
+- **BD-1:** `npm ci` shall install the locked dependencies.
+- **BD-2:** `npm run build` shall run Vue/TypeScript project checks and generate the
+  production site in `dist/`.
+- **BD-3:** A build from a clean checkout shall include the initialized logos submodule
+  assets.
 
-The system shall be considered acceptable when:
+### 7.2 Deployment
 
-- the site builds successfully with `npm run build`
-- tests pass with `npm test`
-- the deploy workflow runs tests before deployment
-- the portfolio renders core content correctly
-- the `CV` button opens the local resume asset
-- the header remains usable on mobile
+- **BD-4:** `.github/workflows/deploy.yml` shall build and deploy pushes to `dev` to
+  GitHub Pages.
+- **BD-5:** The `github-pages` GitHub environment shall permit the `dev` branch under
+  its deployment protection rules.
+- **BD-6:** `.github/workflows/deploy-sajib.adovasoft.com.yml` shall build and upload
+  pushes to `main` to the configured cPanel FTP document root.
+- **BD-7:** Both deployment workflows shall check out submodules before building.
+- **BD-8:** cPanel deployment shall use the configured `FTP_SERVER`, `FTP_USERNAME`,
+  and `FTP_PASSWORD` GitHub Actions secrets.
 
-## 8. Future Considerations
+### 7.3 Acceptance checks
 
-Possible future enhancements:
+The implementation is acceptable when:
 
-- move portfolio content into structured JSON or CMS-managed data
-- add downloadable vCard or direct social CTA grouping
-- add accessibility review and explicit WCAG targets
-- add analytics or contact form integration
-- add richer test coverage for navigation and responsive behavior
+- `npm run build` completes successfully.
+- A clean checkout with submodules initialized produces a build containing the logo,
+  favicon, and icon-sprite assets.
+- The main page displays the profile, toolkit, career story, project list, GitHub
+  activity, and footer.
+- Language changes update visible English/Bangla content and persist after reload.
+- Light, dark, and system theme changes update page styling, logo, and favicon and
+  persist after reload.
+- Hero links point to the configured Linktree, resume, GitHub, and email destinations.
+- Desktop and mobile navigation link to the correct page sections.
+- Reduced-motion preferences do not leave content hidden.
+
+The current package scripts expose `dev`, `build`, and `preview`. No `npm test` script
+is currently defined; automated test coverage is not a deployment acceptance gate.
+
+## 8. Out of Scope
+
+- Backend APIs, database storage, user accounts, and authentication.
+- A CMS or browser-based content editor.
+- Server-side rendering.
+- A contact form or server-side email delivery.
+- Synchronizing preferences across devices.
+- Guaranteed availability of external fonts, icons, or contribution-calendar services.

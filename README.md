@@ -14,6 +14,7 @@ Personal portfolio site built with Vue 3, Vite, TypeScript, and Tailwind CSS v4.
 ## Features
 
 - Responsive portfolio layout for desktop and mobile
+- English and Bangla localization with a saved language preference
 - Custom cyber/dev themed branding and favicon
 - Local resume PDF served from `public/`
 - Hero CTA actions for `Links`, `CV`, and `Contact`
@@ -26,13 +27,18 @@ Personal portfolio site built with Vue 3, Vite, TypeScript, and Tailwind CSS v4.
 .
 |-- .github/workflows/deploy.yml
 |-- public/
-|   |-- favicon.svg
-|   |-- logo.svg
-|   `-- resume-of-sajib-adhikary.pdf
+|   |-- logos/ (Git submodule: sajibAdhi/logos)
+|   |-- resume-of-sajib-adhikary.pdf
+|   `-- sajib-adhikary.jpg
 |-- src/
 |   |-- App.vue
 |   |-- App.test.ts
 |   |-- main.ts
+|   |-- config/
+|   |   `-- site-features.ts
+|   |-- data/
+|   |   |-- career-story.bn.json
+|   |   `-- translations.ts
 |   `-- style.css
 |-- package.json
 `-- vitest.config.ts
@@ -99,7 +105,22 @@ public/resume-of-sajib-adhikary.pdf
 
 If you replace the resume file, keep the same filename or update `resumeUrl` in `src/App.vue`.
 
+## Brand Assets
+
+The contents of `public/logos/` (including theme-specific logos, favicons, and icon assets)
+are maintained in the public
+[sajibAdhi/logos](https://github.com/sajibAdhi/logos) repository and included here as a
+Git submodule. Clone this project with `git clone --recurse-submodules`; if you already
+cloned it, run `git submodule update --init --recursive`. Both deployment workflows
+initialize submodules automatically.
+
 ## Deployment
+
+GitHub Pages deployment is handled by `.github/workflows/deploy.yml`. Every push to
+`dev` builds and deploys the site to `sajibadhi.github.io`. Ensure the repository's
+Pages source is configured to use GitHub Actions. Also allow the `dev` branch in the
+`github-pages` environment's deployment branch rules
+(`Settings` > `Environments` > `github-pages` > `Deployment branches and tags`).
 
 Deployment to cPanel is handled by `.github/workflows/deploy-sajib.adovasoft.com.yml`.
 On every push to `main`, the workflow installs dependencies, builds the site, and uploads
@@ -121,6 +142,10 @@ Main content lives in `src/App.vue`, including:
 - external links
 
 Theme styling and reusable visual tokens live in `src/style.css`.
+
+Feature defaults and settings for the theme and language selectors live in
+`src/config/site-features.ts`. Update the options, defaults, storage keys, or
+`enabled` flags there; interface copy is maintained in `src/data/translations.ts`.
 
 ## License
 
