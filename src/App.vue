@@ -19,11 +19,6 @@ const resumeData = {
     ]
   },
   summary: "Software Engineer with 6+ years of experience building scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Specializes in backend architecture, database design, and performance optimization for applications serving hundreds of users. Mentors 4 junior engineers, leads code reviews for a 5-person team, and promotes two-way knowledge-sharing to raise code quality and architectural standards.",
-  education: [
-    { school: "Sonargaon University", degree: "B.Sc in CSE", period: "2019 - 2023", result: "CGPA 3.19" },
-    { school: "Bcic College", degree: "HSC Science", period: "2017 - 2018", result: "GPA 3.42" },
-    { school: "Govt. Boys High School", degree: "SSC Science", period: "2014 - 2016", result: "GPA 4.72" }
-  ],
   skills: [
     { category: 'Languages', items: ['PHP', 'JavaScript'] },
     { category: 'Frameworks', items: ['Laravel', 'CodeIgniter', 'jQuery'] },
@@ -41,23 +36,14 @@ const resumeData = {
     { name: "E-Recruitment", desc: "Recruitment platform with applicant, admin, and verifier panels, dynamic job forms, and role-based access control.", link: "" },
     { name: "ZindaPark Banking", desc: "Online banking with year-end closing, interest calculations, low-bandwidth performance, and queue-based task scheduling.", link: "" }
   ],
-  certifications: ["Python for Everybody (Coursera)", "Web App. for Everybody (Coursera)"],
-  awards: [{ title: "Project Showcasing - 2nd Runner-up", provider: "Sonargaon University", desc: "Project Thesis Manager cloud system." }],
-  volunteering: ["Maintainer – OpenTelemetry.io (Bangla)", "Contributor – CNCF Glossary (Bangla)", "Contributor – Kubernetes (Bangla)"],
-  languages: ["English (Professional)", "Bangla (Native)"],
-  references: [
-    { name: "Bulbul Ahamed", pos: "Dept. Head, CSE, SU" },
-    { name: "Subrata Mondol", pos: "MD, Adova Soft" }
-  ]
+  languages: ["English (Professional)", "Bangla (Native)"]
 }
 
 const navItems = [
   { label: 'Home', icon: 'fas fa-home', link: '#home' },
   { label: 'Skills', icon: 'fas fa-layer-group', link: '#skills' },
   { label: 'Experience', icon: 'fas fa-history', link: '#exp' },
-  { label: 'Projects', icon: 'fas fa-code-branch', link: '#projects' },
-  { label: 'Education', icon: 'fas fa-graduation-cap', link: '#edu' },
-  { label: 'Community', icon: 'fas fa-users', link: '#oss' }
+  { label: 'Projects', icon: 'fas fa-code-branch', link: '#projects' }
 ]
 
 const engineeringImpact = [
@@ -357,80 +343,6 @@ onBeforeUnmount(() => {
           </div>
         </div>
       </section>
-
-      <!-- Education & Awards -->
-      <section id="edu" class="resume-reveal grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div>
-           <div class="hf-section-header mb-8">
-             <h2 class="text-lg lg:text-xl font-bold text-white">Academic Path</h2>
-             <div class="hf-line from-hf-indigo/50"></div>
-           </div>
-           <div class="space-y-4">
-             <div v-for="edu in resumeData.education" :key="edu.school" class="resume-card resume-reveal p-4 lg:p-6 bg-slate-900/30 border border-slate-800 rounded-xl">
-               <div class="flex justify-between items-baseline mb-2">
-                 <h4 class="font-bold text-white text-sm lg:text-base">{{ edu.degree }}</h4>
-                 <span class="text-[10px] text-hf-pink font-mono">{{ edu.period }}</span>
-               </div>
-               <p class="text-xs text-slate-500 mb-1">{{ edu.school }}</p>
-               <span class="text-[10px] font-bold text-hf-green">{{ edu.result }}</span>
-             </div>
-           </div>
-        </div>
-        <div>
-           <div class="hf-section-header mb-8">
-             <h2 class="text-lg lg:text-xl font-bold text-white">Achievements</h2>
-             <div class="hf-line from-hf-green/50"></div>
-           </div>
-           <div class="space-y-6">
-              <div v-for="award in resumeData.awards" :key="award.title" class="hf-card resume-card resume-reveal p-6 border-hf-green/20">
-                <i class="fas fa-trophy text-hf-green mb-4 block"></i>
-                <h4 class="font-bold text-white mb-2 text-sm lg:text-base">{{ award.title }}</h4>
-                <p class="text-xs text-slate-500">{{ award.desc }}</p>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div v-for="cert in resumeData.certifications" :key="cert" class="resume-card resume-reveal p-4 bg-slate-900/50 border border-slate-800 rounded-lg text-[10px] text-slate-400">
-                  <i class="fas fa-certificate text-hf-indigo mr-2"></i> {{ cert }}
-                </div>
-              </div>
-           </div>
-        </div>
-      </section>
-
-      <!-- Extras & References -->
-      <section id="oss" class="resume-reveal grid grid-cols-1 md:grid-cols-3 gap-12">
-         <div class="md:col-span-2">
-            <div class="hf-section-header mb-8">
-              <h2 class="text-lg lg:text-xl font-bold text-white">Open Source Ecosystem</h2>
-              <div class="hf-line"></div>
-            </div>
-            <div class="flex flex-wrap gap-4">
-              <div v-for="vol in resumeData.volunteering" :key="vol" class="resume-card resume-reveal px-6 py-4 bg-hf-indigo/5 border border-hf-indigo/20 rounded-2xl flex flex-col gap-1 w-full sm:w-auto">
-                <span class="text-xs font-bold text-white">{{ vol }}</span>
-                <span class="text-[9px] text-slate-500 uppercase tracking-widest">Global Contributor</span>
-              </div>
-            </div>
-         </div>
-         <div>
-            <div class="hf-section-header mb-8">
-              <h2 class="text-lg lg:text-xl font-bold text-white">References</h2>
-              <div class="hf-line"></div>
-            </div>
-            <div class="space-y-4">
-               <div v-for="ref in resumeData.references" :key="ref.name" class="resume-card resume-reveal p-4 border-l-2 border-l-hf-pink bg-slate-900/20">
-                 <h4 class="text-sm font-bold text-white">{{ ref.name }}</h4>
-                 <p class="text-[10px] text-slate-500">{{ ref.pos }}</p>
-               </div>
-            </div>
-         </div>
-      </section>
-
-      <!-- Declaration -->
-      <footer class="text-center space-y-4 pt-12 border-t border-slate-900">
-        <p class="text-[10px] text-slate-600 italic max-w-md mx-auto">
-          "I hereby declare that all the information furnished above is correct to the best of my belief. I am responsible for the authenticity of all the information."
-        </p>
-        <div class="font-mono text-[10px] text-hf-pink">Build: v1.0.0-final // VERIFIED</div>
-      </footer>
 
     </main>
 

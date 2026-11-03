@@ -1,4 +1,4 @@
-name: Deploy to sajib.adovasoft.com
+name: Deploy via FTP to sajib.adovasoft.com
 
 on:
   push:
@@ -6,18 +6,17 @@ on:
       - main
 
 jobs:
-  deploy:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
-      - name: Sync Files via SSH/SFTP
-        uses: appleboy/scp-action@v0.1.7
+      - name: 📂 Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "."
-          target: ${{ secrets.TARGET_DIR }}
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: /public_html/ # আপনার হোস্টিংয়ের রুট ফোল্ডার পাথ
