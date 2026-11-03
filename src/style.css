@@ -29,6 +29,14 @@
   }
 }
 
+html[lang="bn"] body {
+  font-family: 'Noto Sans Bengali', 'Nirmala UI', var(--font-sans);
+}
+
+html[lang="bn"] .font-mono {
+  font-family: 'Noto Sans Bengali', 'Nirmala UI', var(--font-sans);
+}
+
 .hf-grid-bg {
   background-image:
     linear-gradient(rgba(56, 189, 248, 0.025) 1px, transparent 1px),

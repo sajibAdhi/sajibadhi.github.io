@@ -1,30 +1,97 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import careerStory from './data/career-story.json'
+import careerStoryBn from './data/career-story.bn.json'
+import { messages, type Locale, type MessageKey } from './data/translations'
+import { siteFeatures } from './config/site-features'
 
-type ThemePreference = 'system' | 'light' | 'dark'
-const themePreference = ref<ThemePreference>('system')
+const readPreference = <T extends string>(
+  storageKey: string,
+  options: readonly { value: T }[],
+  fallback: T
+): T => {
+  try {
+    const savedValue = localStorage.getItem(storageKey)
+    return options.find((option) => option.value === savedValue)?.value ?? fallback
+  } catch (error) {
+    console.warn(`Unable to load saved preference "${storageKey}".`, error)
+    return fallback
+  }
+}
+
+const localeOptions = siteFeatures.language.options
+const themeOptions = siteFeatures.theme.options
+const locale = ref<Locale>(
+  siteFeatures.language.enabled
+    ? readPreference(siteFeatures.language.storageKey, localeOptions, siteFeatures.language.default)
+    : siteFeatures.language.default
+)
+const t = (key: MessageKey) => messages[locale.value][key]
+const activeCareerStory = computed(() => locale.value === 'bn' ? careerStoryBn : careerStory)
+const projects = [
+  { name: 'Mobile EMI', descriptionKey: 'projectMobileEmi', link: '' },
+  { name: 'Shikkha Plus', descriptionKey: 'projectShikkhaPlus', link: 'https://shikkhaplus.com/' },
+  { name: 'HishabKitab (ERP)', descriptionKey: 'projectHishabKitab', link: 'https://hishabkitab.com/' },
+  { name: 'E-Recruitment', descriptionKey: 'projectRecruitment', link: '' },
+  { name: 'ZindaPark Banking', descriptionKey: 'projectZindaPark', link: '' }
+] as const satisfies { name: string; descriptionKey: MessageKey; link: string }[]
+
+const applyLocale = () => {
+  document.documentElement.lang = locale.value
+  document.title = locale.value === 'bn' ? 'সজীব অধিকারী | সফটওয়্যার ইঞ্জিনিয়ার' : 'Sajib Adhikary | Software Engineer'
+  document.querySelector<HTMLMetaElement>('meta[name="description"]')?.setAttribute(
+    'content',
+    locale.value === 'bn'
+      ? 'সজীব অধিকারী—ব্যাকএন্ড আর্কিটেকচার, ERP প্ল্যাটফর্ম এবং নির্ভরযোগ্য আর্থিক সিস্টেমে অভিজ্ঞ সফটওয়্যার ইঞ্জিনিয়ার।'
+      : 'Sajib Adhikary is a software engineer specializing in backend architecture, ERP platforms, and reliable financial systems.'
+  )
+}
+
+applyLocale()
+
+watch(locale, (preference) => {
+  if (siteFeatures.language.enabled) {
+    try {
+      localStorage.setItem(siteFeatures.language.storageKey, preference)
+    } catch (error) {
+      console.warn('Unable to save the language preference.', error)
+    }
+  }
+  applyLocale()
+})
+
+type ThemePreference = typeof siteFeatures.theme.options[number]['value']
+const themePreference = ref<ThemePreference>(
+  siteFeatures.theme.enabled
+    ? readPreference(siteFeatures.theme.storageKey, themeOptions, siteFeatures.theme.default)
+    : siteFeatures.theme.default
+)
 const resolvedTheme = ref<'light' | 'dark'>('dark')
-let systemThemeQuery: MediaQueryList | undefined
+const systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)')
 let systemThemeListener: (() => void) | undefined
 
 const applyTheme = () => {
-  const isLight = themePreference.value === 'light' ||
-    (themePreference.value === 'system' && systemThemeQuery?.matches === true)
+  const preference = siteFeatures.theme.enabled ? themePreference.value : siteFeatures.theme.default
+  const isLight = preference === 'light' ||
+    (preference === 'system' && systemThemeQuery.matches)
 
   resolvedTheme.value = isLight ? 'light' : 'dark'
   document.documentElement.dataset.theme = isLight ? 'light' : 'dark'
   document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute(
     'content',
-    isLight ? '#f6f8fc' : '#080d16'
+    isLight ? siteFeatures.theme.colors.light : siteFeatures.theme.colors.dark
   )
 }
 
+applyTheme()
+
 watch(themePreference, (preference) => {
-  try {
-    localStorage.setItem('portfolio-theme', preference)
-  } catch (error) {
-    console.warn('Unable to save the theme preference.', error)
+  if (siteFeatures.theme.enabled) {
+    try {
+      localStorage.setItem(siteFeatures.theme.storageKey, preference)
+    } catch (error) {
+      console.warn('Unable to save the theme preference.', error)
+    }
   }
   applyTheme()
 })
@@ -45,7 +112,6 @@ const resumeData = {
       { name: 'LinkedIn', url: 'https://www.linkedin.com/in/sajibadhi/', icon: 'fab fa-linkedin' }
     ]
   },
-  summary: "Software Engineer with 6+ years of experience building scalable ERP, accounting, and microfinance systems using Laravel and CodeIgniter. Specializes in backend architecture, database design, and performance optimization for applications serving hundreds of users. Mentors 4 junior engineers, leads code reviews for a 5-person team, and promotes two-way knowledge-sharing to raise code quality and architectural standards.",
   skills: [
     { category: 'Languages', items: ['PHP', 'JavaScript'] },
     { category: 'Frameworks', items: ['Laravel', 'CodeIgniter', 'jQuery'] },
@@ -57,47 +123,46 @@ const resumeData = {
     { category: 'Concepts', items: ['MVC Architecture', 'REST APIs', 'Database Optimization', 'Authentication & Authorization'] },
     { category: 'Engineering', items: ['System Design', 'API Design', 'Performance Profiling', 'Caching & Queues', 'Code Review & Mentoring'] }
   ],
-  projects: [
-    { name: "Mobile EMI", desc: "Automated device lock/unlock and installment workflows serving 60,000+ customers and 300,000+ transactions. Optimized reporting from 4 minutes to 30 seconds.", link: "" },
-    { name: "Shikkha Plus", desc: "Educational institute management system serving 3,000+ active users, with admissions, fees, attendance, exams, and results management.", link: "https://shikkhaplus.com/" },
-    { name: "HishabKitab (ERP)", desc: "Accounting, inventory, and loan management across 15+ modules, including ledgers, balance sheets, and transaction logging.", link: "https://hishabkitab.com/" },
-    { name: "E-Recruitment", desc: "Recruitment platform with applicant, admin, and verifier panels, dynamic job forms, and role-based access control.", link: "" },
-    { name: "ZindaPark Banking", desc: "Online banking with year-end closing, interest calculations, low-bandwidth performance, and queue-based task scheduling.", link: "" }
-  ],
   languages: ["English (Professional)", "Bangla (Native)"]
 }
 
 const toolkitFilters = ['All', 'Backend', 'Frontend', 'DevOps'] as const
 type ToolkitFilter = typeof toolkitFilters[number]
+const toolkitFilterMessage: Record<ToolkitFilter, MessageKey> = {
+  All: 'all',
+  Backend: 'backend',
+  Frontend: 'frontend',
+  DevOps: 'devops'
+}
 
 const activeToolkitFilter = ref<ToolkitFilter>('All')
 const skillGroups = [
   {
-    category: 'Frontend',
+    category: 'frontendCategory',
     filter: 'Frontend',
     items: ['JavaScript', 'jQuery', 'HTML', 'CSS', 'Tailwind', 'Bootstrap']
   },
   {
-    category: 'Backend',
+    category: 'backendCategory',
     filter: 'Backend',
     items: ['PHP', 'Laravel', 'CodeIgniter', 'REST APIs', 'MVC Architecture', 'Authentication & Authorization']
   },
   {
-    category: 'Data',
+    category: 'dataCategory',
     filter: 'Backend',
     items: ['MySQL', 'MariaDB', 'PostgreSQL', 'Database Optimization']
   },
   {
-    category: 'DevOps',
+    category: 'devopsCategory',
     filter: 'DevOps',
     items: ['Git', 'Docker', 'Composer', 'Npm', 'Pest', 'VPS', 'Linux', 'Hosting']
   },
   {
-    category: 'Engineering & AI',
+    category: 'engineeringAiCategory',
     filter: 'Backend',
     items: ['System Design', 'API Design', 'Performance Profiling', 'Caching & Queues', 'Code Review & Mentoring', 'Agentic AI']
   }
-] satisfies { category: string; filter: Exclude<ToolkitFilter, 'All'>; items: string[] }[]
+] satisfies { category: MessageKey; filter: Exclude<ToolkitFilter, 'All'>; items: string[] }[]
 
 const visibleSkillGroups = computed(() =>
   activeToolkitFilter.value === 'All'
@@ -105,13 +170,13 @@ const visibleSkillGroups = computed(() =>
     : skillGroups.filter((group) => group.filter === activeToolkitFilter.value)
 )
 
-const navItems = [
-  { label: 'Home', icon: 'fas fa-home', link: '#home' },
-  { label: 'Skills', icon: 'fas fa-layer-group', link: '#skills' },
-  { label: 'Experience', icon: 'fas fa-history', link: '#exp' },
-  { label: 'Projects', icon: 'fas fa-code-branch', link: '#projects' },
-  { label: 'GitHub Activity', icon: 'fab fa-github', link: '#github-activity' }
-]
+const navItems = computed(() => [
+  { label: t('home'), icon: 'fas fa-home', link: '#home' },
+  { label: t('skills'), icon: 'fas fa-layer-group', link: '#skills' },
+  { label: t('experience'), icon: 'fas fa-history', link: '#exp' },
+  { label: t('projects'), icon: 'fas fa-code-branch', link: '#projects' },
+  { label: t('githubActivity'), icon: 'fab fa-github', link: '#github-activity' }
+])
 
 const resumeRoot = ref<HTMLElement | null>(null)
 const activeStoryIndex = ref(0)
@@ -119,20 +184,8 @@ let revealObserver: IntersectionObserver | undefined
 let storyObserver: IntersectionObserver | undefined
 
 onMounted(() => {
-  try {
-    const savedTheme = localStorage.getItem('portfolio-theme')
-    if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
-      themePreference.value = savedTheme
-    }
-  } catch (error) {
-    console.warn('Unable to load the saved theme preference.', error)
-  }
-
-  systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)')
-  applyTheme()
-
   systemThemeListener = () => {
-    if (themePreference.value === 'system') {
+    if (siteFeatures.theme.enabled && themePreference.value === 'system') {
       applyTheme()
     }
   }
@@ -206,31 +259,35 @@ onBeforeUnmount(() => {
 
     <!-- Top Nav (Minimalist) -->
     <header id="home" class="w-full max-w-6xl px-4 sm:px-6 py-4 sm:py-6 flex flex-row justify-between items-center gap-3 z-50">
-      <a href="#home" class="site-logo-link group shrink-0" aria-label="Sajib Adhikary home">
+      <a href="#home" class="site-logo-link group shrink-0" :aria-label="`${resumeData.basics.name} ${t('home')}`">
         <img
           :src="resolvedTheme === 'light' ? '/logo-light.svg?v=1' : '/logo.svg?v=3'"
-          alt="Sajib Adhikary, Software Engineer"
+          :alt="t('logoAlt')"
           class="w-32 sm:w-40 h-auto transition-transform duration-300 group-hover:scale-[1.02]"
         >
       </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end gap-3 w-full sm:w-auto">
-        <label class="theme-control flex items-center gap-2 rounded-lg border border-hf-border bg-slate-900 px-3 py-2 text-slate-300">
+        <label v-if="siteFeatures.language.enabled" class="theme-control flex items-center gap-2 rounded-lg border border-hf-border bg-slate-900 px-3 py-2 text-slate-300">
+          <span class="sr-only">{{ t('language') }}</span>
+          <select v-model="locale" :aria-label="t('language')" class="bg-transparent text-[10px] font-bold text-current outline-none">
+            <option v-for="option in localeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
+          </select>
+        </label>
+        <label v-if="siteFeatures.theme.enabled" class="theme-control flex items-center gap-2 rounded-lg border border-hf-border bg-slate-900 px-3 py-2 text-slate-300">
           <i
             :class="themePreference === 'system' ? 'fas fa-circle-half-stroke' : themePreference === 'light' ? 'fas fa-sun' : 'fas fa-moon'"
             class="text-xs text-hf-cyan"
             aria-hidden="true"
           ></i>
-          <span class="sr-only">Color theme</span>
-          <select v-model="themePreference" aria-label="Color theme" class="bg-transparent text-[10px] font-bold text-current outline-none">
-            <option value="system">System</option>
-            <option value="light">Light</option>
-            <option value="dark">Dark</option>
+          <span class="sr-only">{{ t('theme') }}</span>
+          <select v-model="themePreference" :aria-label="t('theme')" class="bg-transparent text-[10px] font-bold text-current outline-none">
+            <option v-for="option in themeOptions" :key="option.value" :value="option.value">{{ option.labels[locale] }}</option>
           </select>
         </label>
-        <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 hidden sm:flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition" title="GitHub"><i class="fab fa-github"></i></a>
+        <a :href="resumeData.basics.socials[0].url" target="_blank" rel="noopener noreferrer" class="w-10 h-10 hidden sm:flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition" title="GitHub"><i class="fab fa-github"></i></a>
         <a :href="'mailto:' + resumeData.basics.email" class="hf-cta hf-cta--ghost">
           <i class="fas fa-envelope text-[11px]"></i>
-          <span>Contact</span>
+          <span>{{ t('contact') }}</span>
         </a>
       </div>
     </header>
@@ -240,28 +297,28 @@ onBeforeUnmount(() => {
       <!-- Hero -->
       <section class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         <div class="resume-hero-copy lg:col-span-7 space-y-6 text-center lg:text-left">
-          <p class="engineer-eyebrow"><span></span> BACKEND · ERP · FINANCIAL SYSTEMS</p>
+          <p class="engineer-eyebrow"><span></span> {{ t('heroEyebrow') }}</p>
           <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight leading-none">
             {{ resumeData.basics.name }}<br/>
-            <span class="hf-gradient-text text-2xl sm:text-3xl lg:text-5xl block mt-4">Software Engineer</span>
+            <span class="hf-gradient-text text-2xl sm:text-3xl lg:text-5xl block mt-4">{{ t('role') }}</span>
           </h1>
-          <p class="engineer-positioning">I build dependable software for real-world businesses.</p>
+          <p class="engineer-positioning">{{ t('positioning') }}</p>
           <p class="text-base lg:text-lg text-slate-400 max-w-2xl leading-relaxed mx-auto lg:mx-0">
-            {{ resumeData.summary }}
+            {{ t('summary') }}
           </p>
           <div class="flex flex-wrap justify-center lg:justify-start gap-3">
             <a :href="resumeData.basics.linktreeUrl" target="_blank" class="hf-cta hf-cta--accent">
               <i class="fas fa-link text-[11px]"></i>
-              <span>Links</span>
+              <span>{{ t('links') }}</span>
             </a>
             <a :href="resumeData.basics.resumeUrl" target="_blank" class="hf-cta hf-cta--primary">
               <i class="fas fa-file-lines text-[11px]"></i>
-              <span>Resume</span>
+              <span>{{ t('resume') }}</span>
             </a>
           </div>
           <div class="flex flex-wrap justify-center lg:justify-start gap-3 text-[10px] font-mono">
             <div class="flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-800 text-slate-400">
-              <i class="fas fa-map-marker-alt text-hf-pink"></i> {{ resumeData.basics.location }}
+              <i class="fas fa-map-marker-alt text-hf-pink"></i> {{ t('location') }}
             </div>
             <div class="flex items-center gap-2 px-3 py-1 rounded bg-slate-900 border border-slate-800 text-slate-400">
               <i class="fas fa-phone text-hf-green"></i> {{ resumeData.basics.phone }}
@@ -274,8 +331,8 @@ onBeforeUnmount(() => {
         <div class="resume-portrait lg:col-span-5 flex justify-center order-first lg:order-last">
           <div class="relative group">
             <div class="absolute -inset-4 bg-hf-cyan opacity-10 blur-2xl group-hover:opacity-20 transition animate-pulse"></div>
-            <img :src="resumeData.basics.profilePic" alt="Portrait of Sajib Adhikary" class="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border grayscale hover:grayscale-0 transition-all duration-700">
-            <div class="engineer-stack" aria-label="Primary engineering technologies">
+            <img :src="resumeData.basics.profilePic" :alt="t('portraitAlt')" class="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 rounded-2xl object-cover relative z-10 border-2 border-hf-border grayscale hover:grayscale-0 transition-all duration-700">
+            <div class="engineer-stack" :aria-label="t('primaryTechnologies')">
               <span v-for="technology in ['PHP', 'Laravel', 'MySQL', 'Docker']" :key="technology">{{ technology }}</span>
             </div>
           </div>
@@ -286,10 +343,10 @@ onBeforeUnmount(() => {
       <section id="skills" class="resume-reveal">
         <div class="hf-section-header flex-wrap">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-screwdriver-wrench text-hf-cyan"></i> Engineering Toolkit
+            <i class="fas fa-screwdriver-wrench text-hf-cyan"></i> {{ t('toolkit') }}
           </h2>
           <div class="hf-line hidden sm:block"></div>
-          <div class="flex items-center gap-1 rounded-xl border border-hf-border bg-slate-950/70 p-1" role="group" aria-label="Filter toolkit categories">
+          <div class="flex items-center gap-1 rounded-xl border border-hf-border bg-slate-950/70 p-1" role="group" :aria-label="t('filterToolkit')">
             <button
               v-for="filter in toolkitFilters"
               :key="filter"
@@ -299,7 +356,7 @@ onBeforeUnmount(() => {
               class="rounded-lg px-3 py-2 text-[10px] font-bold transition-colors"
               :class="activeToolkitFilter === filter ? 'bg-hf-cyan text-slate-950' : 'text-slate-400 hover:text-white'"
             >
-              {{ filter }}
+              {{ t(toolkitFilterMessage[filter]) }}
             </button>
           </div>
         </div>
@@ -308,10 +365,10 @@ onBeforeUnmount(() => {
             <div class="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-hf-cyan/10 blur-3xl" aria-hidden="true"></div>
             <div class="relative">
               <div class="flex items-center justify-between gap-3">
-                <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-hf-cyan">Core Stack · Daily Use</p>
+                <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-hf-cyan">{{ t('coreStack') }}</p>
                 <span class="flex items-center gap-2 text-[10px] text-slate-400">
                   <span class="h-1.5 w-1.5 rounded-full bg-hf-cyan"></span>
-                  Primary technologies
+                  {{ t('primaryStack') }}
                 </span>
               </div>
               <h3 class="mt-5 text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-white">
@@ -319,7 +376,7 @@ onBeforeUnmount(() => {
                 <span class="text-hf-cyan">·</span> MySQL
               </h3>
               <p class="mt-5 max-w-md text-sm leading-relaxed text-slate-400">
-                Building dependable backend systems, business workflows, and data-driven applications.
+                {{ t('coreStackDescription') }}
               </p>
               <div class="mt-6 flex flex-wrap gap-2">
                 <span v-for="technology in ['PHP', 'Laravel', 'MySQL']" :key="technology" class="rounded-full border border-hf-cyan/40 bg-hf-cyan/10 px-3 py-1 text-[11px] font-semibold text-hf-cyan">
@@ -331,8 +388,8 @@ onBeforeUnmount(() => {
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:col-span-7">
             <article v-for="group in visibleSkillGroups" :key="group.category" class="resume-card rounded-2xl border border-hf-border bg-hf-card/80 p-4 sm:p-5 transition-colors hover:border-hf-cyan/40">
               <div class="mb-4 flex items-center justify-between gap-2">
-                <h3 class="text-[10px] font-bold uppercase tracking-[0.16em] text-hf-cyan">{{ group.category }}</h3>
-                <span class="text-[10px] text-slate-500">{{ group.items.length }} skills</span>
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.16em] text-hf-cyan">{{ t(group.category) }}</h3>
+                <span class="text-[10px] text-slate-500">{{ group.items.length }} {{ t('skillsCount') }}</span>
               </div>
               <div class="flex flex-wrap gap-2">
                 <span
@@ -353,31 +410,31 @@ onBeforeUnmount(() => {
       <section
         id="exp"
         class="career-story"
-        :style="{ '--story-progress': `${((activeStoryIndex + 1) / (careerStory.chapters.length + 1)) * 100}%` }"
+        :style="{ '--story-progress': `${((activeStoryIndex + 1) / (activeCareerStory.chapters.length + 1)) * 100}%` }"
       >
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-code-branch text-hf-cyan"></i> Engineering Experience
+            <i class="fas fa-code-branch text-hf-cyan"></i> {{ t('engineeringExperience') }}
           </h2>
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
         <div class="novel">
           <div class="novel__masthead">
-            <span><i class="fas fa-code" aria-hidden="true"></i> CAREER / ENGINEERING.LOG</span>
-            <span>NOW READING · {{ String(activeStoryIndex + 1).padStart(2, '0') }} / {{ String(careerStory.chapters.length + 1).padStart(2, '0') }}</span>
+            <span><i class="fas fa-code" aria-hidden="true"></i> {{ t('careerLog') }}</span>
+            <span>{{ t('nowReading') }} · {{ String(activeStoryIndex + 1).padStart(2, '0') }} / {{ String(activeCareerStory.chapters.length + 1).padStart(2, '0') }}</span>
           </div>
           <div class="novel__progress" aria-hidden="true">
             <span></span>
           </div>
           <div class="novel__book novel__pages">
               <header class="novel__opening">
-                <span class="novel__opening-kicker"><i class="fas fa-terminal" aria-hidden="true"></i> ENGINEERING / IN PRACTICE</span>
-                <h3>From solving real problems<br>to building systems at scale.</h3>
-                <p>{{ careerStory.introduction }}</p>
-                <span class="novel__opening-scroll"><i class="fas fa-arrow-down" aria-hidden="true"></i> Scroll to begin</span>
+                <span class="novel__opening-kicker"><i class="fas fa-terminal" aria-hidden="true"></i> {{ t('engineeringInPractice') }}</span>
+                <h3>{{ t('openingStoryTitle') }}</h3>
+                <p>{{ activeCareerStory.introduction }}</p>
+                <span class="novel__opening-scroll"><i class="fas fa-arrow-down" aria-hidden="true"></i> {{ t('scrollToBegin') }}</span>
               </header>
               <article
-                v-for="(chapter, index) in careerStory.chapters"
+                v-for="(chapter, index) in activeCareerStory.chapters"
                 :id="`story-chapter-${index}`"
                 :key="chapter.period"
                 :data-story-index="index"
@@ -400,7 +457,7 @@ onBeforeUnmount(() => {
                   <span class="novel__scene-scan"></span>
                 </div>
                 <div class="novel__page-heading">
-                  <p class="novel__chapter-label">CHAPTER {{ String(index + 1).padStart(2, '0') }}</p>
+                  <p class="novel__chapter-label">{{ t('chapter') }} {{ String(index + 1).padStart(2, '0') }}</p>
                   <p class="novel__period">{{ chapter.period }}</p>
                 </div>
                 <p class="novel__byline">
@@ -411,7 +468,7 @@ onBeforeUnmount(() => {
                 <h3 class="novel__title">{{ chapter.title }}</h3>
                 <p class="novel__narrative">{{ chapter.story }}</p>
                 <div class="novel__details">
-                  <p class="novel__section-label">ENGINEERING WORK & IMPACT</p>
+                  <p class="novel__section-label">{{ t('engineeringWorkImpact') }}</p>
                   <ul class="novel__highlights">
                     <li v-for="highlight in chapter.highlights" :key="highlight">
                       <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -420,7 +477,7 @@ onBeforeUnmount(() => {
                   </ul>
                 </div>
                 <aside v-if="chapter.transitionToNext" class="novel__carry">
-                  <p class="novel__section-label"><i class="fas fa-bookmark" aria-hidden="true"></i> WHAT I CARRIED FORWARD</p>
+                  <p class="novel__section-label"><i class="fas fa-bookmark" aria-hidden="true"></i> {{ t('carriedForward') }}</p>
                   <h4>{{ chapter.transitionToNext.title }}</h4>
                   <p>{{ chapter.transitionToNext.story }}</p>
                   <ul class="novel__skills">
@@ -431,30 +488,30 @@ onBeforeUnmount(() => {
                 </aside>
               </article>
               <article
-                :data-story-index="careerStory.chapters.length"
+                :data-story-index="activeCareerStory.chapters.length"
                 class="novel__page novel__page--epilogue"
-                :class="{ 'is-active': activeStoryIndex === careerStory.chapters.length }"
+                :class="{ 'is-active': activeStoryIndex === activeCareerStory.chapters.length }"
               >
                 <div class="novel__scene" aria-hidden="true">
                   <span class="novel__scene-grid"></span>
                   <span class="novel__scene-number"><i class="fas fa-feather-pointed"></i></span>
                   <span class="novel__scene-copy">
-                    <span>{{ careerStory.epilogueScene.label }}</span>
-                    <span>{{ careerStory.epilogueScene.caption }}</span>
+                    <span>{{ activeCareerStory.epilogueScene.label }}</span>
+                    <span>{{ activeCareerStory.epilogueScene.caption }}</span>
                   </span>
                   <span class="novel__architecture">
-                    <span v-for="(step, stepIndex) in careerStory.epilogueScene.steps" :key="step" class="novel__architecture-node">
+                    <span v-for="(step, stepIndex) in activeCareerStory.epilogueScene.steps" :key="step" class="novel__architecture-node">
                       <i :class="['fas', stepIndex === 0 ? 'fa-diagram-project' : stepIndex === 1 ? 'fa-gears' : 'fa-database']"></i>
                       {{ step }}
                     </span>
                   </span>
                   <span class="novel__scene-scan"></span>
                 </div>
-                <p class="novel__chapter-label">EPILOGUE · THE STORY CONTINUES</p>
-                <h3 class="novel__title">{{ careerStory.closing.title }}</h3>
-                <p class="novel__narrative">{{ careerStory.closing.story }}</p>
+                <p class="novel__chapter-label">{{ t('epilogue') }}</p>
+                <h3 class="novel__title">{{ activeCareerStory.closing.title }}</h3>
+                <p class="novel__narrative">{{ activeCareerStory.closing.story }}</p>
                 <a :href="'mailto:' + resumeData.basics.email" class="career-story__contact">
-                  {{ careerStory.closing.callToAction }}
+                  {{ activeCareerStory.closing.callToAction }}
                   <i class="fas fa-arrow-right" aria-hidden="true"></i>
                 </a>
               </article>
@@ -466,16 +523,16 @@ onBeforeUnmount(() => {
       <section id="projects" class="resume-reveal">
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fas fa-cubes text-hf-cyan"></i> Selected Engineering Work
+            <i class="fas fa-cubes text-hf-cyan"></i> {{ t('selectedWork') }}
           </h2>
           <div class="hf-line from-hf-green/50"></div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div v-for="proj in resumeData.projects" :key="proj.name" class="hf-card resume-card resume-reveal p-6 lg:p-8 border-l-4 border-l-hf-indigo hover:border-l-hf-pink transition-all">
+          <div v-for="proj in projects" :key="proj.name" class="hf-card resume-card resume-reveal p-6 lg:p-8 border-l-4 border-l-hf-indigo hover:border-l-hf-pink transition-all">
             <h3 class="text-lg lg:text-xl font-bold text-white mb-2">{{ proj.name }}</h3>
-            <p class="text-sm text-slate-500 mb-6">{{ proj.desc }}</p>
-            <a v-if="proj.link" :href="proj.link" target="_blank" class="text-[10px] font-bold text-hf-indigo uppercase tracking-[0.2em] hover:text-hf-pink transition">
-              Establish Connection <i class="fas fa-external-link-alt ml-1"></i>
+            <p class="text-sm text-slate-500 mb-6">{{ t(proj.descriptionKey) }}</p>
+            <a v-if="proj.link" :href="proj.link" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold text-hf-indigo uppercase tracking-[0.2em] hover:text-hf-pink transition">
+              {{ t('viewProject') }} <i class="fas fa-external-link-alt ml-1"></i>
             </a>
           </div>
         </div>
@@ -485,16 +542,16 @@ onBeforeUnmount(() => {
       <section id="github-activity" class="resume-reveal">
         <div class="hf-section-header">
           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-            <i class="fab fa-github text-hf-cyan" aria-hidden="true"></i> GitHub Activity
+            <i class="fab fa-github text-hf-cyan" aria-hidden="true"></i> {{ t('githubActivity') }}
           </h2>
           <div class="hf-line from-hf-cyan/50"></div>
         </div>
         <div class="hf-card p-4 sm:p-6 lg:p-8">
-          <p class="text-sm text-slate-500 mb-5">A snapshot of my contributions over the past year.</p>
-          <div class="overflow-x-auto" role="region" aria-label="GitHub contribution calendar" tabindex="0">
+          <p class="text-sm text-slate-500 mb-5">{{ t('githubSnapshot') }}</p>
+          <div class="overflow-x-auto" role="region" :aria-label="t('contributionCalendar')" tabindex="0">
             <img
               src="https://ghchart.rshah.org/38bdf8/sajibAdhi"
-              alt="GitHub contribution activity for Sajib Adhikary"
+              :alt="t('githubAlt')"
               class="min-w-[700px] w-full"
               loading="lazy"
             >
@@ -505,7 +562,7 @@ onBeforeUnmount(() => {
             rel="noopener noreferrer"
             class="inline-flex items-center gap-2 mt-5 text-xs font-bold text-hf-indigo hover:text-hf-pink transition"
           >
-            View my GitHub profile <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            {{ t('viewGithub') }} <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
           </a>
         </div>
       </section>
@@ -514,7 +571,7 @@ onBeforeUnmount(() => {
 
     <footer class="site-footer w-full bg-slate-950 py-12 border-t border-slate-900 mt-12 lg:mt-24">
        <div class="max-w-6xl mx-auto px-6 text-center text-[8px] lg:text-[10px] text-slate-700 uppercase tracking-[0.2em] lg:tracking-[0.4em]">
-          Handcrafted with Vue 3 & Tailwind // Sajib Adhikary
+          {{ t('craftedWith') }}
        </div>
     </footer>
   </div>
