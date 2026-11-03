@@ -26,6 +26,9 @@ const locale = ref<Locale>(
     ? readPreference(siteFeatures.language.storageKey, localeOptions, siteFeatures.language.default)
     : siteFeatures.language.default
 )
+const activeLocaleLabel = computed(() =>
+  localeOptions.find((option) => option.value === locale.value)?.label ?? locale.value
+)
 const t = (key: MessageKey) => messages[locale.value][key]
 const activeCareerStory = computed(() => locale.value === 'bn' ? careerStoryBn : careerStory)
 const projects = [
@@ -65,6 +68,9 @@ const themePreference = ref<ThemePreference>(
   siteFeatures.theme.enabled
     ? readPreference(siteFeatures.theme.storageKey, themeOptions, siteFeatures.theme.default)
     : siteFeatures.theme.default
+)
+const activeThemeLabel = computed(() =>
+  themeOptions.find((option) => option.value === themePreference.value)?.labels[locale.value] ?? ''
 )
 const resolvedTheme = ref<'light' | 'dark'>('dark')
 const systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)')
@@ -268,8 +274,8 @@ onBeforeUnmount(() => {
       </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end gap-3 w-full sm:w-auto">
         <label v-if="siteFeatures.language.enabled" class="theme-control flex items-center gap-2 rounded-lg border border-hf-border bg-slate-900 px-3 py-2 text-slate-300">
-          <span class="sr-only">{{ t('language') }}</span>
-          <select v-model="locale" :aria-label="t('language')" class="bg-transparent text-[10px] font-bold text-current outline-none">
+          <span class="theme-control__value" aria-hidden="true">{{ activeLocaleLabel }}</span>
+          <select v-model="locale" :aria-label="t('language')" class="theme-control__select">
             <option v-for="option in localeOptions" :key="option.value" :value="option.value">{{ option.label }}</option>
           </select>
         </label>
@@ -279,8 +285,8 @@ onBeforeUnmount(() => {
             class="text-xs text-hf-cyan"
             aria-hidden="true"
           ></i>
-          <span class="sr-only">{{ t('theme') }}</span>
-          <select v-model="themePreference" :aria-label="t('theme')" class="bg-transparent text-[10px] font-bold text-current outline-none">
+          <span class="theme-control__value" aria-hidden="true">{{ activeThemeLabel }}</span>
+          <select v-model="themePreference" :aria-label="t('theme')" class="theme-control__select">
             <option v-for="option in themeOptions" :key="option.value" :value="option.value">{{ option.labels[locale] }}</option>
           </select>
         </label>
