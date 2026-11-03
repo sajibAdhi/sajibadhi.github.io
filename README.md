@@ -101,14 +101,11 @@ If you replace the resume file, keep the same filename or update `resumeUrl` in 
 
 ## Deployment
 
-Deployment is handled by GitHub Actions in `.github/workflows/deploy.yml`.
-
-On every push to `main`, the workflow:
-
-1. Installs dependencies with `npm ci`
-2. Runs tests with `npm test`
-3. Builds the site with `npm run build`
-4. Deploys `dist/` to GitHub Pages
+Deployment to cPanel is handled by `.github/workflows/deploy-sajib.adovasoft.com.yml`.
+On every push to `main`, the workflow installs dependencies, builds the site, and uploads
+the generated `dist/` directory over FTP. Set the `FTP_SERVER`, `FTP_USERNAME`, and
+`FTP_PASSWORD` GitHub Actions secrets, and make sure `server-dir` in the workflow points
+to the domain's document root in cPanel.
 
 ## Customization
 
