@@ -290,11 +290,6 @@ onBeforeUnmount(() => {
             <option v-for="option in themeOptions" :key="option.value" :value="option.value">{{ option.labels[locale] }}</option>
           </select>
         </label>
-        <a :href="resumeData.basics.socials[0].url" target="_blank" rel="noopener noreferrer" class="w-10 h-10 hidden sm:flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition" title="GitHub"><i class="fab fa-github"></i></a>
-        <a :href="'mailto:' + resumeData.basics.email" class="hf-cta hf-cta--ghost">
-          <i class="fas fa-envelope text-[11px]"></i>
-          <span>{{ t('contact') }}</span>
-        </a>
       </div>
     </header>
 
@@ -312,14 +307,32 @@ onBeforeUnmount(() => {
           <p class="text-base lg:text-lg text-slate-400 max-w-2xl leading-relaxed mx-auto lg:mx-0">
             {{ t('summary') }}
           </p>
-          <div class="flex flex-wrap justify-center lg:justify-start gap-3">
-            <a :href="resumeData.basics.linktreeUrl" target="_blank" class="hf-cta hf-cta--accent">
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+            <a :href="resumeData.basics.linktreeUrl" target="_blank" class="hf-cta">
               <i class="fas fa-link text-[11px]"></i>
               <span>{{ t('links') }}</span>
             </a>
-            <a :href="resumeData.basics.resumeUrl" target="_blank" class="hf-cta hf-cta--primary">
+            <a :href="resumeData.basics.resumeUrl" target="_blank" class="hf-cta">
               <i class="fas fa-file-lines text-[11px]"></i>
               <span>{{ t('resume') }}</span>
+            </a>
+            <a
+              :href="resumeData.basics.socials[0].url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hf-cta hero-icon-link"
+              aria-label="GitHub"
+              title="GitHub"
+            >
+              <i class="fab fa-github" aria-hidden="true"></i>
+            </a>
+            <a
+              :href="'mailto:' + resumeData.basics.email"
+              class="hf-cta hero-icon-link"
+              :aria-label="t('contact')"
+              :title="t('contact')"
+            >
+              <i class="fas fa-envelope" aria-hidden="true"></i>
             </a>
           </div>
           <div class="flex flex-wrap justify-center lg:justify-start gap-3 text-[10px] font-mono">
