@@ -4,6 +4,7 @@ import careerStory from './data/career-story.json'
 
 type ThemePreference = 'system' | 'light' | 'dark'
 const themePreference = ref<ThemePreference>('system')
+const resolvedTheme = ref<'light' | 'dark'>('dark')
 let systemThemeQuery: MediaQueryList | undefined
 let systemThemeListener: (() => void) | undefined
 
@@ -11,12 +12,22 @@ const applyTheme = () => {
   const isLight = themePreference.value === 'light' ||
     (themePreference.value === 'system' && systemThemeQuery?.matches === true)
 
+  resolvedTheme.value = isLight ? 'light' : 'dark'
   document.documentElement.dataset.theme = isLight ? 'light' : 'dark'
   document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute(
     'content',
     isLight ? '#f6f8fc' : '#080d16'
   )
 }
+
+watch(themePreference, (preference) => {
+  try {
+    localStorage.setItem('portfolio-theme', preference)
+  } catch (error) {
+    console.warn('Unable to save the theme preference.', error)
+  }
+  applyTheme()
+})
 
 const resumeData = {
   basics: {
@@ -108,9 +119,13 @@ let revealObserver: IntersectionObserver | undefined
 let storyObserver: IntersectionObserver | undefined
 
 onMounted(() => {
-  const savedTheme = localStorage.getItem('portfolio-theme')
-  if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
-    themePreference.value = savedTheme
+  try {
+    const savedTheme = localStorage.getItem('portfolio-theme')
+    if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
+      themePreference.value = savedTheme
+    }
+  } catch (error) {
+    console.warn('Unable to load the saved theme preference.', error)
   }
 
   systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)')
@@ -122,11 +137,6 @@ onMounted(() => {
     }
   }
   systemThemeQuery.addEventListener('change', systemThemeListener)
-
-  watch(themePreference, (preference) => {
-    localStorage.setItem('portfolio-theme', preference)
-    applyTheme()
-  })
 
   const root = resumeRoot.value
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
@@ -197,7 +207,11 @@ onBeforeUnmount(() => {
     <!-- Top Nav (Minimalist) -->
     <header id="home" class="w-full max-w-6xl px-4 sm:px-6 py-4 sm:py-6 flex flex-row justify-between items-center gap-3 z-50">
       <a href="#home" class="site-logo-link group shrink-0" aria-label="Sajib Adhikary home">
-        <img src="/logo.svg?v=2" alt="Sajib Adhikary, Software Engineer" class="w-32 sm:w-40 h-auto transition-transform duration-300 group-hover:scale-[1.02]">
+        <img
+          :src="resolvedTheme === 'light' ? '/logo-light.svg?v=1' : '/logo.svg?v=3'"
+          alt="Sajib Adhikary, Software Engineer"
+          class="w-32 sm:w-40 h-auto transition-transform duration-300 group-hover:scale-[1.02]"
+        >
       </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end gap-3 w-full sm:w-auto">
         <label class="theme-control flex items-center gap-2 rounded-lg border border-hf-border bg-slate-900 px-3 py-2 text-slate-300">

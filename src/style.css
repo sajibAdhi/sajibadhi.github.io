@@ -18,6 +18,7 @@
 @layer base {
   html {
     font-size: 16px;
+    color-scheme: dark;
     text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
   }
@@ -1970,6 +1971,10 @@ html[data-theme="light"] {
   color-scheme: light;
   --color-hf-bg: #f4f7fb;
   --color-hf-card: #ffffff;
+  --color-hf-pink: #0369a1;
+  --color-hf-indigo: #5b4acb;
+  --color-hf-cyan: #0e7490;
+  --color-hf-green: #15803d;
   --color-hf-border: #d7e0eb;
   --color-hf-muted: #526174;
   --color-slate-950: #f7f9fc;
@@ -2001,10 +2006,8 @@ html[data-theme="light"] .text-white {
   color: #142238;
 }
 
-html[data-theme="light"] .site-logo-link {
-  padding: 0.25rem 0.45rem;
-  border-radius: 0.75rem;
-  background: #080d16;
+html[data-theme="light"] .hf-gradient-text {
+  background-image: linear-gradient(90deg, #0369a1 0%, #6d28d9 50%, #0e7490 100%);
 }
 
 html[data-theme="light"] .theme-control {
@@ -2019,6 +2022,11 @@ html[data-theme="light"] .theme-control option {
 
 html[data-theme="light"] .theme-control option {
   background: #ffffff;
+}
+
+html[data-theme="light"] .theme-control select:focus-visible {
+  outline: 2px solid var(--color-hf-cyan);
+  outline-offset: 3px;
 }
 
 html[data-theme="light"] .hf-cta {
@@ -2059,6 +2067,13 @@ html[data-theme="light"] .novel__highlights li {
   color: #46566b;
 }
 
+html[data-theme="light"] .career-story__current-company,
+html[data-theme="light"] .career-transition__story,
+html[data-theme="light"] .story-chapter__narrative,
+html[data-theme="light"] .novel__opening-scroll {
+  color: #536174;
+}
+
 html[data-theme="light"] .career-story__progress-step:hover,
 html[data-theme="light"] .career-story__progress-step.is-active,
 html[data-theme="light"] .career-story__progress-step.is-complete {
@@ -2073,6 +2088,14 @@ html[data-theme="light"] .career-story__ending-mark {
 html[data-theme="light"] .career-transition__skills li {
   background: rgba(99, 102, 241, 0.07);
   color: #5143a8;
+}
+
+html[data-theme="light"] .engineer-eyebrow {
+  color: #0369a1;
+}
+
+html[data-theme="light"] .engineer-positioning {
+  color: #25364c;
 }
 
 html[data-theme="light"] .novel {
@@ -2123,10 +2146,6 @@ html[data-theme="light"] .novel__carry {
   background: linear-gradient(90deg, rgba(14, 116, 144, 0.06), transparent);
 }
 
-html[data-theme="light"] .engineer-positioning {
-  color: #25364c;
-}
-
 html[data-theme="light"] .engineer-stack {
   border-color: rgba(14, 116, 144, 0.18);
   background: rgba(255, 255, 255, 0.9);
@@ -2140,4 +2159,13 @@ html[data-theme="light"] .engineer-stack span {
 
 html[data-theme="light"] .site-footer {
   background: #edf2f8;
+}
+
+html[data-theme="light"] .site-footer > div {
+  color: #536174;
+}
+
+html[data-theme="light"] .career-story__event-node,
+html[data-theme="light"] .career-story__ending-mark {
+  box-shadow: 0 0 16px -10px rgba(15, 23, 42, 0.2);
 }
