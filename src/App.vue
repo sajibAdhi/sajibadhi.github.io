@@ -89,7 +89,7 @@ const applyTheme = () => {
   )
   document.querySelector<HTMLLinkElement>('#site-favicon')?.setAttribute(
     'href',
-    `./logos/${isLight ? 'dark' : 'light'}-favicon.ico?v=1`
+    `./logos/favicon-${isLight ? 'dark' : 'light'}.ico?v=1`
   )
 }
 
@@ -271,9 +271,9 @@ onBeforeUnmount(() => {
     <header id="home" class="w-full max-w-6xl px-4 sm:px-6 py-4 sm:py-6 flex flex-row justify-between items-center gap-3 z-50">
       <a href="#home" class="site-logo-link group shrink-0" :aria-label="`${resumeData.basics.name} ${t('home')}`">
         <img
-          :src="resolvedTheme === 'light' ? '/logo-light.svg?v=1' : '/logo.svg?v=3'"
+          :src="resolvedTheme === 'light' ? '/logos/logo-horizontal-dark.png' : '/logos/logo-horizontal-light.png'"
           :alt="t('logoAlt')"
-          class="w-32 sm:w-40 h-auto transition-transform duration-300 group-hover:scale-[1.02]"
+          class="w-52 sm:w-64 h-auto transition-transform duration-300 group-hover:scale-[1.02]"
         >
       </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end gap-3 w-full sm:w-auto">
