@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Sajib Adhikary is a software engineer specializing in backend architecture, ERP platforms, and reliable financial systems." />
     <meta name="theme-color" content="#080d16" />
+    <script>
+      const savedTheme = localStorage.getItem('portfolio-theme')
+      const useLightTheme = savedTheme === 'light' ||
+        (savedTheme !== 'dark' && window.matchMedia('(prefers-color-scheme: light)').matches)
+      document.documentElement.dataset.theme = useLightTheme ? 'light' : 'dark'
+    </script>
     <title>Sajib Adhikary | Software Engineer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

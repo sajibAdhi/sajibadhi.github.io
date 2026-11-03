@@ -1,6 +1,22 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import careerStory from './data/career-story.json'
+
+type ThemePreference = 'system' | 'light' | 'dark'
+const themePreference = ref<ThemePreference>('system')
+let systemThemeQuery: MediaQueryList | undefined
+let systemThemeListener: (() => void) | undefined
+
+const applyTheme = () => {
+  const isLight = themePreference.value === 'light' ||
+    (themePreference.value === 'system' && systemThemeQuery?.matches === true)
+
+  document.documentElement.dataset.theme = isLight ? 'light' : 'dark'
+  document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')?.setAttribute(
+    'content',
+    isLight ? '#f6f8fc' : '#080d16'
+  )
+}
 
 const resumeData = {
   basics: {
@@ -92,6 +108,26 @@ let revealObserver: IntersectionObserver | undefined
 let storyObserver: IntersectionObserver | undefined
 
 onMounted(() => {
+  const savedTheme = localStorage.getItem('portfolio-theme')
+  if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
+    themePreference.value = savedTheme
+  }
+
+  systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)')
+  applyTheme()
+
+  systemThemeListener = () => {
+    if (themePreference.value === 'system') {
+      applyTheme()
+    }
+  }
+  systemThemeQuery.addEventListener('change', systemThemeListener)
+
+  watch(themePreference, (preference) => {
+    localStorage.setItem('portfolio-theme', preference)
+    applyTheme()
+  })
+
   const root = resumeRoot.value
   const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false
 
@@ -125,6 +161,9 @@ onMounted(() => {
 onBeforeUnmount(() => {
   revealObserver?.disconnect()
   storyObserver?.disconnect()
+  if (systemThemeQuery && systemThemeListener) {
+    systemThemeQuery.removeEventListener('change', systemThemeListener)
+  }
 })
 </script>
 
@@ -157,10 +196,23 @@ onBeforeUnmount(() => {
 
     <!-- Top Nav (Minimalist) -->
     <header id="home" class="w-full max-w-6xl px-4 sm:px-6 py-4 sm:py-6 flex flex-row justify-between items-center gap-3 z-50">
-      <a href="#home" class="group shrink-0" aria-label="Sajib Adhikary home">
+      <a href="#home" class="site-logo-link group shrink-0" aria-label="Sajib Adhikary home">
         <img src="/logo.svg?v=2" alt="Sajib Adhikary, Software Engineer" class="w-32 sm:w-40 h-auto transition-transform duration-300 group-hover:scale-[1.02]">
       </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end gap-3 w-full sm:w-auto">
+        <label class="theme-control flex items-center gap-2 rounded-lg border border-hf-border bg-slate-900 px-3 py-2 text-slate-300">
+          <i
+            :class="themePreference === 'system' ? 'fas fa-circle-half-stroke' : themePreference === 'light' ? 'fas fa-sun' : 'fas fa-moon'"
+            class="text-xs text-hf-cyan"
+            aria-hidden="true"
+          ></i>
+          <span class="sr-only">Color theme</span>
+          <select v-model="themePreference" aria-label="Color theme" class="bg-transparent text-[10px] font-bold text-current outline-none">
+            <option value="system">System</option>
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+          </select>
+        </label>
         <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 hidden sm:flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition" title="GitHub"><i class="fab fa-github"></i></a>
         <a :href="'mailto:' + resumeData.basics.email" class="hf-cta hf-cta--ghost">
           <i class="fas fa-envelope text-[11px]"></i>
