@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import careerStory from './data/career-story.json'
 
 const resumeData = {
@@ -40,9 +40,43 @@ const resumeData = {
   languages: ["English (Professional)", "Bangla (Native)"]
 }
 
-const coreSkillCategories = ['Languages', 'Frameworks', 'Database']
-const coreSkills = resumeData.skills.filter((skill) => coreSkillCategories.includes(skill.category))
-const supportingSkills = resumeData.skills.filter((skill) => !coreSkillCategories.includes(skill.category))
+const toolkitFilters = ['All', 'Backend', 'Frontend', 'DevOps'] as const
+type ToolkitFilter = typeof toolkitFilters[number]
+
+const activeToolkitFilter = ref<ToolkitFilter>('All')
+const skillGroups = [
+  {
+    category: 'Frontend',
+    filter: 'Frontend',
+    items: ['JavaScript', 'jQuery', 'HTML', 'CSS', 'Tailwind', 'Bootstrap']
+  },
+  {
+    category: 'Backend',
+    filter: 'Backend',
+    items: ['PHP', 'Laravel', 'CodeIgniter', 'REST APIs', 'MVC Architecture', 'Authentication & Authorization']
+  },
+  {
+    category: 'Data',
+    filter: 'Backend',
+    items: ['MySQL', 'MariaDB', 'PostgreSQL', 'Database Optimization']
+  },
+  {
+    category: 'DevOps',
+    filter: 'DevOps',
+    items: ['Git', 'Docker', 'Composer', 'Npm', 'Pest', 'VPS', 'Linux', 'Hosting']
+  },
+  {
+    category: 'Engineering & AI',
+    filter: 'Backend',
+    items: ['System Design', 'API Design', 'Performance Profiling', 'Caching & Queues', 'Code Review & Mentoring', 'Agentic AI']
+  }
+] satisfies { category: string; filter: Exclude<ToolkitFilter, 'All'>; items: string[] }[]
+
+const visibleSkillGroups = computed(() =>
+  activeToolkitFilter.value === 'All'
+    ? skillGroups
+    : skillGroups.filter((group) => group.filter === activeToolkitFilter.value)
+)
 
 const navItems = [
   { label: 'Home', icon: 'fas fa-home', link: '#home' },
@@ -184,38 +218,67 @@ onBeforeUnmount(() => {
 
       <!-- Engineering toolkit -->
       <section id="skills" class="resume-reveal">
-        <div class="hf-section-header">
-           <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
-             <i class="fas fa-screwdriver-wrench text-hf-cyan"></i> Engineering Toolkit
-           </h2>
-           <div class="hf-line"></div>
-        </div>
-        <div class="space-y-8">
-          <div>
-            <h3 class="text-xs font-bold text-hf-cyan uppercase tracking-[0.2em] mb-4">Core</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <article v-for="skill in coreSkills" :key="skill.category" class="hf-card resume-card p-5 border-hf-cyan/30">
-                <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4">{{ skill.category }}</h4>
-                <div class="grid grid-cols-2 gap-2">
-                  <span v-for="item in skill.items" :key="item" class="rounded-lg border border-hf-border bg-slate-950/60 px-3 py-2 text-xs text-slate-300 text-center">
-                    {{ item }}
-                  </span>
-                </div>
-              </article>
-            </div>
+        <div class="hf-section-header flex-wrap">
+          <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
+            <i class="fas fa-screwdriver-wrench text-hf-cyan"></i> Engineering Toolkit
+          </h2>
+          <div class="hf-line hidden sm:block"></div>
+          <div class="flex items-center gap-1 rounded-xl border border-hf-border bg-slate-950/70 p-1" role="group" aria-label="Filter toolkit categories">
+            <button
+              v-for="filter in toolkitFilters"
+              :key="filter"
+              type="button"
+              :aria-pressed="activeToolkitFilter === filter"
+              @click="activeToolkitFilter = filter"
+              class="rounded-lg px-3 py-2 text-[10px] font-bold transition-colors"
+              :class="activeToolkitFilter === filter ? 'bg-hf-cyan text-slate-950' : 'text-slate-400 hover:text-white'"
+            >
+              {{ filter }}
+            </button>
           </div>
-          <div>
-            <h3 class="text-xs font-bold text-hf-indigo uppercase tracking-[0.2em] mb-4">Supporting Skills</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-              <article v-for="skill in supportingSkills" :key="skill.category" class="resume-card rounded-xl border border-slate-800 bg-slate-900/30 p-4">
-                <h4 class="text-[10px] font-bold text-hf-indigo uppercase tracking-wider mb-3">{{ skill.category }}</h4>
-                <div class="flex flex-wrap gap-2">
-                  <span v-for="item in skill.items" :key="item" class="rounded-md border border-slate-800 bg-slate-950/50 px-2 py-1 text-[11px] text-slate-400">
-                    {{ item }}
-                  </span>
-                </div>
-              </article>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <article class="relative overflow-hidden rounded-2xl border border-hf-cyan/40 bg-gradient-to-br from-hf-cyan/10 via-hf-card to-slate-950 p-6 sm:p-8 lg:col-span-5">
+            <div class="absolute -right-16 -top-20 h-56 w-56 rounded-full bg-hf-cyan/10 blur-3xl" aria-hidden="true"></div>
+            <div class="relative">
+              <div class="flex items-center justify-between gap-3">
+                <p class="text-[10px] font-bold uppercase tracking-[0.18em] text-hf-cyan">Core Stack · Daily Use</p>
+                <span class="flex items-center gap-2 text-[10px] text-slate-400">
+                  <span class="h-1.5 w-1.5 rounded-full bg-hf-cyan"></span>
+                  Primary technologies
+                </span>
+              </div>
+              <h3 class="mt-5 text-3xl sm:text-4xl font-bold leading-tight tracking-tight text-white">
+                PHP <span class="text-hf-cyan">·</span> Laravel<br>
+                <span class="text-hf-cyan">·</span> MySQL
+              </h3>
+              <p class="mt-5 max-w-md text-sm leading-relaxed text-slate-400">
+                Building dependable backend systems, business workflows, and data-driven applications.
+              </p>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <span v-for="technology in ['PHP', 'Laravel', 'MySQL']" :key="technology" class="rounded-full border border-hf-cyan/40 bg-hf-cyan/10 px-3 py-1 text-[11px] font-semibold text-hf-cyan">
+                  {{ technology }}
+                </span>
+              </div>
             </div>
+          </article>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:col-span-7">
+            <article v-for="group in visibleSkillGroups" :key="group.category" class="resume-card rounded-2xl border border-hf-border bg-hf-card/80 p-4 sm:p-5 transition-colors hover:border-hf-cyan/40">
+              <div class="mb-4 flex items-center justify-between gap-2">
+                <h3 class="text-[10px] font-bold uppercase tracking-[0.16em] text-hf-cyan">{{ group.category }}</h3>
+                <span class="text-[10px] text-slate-500">{{ group.items.length }} skills</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="item in group.items"
+                  :key="item"
+                  class="rounded-full border px-2.5 py-1 text-[10px] transition-colors"
+                  :class="['PHP', 'Laravel', 'MySQL'].includes(item) ? 'border-hf-cyan/50 bg-hf-cyan/10 text-hf-cyan' : 'border-slate-700 bg-slate-900/60 text-slate-300'"
+                >
+                  {{ item }}
+                </span>
+              </div>
+            </article>
           </div>
         </div>
       </section>
