@@ -43,7 +43,8 @@ const navItems = [
   { label: 'Home', icon: 'fas fa-home', link: '#home' },
   { label: 'Skills', icon: 'fas fa-layer-group', link: '#skills' },
   { label: 'Experience', icon: 'fas fa-history', link: '#exp' },
-  { label: 'Projects', icon: 'fas fa-code-branch', link: '#projects' }
+  { label: 'Projects', icon: 'fas fa-code-branch', link: '#projects' },
+  { label: 'GitHub Activity', icon: 'fab fa-github', link: '#github-activity' }
 ]
 
 const engineeringImpact = [
@@ -341,6 +342,35 @@ onBeforeUnmount(() => {
               Establish Connection <i class="fas fa-external-link-alt ml-1"></i>
             </a>
           </div>
+        </div>
+      </section>
+
+      <!-- GitHub Activity -->
+      <section id="github-activity" class="resume-reveal">
+        <div class="hf-section-header">
+          <h2 class="text-xl lg:text-2xl font-bold text-white flex items-center gap-3">
+            <i class="fab fa-github text-hf-cyan" aria-hidden="true"></i> GitHub Activity
+          </h2>
+          <div class="hf-line from-hf-cyan/50"></div>
+        </div>
+        <div class="hf-card p-4 sm:p-6 lg:p-8">
+          <p class="text-sm text-slate-500 mb-5">A snapshot of my contributions over the past year.</p>
+          <div class="overflow-x-auto" role="region" aria-label="GitHub contribution calendar" tabindex="0">
+            <img
+              src="https://ghchart.rshah.org/38bdf8/sajibAdhi"
+              alt="GitHub contribution activity for Sajib Adhikary"
+              class="min-w-[700px] w-full"
+              loading="lazy"
+            >
+          </div>
+          <a
+            :href="resumeData.basics.socials[0].url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 mt-5 text-xs font-bold text-hf-indigo hover:text-hf-pink transition"
+          >
+            View my GitHub profile <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          </a>
         </div>
       </section>
 
