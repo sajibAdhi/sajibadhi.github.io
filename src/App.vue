@@ -123,14 +123,9 @@ onBeforeUnmount(() => {
 
     <!-- Top Nav (Minimalist) -->
     <header id="home" class="w-full max-w-6xl px-4 sm:px-6 py-4 sm:py-6 flex flex-row justify-between items-center gap-3 z-50">
-      <div class="flex items-center gap-3 group cursor-pointer min-w-0">
-        <img src="/logo.svg" alt="Sajib Logo" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-2xl transition-transform group-hover:scale-110 duration-500 shrink-0">
-        <div class="font-mono text-base sm:text-xl font-black flex items-center gap-1 sm:gap-1.5 tracking-tight sm:tracking-tighter min-w-0">
-          <span class="text-hf-pink opacity-80">&lt;</span>
-          <span class="text-white truncate">SAJIB.DEV</span>
-          <span class="text-hf-pink opacity-80">/&gt;</span>
-        </div>
-      </div>
+      <a href="#home" class="group shrink-0" aria-label="Sajib Adhikary home">
+        <img src="/logo.svg" alt="Sajib Adhikary, Software Engineer" class="w-32 sm:w-40 h-auto transition-transform duration-300 group-hover:scale-[1.02]">
+      </a>
       <div class="flex flex-wrap items-center justify-start sm:justify-end gap-3 w-full sm:w-auto">
         <a :href="resumeData.basics.socials[0].url" target="_blank" class="w-10 h-10 hidden sm:flex items-center justify-center rounded-lg bg-slate-900 border border-hf-border hover:border-hf-pink transition" title="GitHub"><i class="fab fa-github"></i></a>
         <a :href="'mailto:' + resumeData.basics.email" class="hf-cta hf-cta--ghost">
