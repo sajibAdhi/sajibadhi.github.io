@@ -110,7 +110,9 @@ If you replace the resume file, keep the same filename or update `resumeUrl` in 
 
 GitHub Pages deployment is handled by `.github/workflows/deploy.yml`. Every push to
 `dev` builds and deploys the site to `sajibadhi.github.io`. Ensure the repository's
-Pages source is configured to use GitHub Actions.
+Pages source is configured to use GitHub Actions. Also allow the `dev` branch in the
+`github-pages` environment's deployment branch rules
+(`Settings` > `Environments` > `github-pages` > `Deployment branches and tags`).
 
 Deployment to cPanel is handled by `.github/workflows/deploy-sajib.adovasoft.com.yml`.
 On every push to `main`, the workflow installs dependencies, builds the site, and uploads
