@@ -19,4 +19,4 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /public_html/ # আপনার হোস্টিংয়ের রুট ফোল্ডার পাথ
+          server-dir: / # আপনার হোস্টিংয়ের রুট ফোল্ডার পাথ
