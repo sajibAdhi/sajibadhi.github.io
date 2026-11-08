@@ -122,6 +122,19 @@ Pages source is configured to use GitHub Actions. Also allow the `dev` branch in
 `github-pages` environment's deployment branch rules
 (`Settings` > `Environments` > `github-pages` > `Deployment branches and tags`).
 
+Vercel Preview Deployments are created automatically for pull requests after connecting
+this GitHub repository to a Vercel project:
+
+1. In Vercel, choose **Add New** > **Project** and import `sajibAdhi/sajibadhi.github.io`.
+2. Set the framework preset to **Vite** (if it is not detected automatically).
+3. Use `npm run build` as the build command and `dist` as the output directory.
+4. In the project's **Git** settings, make sure Preview Deployments are enabled for
+   pull requests.
+
+Vercel will create a preview when a pull request is opened and update it when new
+commits are pushed. This uses Vercel's Git integration, so no deployment token needs
+to be added to GitHub Actions secrets.
+
 Deployment to cPanel is handled by `.github/workflows/deploy-sajib.adovasoft.com.yml`.
 On every push to `main`, the workflow installs dependencies, builds the site, and uploads
 the generated `dist/` directory over FTP. Set the `FTP_SERVER`, `FTP_USERNAME`, and
